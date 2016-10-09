@@ -23,7 +23,7 @@ public class XMLParser implements NoSQLParser {
 
 	private ArrayList<Element> extractElements(String file) {
 		ArrayList<Element> wantedElements = new ArrayList<Element>();
-		String wantedObjects = "country"; //specify here which elements we are looking for
+		String wantedObjects = "info"; //specify here which elements we are looking for
 		ElementFilter ef = new ElementFilter();
 		try {
 			File inputFile = new File(file);
@@ -54,7 +54,8 @@ public class XMLParser implements NoSQLParser {
 				if(!attributes.contains(attribute)) attributes.add(attribute);
 			}
 			object.setAttributes(attributes);
-			object.setName(el.getAttributeValue("name")); //specify here which attribute is the name
+//			object.setName(el.getAttributeValue("type")); //specify here which attribute is the name, OR...
+			object.setName(el.getChildTextNormalize("type")); //... which child element is the name (comment one line out)
 			parsedObjects.add(object);
 		}
 		System.out.println("done.");

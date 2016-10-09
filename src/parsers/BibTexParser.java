@@ -55,7 +55,7 @@ public class BibTexParser implements NoSQLParser {
 			FormalObject currentObject = new FormalObject();
 			ArrayList<String> attributes = new ArrayList<String>();
 			String name = "NO NAME FOUND"; //will be overwritten
-			String[] lines = obj.split(System.getProperty("line.separator"));
+			String[] lines = obj.split("\n");
 			for(int i = 0; i < lines.length; i++){
 				if(lines[i].contains(" = ")){
 					String attribute = lines[i].split(" = ")[0].trim();

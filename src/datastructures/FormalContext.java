@@ -34,7 +34,7 @@ public class FormalContext {
 	
 	public void exportFormatted(String outputFile){
 		System.out.print("Converting to target syntax... ");
-		String exportString = createConexpString();
+		String exportString = createCXTString();
 		System.out.print("done. \nWriting file... ");
 		writeToFile(exportString, outputFile);
 		System.out.println("done.");
@@ -50,14 +50,14 @@ public class FormalContext {
 		catch (UnsupportedEncodingException e) { e.printStackTrace(); }
 	}
 
-	private String createLatticeMinerString() {
+	private String createSLFString() {
 		String export = "";
 		export += "[Lattice]\n";
 		export += objects.size() + "\n";
 		export += dic.getSize() + "\n";
 		export += "[Objects]\n";
 		for(FormalObject obj : objects){
-			export += obj.getName() + "\n";
+			export += obj.getName() + getObjectNumber(obj.getName()) + "\n";
 		}
 		export += "[Attributes]\n";
 		for(String attr : dic.getContents())
@@ -75,7 +75,7 @@ public class FormalContext {
 		return export;
 	}
 	
-	private String createConexpString(){
+	private String createCXTString(){
 		sortObjects();
 		String export = "";
 		export += "B\n\n";

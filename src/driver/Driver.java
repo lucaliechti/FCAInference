@@ -3,7 +3,6 @@ package driver;
 import java.util.ArrayList;
 
 import parsers.BibTexParser;
-//import parsers.BibTexParser;
 import parsers.XMLParser;
 
 import datastructures.FormalContext;
@@ -11,24 +10,44 @@ import datastructures.FormalObject;
 
 public class Driver {
 	public static void main(String[] args){
-		String scgInput = "/home/luca/Dropbox/Uni/!BSc/NoSQL repos/BibTex/scg.bib";
-		String mondialInput = "/home/luca/Dropbox/Uni/!BSc/NoSQL repos/XML/mondial.xml";
-		String sigmodInput = "/home/luca/Dropbox/Uni/!BSc/NoSQL repos/XML/SigmodRecord.xml";
-		String ebayInput = "/home/luca/Dropbox/Uni/!BSc/NoSQL repos/XML/ebay.xml";
-		String listbInput = "/home/luca/Dropbox/Uni/!BSc/NoSQL repos/BibTex/listb.bib";
-		String dblpInput = "/home/luca/Dropbox/Uni/!BSc/NoSQL repos/BibTex/dblp.bib";
+		String repoFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\NoSQL repos\\";
+		String outputFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\context files\\";		
+		ArrayList<String> docs = new ArrayList<String>();
 		
-		String fileOutputLatticeMiner = "/home/luca/Dropbox/Uni/!BSc/LatticeMiner/LatticeMinerExport.slf";
-		String fileOutputConexp = "/home/luca/Dropbox/Uni/!BSc/ConexpExport.cxt";
+//		//add XML repos
+//		docs.add(repoFolder + "XML\\mondial.xml");
+//		docs.add(repoFolder + "XML\\SigmodRecord.xml");
+//		docs.add(repoFolder + "XML\\ebay.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
+		//add BibTex repos
+		docs.add(repoFolder + "BibTex\\scg.bib");
+		docs.add(repoFolder + "BibTex\\listb.bib");
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+		
+		for(String doc : docs)
+			parseDocument(doc, outputFolder);
+		System.out.println("All done.");
+	}
+	
+	private static void parseDocument(String doc, String outputFolder){
+		System.out.println("Parsing file " + doc + "...");
 		BibTexParser BTparser = new BibTexParser();
-		XMLParser XMLparser	= new XMLParser();
-		ArrayList<FormalObject> importedContext = BTparser.parseFile(dblpInput); //specify here which parser to use
-		
+		XMLParser XMLparser = new XMLParser();
+		ArrayList<FormalObject> importedContext = new ArrayList<FormalObject>();
+		if(doc.substring(doc.length()-3).equalsIgnoreCase("bib"))
+			importedContext = BTparser.parseFile(doc);
+		else 
+			importedContext = XMLparser.parseFile(doc);	
 		FormalContext fc = new FormalContext();
 		for(FormalObject object : importedContext) fc.addObject(object);
-
-		fc.exportFormatted(fileOutputConexp);
-		System.out.println("All done.");
+		fc.exportFormatted(outputFolder + doc.substring(doc.length()-3) + "_" + doc.substring(doc.lastIndexOf("\\")+1, doc.lastIndexOf(".")) + ".cxt");
+		System.out.println("Parsed file " + doc);
 	}
 }
