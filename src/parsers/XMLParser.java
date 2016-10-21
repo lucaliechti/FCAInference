@@ -17,6 +17,7 @@ import datastructures.FormalObject;
 public class XMLParser implements NoSQLParser {
 	
 	private String wantedObjects = "info";
+	private String nameAttribute = "type";
 	
 	public ArrayList<FormalObject> parseFile(String file){
 		ArrayList<Element> wantedElements = extractElements(file); //split the input file
@@ -55,6 +56,8 @@ public class XMLParser implements NoSQLParser {
 				if(!attributes.contains(attribute)) attributes.add(attribute);
 			}
 			object.setAttributes(attributes);
+//			object.setName(el.getAttributeValue(nameAttribute)); //specify here which attribute is the name, OR...
+			object.setName(el.getChildTextNormalize(nameAttribute)); //... which child element is the name (comment one line out)
 			parsedObjects.add(object);
 		}
 		System.out.println("done.");
