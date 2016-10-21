@@ -3,6 +3,7 @@ package driver;
 import java.util.ArrayList;
 
 import parsers.BibTexParser;
+import parsers.JSONParser;
 import parsers.XMLParser;
 
 import datastructures.FormalContext;
@@ -23,13 +24,16 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
-		//add BibTex repos
-		docs.add(repoFolder + "BibTex\\scg.bib");
-		docs.add(repoFolder + "BibTex\\listb.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+//		//add BibTex repos
+//		docs.add(repoFolder + "BibTex\\scg.bib");
+//		docs.add(repoFolder + "BibTex\\listb.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+		
+		//add JSON repos
+		docs.add(repoFolder + "JSON\\SIRA\\sira-bfh.js");
 		
 		for(String doc : docs)
 			parseDocument(doc, outputFolder);
@@ -40,11 +44,15 @@ public class Driver {
 		System.out.println("Parsing file " + doc + "...");
 		BibTexParser BTparser = new BibTexParser();
 		XMLParser XMLparser = new XMLParser();
+		JSONParser JSONparser = new JSONParser();
 		ArrayList<FormalObject> importedContext = new ArrayList<FormalObject>();
+		//TODO: use factory pattern to obtain right parser
 		if(doc.substring(doc.length()-3).equalsIgnoreCase("bib"))
 			importedContext = BTparser.parseFile(doc);
-		else 
+		else if (doc.substring(doc.length()-3).equalsIgnoreCase("xml"))
 			importedContext = XMLparser.parseFile(doc);	
+		else if (doc.substring(doc.length()-2).equalsIgnoreCase("js"))
+			importedContext = JSONparser.parseFile(doc);	
 		FormalContext fc = new FormalContext();
 		for(FormalObject object : importedContext) fc.addObject(object);
 		fc.exportFormatted(outputFolder + doc.substring(doc.length()-3) + "_" + doc.substring(doc.lastIndexOf("\\")+1, doc.lastIndexOf(".")) + ".cxt");
