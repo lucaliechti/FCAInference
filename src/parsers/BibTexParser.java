@@ -73,4 +73,9 @@ public class BibTexParser implements NoSQLParser {
 		System.out.println("done.");
 		return parsedObjects;
 	}
+
+	@Override
+	public String getTargetFilename(String doc) {
+		return "bib_" + doc.substring(doc.lastIndexOf("\\")+1, doc.length()-4) + ".cxt"; //hard-coding the file format at the moment
+	}
 }

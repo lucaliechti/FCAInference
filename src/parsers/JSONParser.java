@@ -55,4 +55,9 @@ public class JSONParser implements NoSQLParser {
 		System.out.print("Done.");
 		return parsedObjects;
 	}
+
+	@Override
+	public String getTargetFilename(String doc) {
+		return "js_" + doc.substring(doc.lastIndexOf("\\")+1, doc.length()-3) + ".cxt"; //hard-coding the file format at the moment
+	}
 }
