@@ -106,9 +106,17 @@ public class FormalContext {
 		});
 	}
 	
+	//returns an int enumerating all objects of the same type
+	//like this, we have book0, book1, book2 etc.
 	private int getObjectNumber(String name){
-		if(objectNumbers.containsKey(name)){ objectNumbers.put(name, objectNumbers.get(name)+1); }
-		else{ objectNumbers.put(name, 0); }
+		if(objectNumbers.containsKey(name))
+			objectNumbers.put(name, objectNumbers.get(name)+1);
+		else 
+			objectNumbers.put(name, 0);
 		return objectNumbers.get(name);
+	}
+	
+	public ArrayList<FormalObject> getObjects() {
+		return objects;
 	}
 }

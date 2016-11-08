@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import parsers.NoSQLParser;
 import datastructures.FormalContext;
 import datastructures.FormalObject;
+import datastructures.Lattice;
 import factories.ParserFactory;
 
 public class Driver {
@@ -25,15 +26,15 @@ public class Driver {
 		
 		//add BibTex repos
 		docs.add(repoFolder + "BibTex\\scg.bib");
-		docs.add(repoFolder + "BibTex\\listb.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+//		docs.add(repoFolder + "BibTex\\listb.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
 		
 //		//add JSON repos
 //		docs.add(repoFolder + "JSON\\SIRA\\alle.js");
-		
+
 		for(String doc : docs)
 			parseDocument(doc, outputFolder, factory.makeParser(doc));
 		System.out.println("All done.");
@@ -44,8 +45,13 @@ public class Driver {
 		ArrayList<FormalObject> importedContext = new ArrayList<FormalObject>();
 		importedContext = parser.parseFile(doc);
 		FormalContext fc = new FormalContext();
-		for(FormalObject object : importedContext) fc.addObject(object);
-		fc.exportFormatted(outputFolder + parser.getTargetFilename(doc));
+		for(FormalObject object : importedContext)
+			fc.addObject(object);
+		//fc.exportFormatted(outputFolder + parser.getTargetFilename(doc));
 		System.out.println("Parsed file " + doc);
+		
+		LatticeBuilder lb = new LatticeBuilder();
+		Lattice lattice = lb.buildLattice(fc);
+		System.out.println(lattice);
 	}
 }

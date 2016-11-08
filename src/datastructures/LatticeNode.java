@@ -1,0 +1,22 @@
+package datastructures;
+
+import java.util.BitSet;
+
+public class LatticeNode {
+	private BitSet extent;
+	private int numberOfObjects;
+	
+	public LatticeNode(BitSet bs) {
+		this.extent = bs;
+		this.numberOfObjects = 1;
+	}
+	
+	public void increaseNumberOfObjects() {
+		numberOfObjects++;
+	}
+	
+	@Override
+	public String toString() {
+		return extent.cardinality() + "\t" + numberOfObjects;
+	}
+}
