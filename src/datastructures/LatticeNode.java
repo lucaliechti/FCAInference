@@ -15,6 +15,16 @@ public class LatticeNode {
 		numberOfObjects++;
 	}
 	
+	public BitSet getExtent() {
+		return extent;
+	}
+
+	public Boolean isSubsetOf(LatticeNode otherNode){
+		BitSet thisExtent = (BitSet)extent.clone();
+		thisExtent.and(otherNode.getExtent());
+		return(thisExtent.equals(extent));
+	}
+	
 	@Override
 	public String toString() {
 		return extent.cardinality() + "\t" + numberOfObjects;

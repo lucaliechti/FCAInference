@@ -50,30 +50,30 @@ public class FormalContext {
 		catch (UnsupportedEncodingException e) { e.printStackTrace(); }
 	}
 
-	private String createSLFString() {
-		String export = "";
-		export += "[Lattice]\n";
-		export += objects.size() + "\n";
-		export += dic.getSize() + "\n";
-		export += "[Objects]\n";
-		for(FormalObject obj : objects){
-			export += obj.getName() + getObjectNumber(obj.getName()) + "\n";
-		}
-		export += "[Attributes]\n";
-		for(String attr : dic.getContents())
-			export += attr + "\n";
-		export += "[relation]\n";
-		for(FormalObject obj : objects){
-			BitSet bitset = obj.getExtent();
-			String currentObject = "";
-			for(int i = 0; i < dic.getSize(); i++){
-				if(bitset.get(i)) currentObject += "1 ";
-				else currentObject += "0 ";
-			}
-			export += currentObject + "\n";
-		}
-		return export;
-	}
+//	private String createSLFString() {
+//		String export = "";
+//		export += "[Lattice]\n";
+//		export += objects.size() + "\n";
+//		export += dic.getSize() + "\n";
+//		export += "[Objects]\n";
+//		for(FormalObject obj : objects){
+//			export += obj.getName() + getObjectNumber(obj.getName()) + "\n";
+//		}
+//		export += "[Attributes]\n";
+//		for(String attr : dic.getContents())
+//			export += attr + "\n";
+//		export += "[relation]\n";
+//		for(FormalObject obj : objects){
+//			BitSet bitset = obj.getExtent();
+//			String currentObject = "";
+//			for(int i = 0; i < dic.getSize(); i++){
+//				if(bitset.get(i)) currentObject += "1 ";
+//				else currentObject += "0 ";
+//			}
+//			export += currentObject + "\n";
+//		}
+//		return export;
+//	}
 	
 	private String createCXTString(){
 		sortObjects();
@@ -118,5 +118,10 @@ public class FormalContext {
 	
 	public ArrayList<FormalObject> getObjects() {
 		return objects;
+	}
+	
+	//delete?
+	public int numberOfAttributes() {
+		return dic.getSize();
 	}
 }

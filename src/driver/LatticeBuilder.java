@@ -27,6 +27,7 @@ public class LatticeBuilder {
 		}
 		
 		//add edges to lattice
+		//all relevant datastructures are in the lattice, so we do this from there
 		lattice.computeEdges();
 		
 		return lattice;
