@@ -26,8 +26,8 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add BibTex repos
-//		docs.add(repoFolder + "BibTex\\BordatTest.bib");
-		docs.add(repoFolder + "BibTex\\scg.bib");
+		docs.add(repoFolder + "BibTex\\BordatTest.bib");
+//		docs.add(repoFolder + "BibTex\\scg.bib");
 //		docs.add(repoFolder + "BibTex\\listb.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
@@ -54,5 +54,7 @@ public class Driver {
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
 		lattice.exportLatticeToFile(graphvizFolder + parser.getTargetLatticeFilename(doc));
+//		System.out.println("Parsed file " + doc);
+//		System.out.println(lattice.latticeStats());
 	}
 }

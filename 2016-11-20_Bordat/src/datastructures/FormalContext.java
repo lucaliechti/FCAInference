@@ -8,7 +8,6 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class FormalContext {
 	private ArrayList<FormalObject> objects;
@@ -132,8 +131,8 @@ public class FormalContext {
 		return dic;
 	}
 
-	public HashSet<FormalObject> getDerivationOfAttributes(BitSet seed) {
-		HashSet<FormalObject> derivation = new HashSet<FormalObject>();
+	public ArrayList<FormalObject> getDerivationOfAttributes(BitSet seed) {
+		ArrayList<FormalObject> derivation = new ArrayList<FormalObject>();
 		for(FormalObject obj : objects) {
 			if(obj.isSupersetOf(seed)) derivation.add(obj);
 		}
@@ -141,7 +140,7 @@ public class FormalContext {
 	}
 	
 	public BitSet getDerivationOfObjects(ArrayList<FormalObject> extent) {
-		BitSet derivation = (BitSet)extent.get(0).getIntent().clone();
+		BitSet derivation = extent.get(0).getIntent();
 		for(FormalObject obj : extent)
 			derivation.and(obj.getIntent());
 		return derivation;

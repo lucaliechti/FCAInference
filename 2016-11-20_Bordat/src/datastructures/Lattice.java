@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 
 public class Lattice {
@@ -23,26 +22,21 @@ public class Lattice {
 
 	public String latticeStats() {
 		String str = "";
-		str += "\nLattice nodes:";
-		for(LatticeNode node : nodes)
-			str += "\n" + node.getNiceString();
-		str += "\n";
+		str += "\nLattice stats: \n";
+		str += "Different levels: " + levels.keySet() + "\n";
+		str += "Different nodes: " + nodes.size() + "\n";
+		str += "Number of edges: " + edges.size() + "\n";
 		return str;
 	}
 	
 	public void addNode(LatticeNode node) {
 		node.setNodeNumber(++currentNodeNumber);
 		nodes.add(node);
-		//System.out.println("Node added to lattice: " + node.getIntent() + ", stats = " + latticeStats());
 	}
 	
 	public void addEdge(LatticeNode from, LatticeNode to) {
 		LatticeEdge edge = new LatticeEdge(from, to);
 		edges.add(edge);
-	}
-	
-	public ArrayList<LatticeNode> getNodes() {
-		return this.nodes;
 	}
 
 	public void exportLatticeToFile(String outputFile){
@@ -50,7 +44,7 @@ public class Lattice {
 		String latticeString = "";
 		latticeString += "digraph d{\n";
 		for(LatticeNode node : nodes)
-			latticeString += node.getNodeNumber() + " [label=\"" + node.getIntent() + "\"]\n";
+			latticeString += node.getNodeNumber() + " [label=\"" + node.getExtent() + "\"]\n";
 		for(LatticeEdge edge: edges)
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
@@ -66,23 +60,5 @@ public class Lattice {
 		}
 		catch (FileNotFoundException e) { e.printStackTrace(); } 
 		catch (UnsupportedEncodingException e) { e.printStackTrace(); }
-	}
-
-	public void computeEdges() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public Boolean isEmpty() {
-		return (nodes.size() == 0 && edges.size() == 0);
-	}
-	
-	public Boolean containsNodeWithIntent(BitSet intent) {
-		for(LatticeNode node : nodes) if(node.getIntent().equals(intent)) return true;
-		return false;
-	}
-	
-	public Dictionary getDic() {
-		return dic;
 	}
 }
