@@ -27,9 +27,8 @@ public class LatticeBuilder {
 		for(FormalObject g : context.getObjects()) add(g);
 		addNodeWithAllAttributes();
 		recomputeExtents(); // this should not be necessary
-		System.out.println(lattice.latticeStats());
-		//TODO: add edges
 		lattice.computeEdges();
+		System.out.println(lattice.latticeStats());
 		return lattice;
 	}
 
@@ -94,12 +93,11 @@ public class LatticeBuilder {
 		}
 	}
 
-	private Boolean isSubsetOf(BitSet first, BitSet second) {
+	public static Boolean isSubsetOf(BitSet first, BitSet second) {
 		BitSet firstCopy = (BitSet)first.clone();
 		firstCopy.and(second);
 		return(first.equals(firstCopy));
 	}
-
 	
 	private FormalConcept computeMaximalConcept() {
 		ArrayList<FormalObject> objects = context.getObjects();
