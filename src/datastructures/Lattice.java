@@ -25,7 +25,7 @@ public class Lattice {
 		String str = "";
 		str += "\nLattice nodes:";
 		for(LatticeNode node : nodes)
-			str += "\n" + node.getNiceString();
+			str += "\n" + node.getIntent() + ", " + node.getExtent().size(); //node.getNiceExtentString();
 		str += "\n";
 		return str;
 	}
@@ -33,7 +33,6 @@ public class Lattice {
 	public void addNode(LatticeNode node) {
 		node.setNodeNumber(++currentNodeNumber);
 		nodes.add(node);
-		//System.out.println("Node added to lattice: " + node.getIntent() + ", stats = " + latticeStats());
 	}
 	
 	public void addEdge(LatticeNode from, LatticeNode to) {
@@ -80,6 +79,11 @@ public class Lattice {
 	public Boolean containsNodeWithIntent(BitSet intent) {
 		for(LatticeNode node : nodes) if(node.getIntent().equals(intent)) return true;
 		return false;
+	}
+	
+	public LatticeNode getNodeWithIntent(BitSet intent) {
+		for(LatticeNode node : nodes) if(node.getIntent().equals(intent)) return node;
+		return null;
 	}
 	
 	public Dictionary getDic() {

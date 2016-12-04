@@ -91,10 +91,10 @@ public class FormalContext {
 			}
 		}
 		for(FormalObject obj : objects){
-			BitSet bitset = obj.getIntent();
+			BitSet intent = obj.getIntent();
 			String currentObject = "";
 			for(int i = 0; i < dic.getSize(); i++){
-				if(bitset.get(i)) currentObject += "X";
+				if(intent.get(i)) currentObject += "X";
 				else currentObject += ".";
 			}
 			export += currentObject + "\n";

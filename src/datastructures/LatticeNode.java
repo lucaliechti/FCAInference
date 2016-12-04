@@ -3,6 +3,7 @@ package datastructures;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class LatticeNode {
@@ -15,7 +16,7 @@ public class LatticeNode {
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
 		this.intent = intent;
 		this.extent = new HashSet<FormalObject>();
-		for(FormalObject obj : hashSet) extent.add(obj);
+			for(FormalObject obj : hashSet) extent.add(obj);
 		this.transitivelyReachable = new HashSet<LatticeNode>();
 		this.dic = _dic;
 	}
@@ -70,5 +71,17 @@ public class LatticeNode {
 		}
 		nice += "}";
 		return nice;
+	}
+	
+	public String getNiceExtentString() {
+		String niceExtent = "(";
+		Iterator<FormalObject> it = extent.iterator();
+		while(it.hasNext()){
+			if(!(niceExtent.length() == 1)) niceExtent += ", ";
+			FormalObject obj = it.next();
+			niceExtent += obj.getName();
+		}
+		niceExtent += ")";
+		return niceExtent;
 	}
 }

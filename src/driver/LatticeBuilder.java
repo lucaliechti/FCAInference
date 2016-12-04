@@ -25,13 +25,14 @@ public class LatticeBuilder {
 	public Lattice buildLattice(){
 		//Norris algorithm
 		for(FormalObject g : context.getObjects()) add(g);
-		//TODO: test if a node with ALL attributes (and possibly no objects) is there. If not, add it.
+		addNodeWithAllAttributes();
+		recomputeExtents(); // this should not be necessary
 		System.out.println(lattice.latticeStats());
 		//TODO: add edges
 		lattice.computeEdges();
 		return lattice;
 	}
-	
+
 	//Norris algorithm add function
 	private void add(FormalObject g) {
 		//this happens only at the very beginning
@@ -48,7 +49,7 @@ public class LatticeBuilder {
 				BitSet d = (BitSet)g.getIntent().clone();
 				d.and(ab.getIntent());
 				if(hFunction(g, ab.getExtent())) {
-					ab.addObject(g);
+					ab.addObject(g); //weird: if this is deleted, the number of concepts can vary!!
 					if(!lattice.containsNodeWithIntent(d)) {
 						LatticeNode newNode = new LatticeNode(ab.getExtent(), d, lattice.getDic());
 						lattice.addNode(newNode);
@@ -72,6 +73,25 @@ public class LatticeBuilder {
 			}
 		}
 		return true;
+	}
+	
+	private void addNodeWithAllAttributes() {	
+		BitSet allAttributes = new BitSet(lattice.getDic().getSize());
+		allAttributes.set(0, lattice.getDic().getSize());
+		if(!lattice.containsNodeWithIntent(allAttributes)){
+			HashSet<FormalObject> extentWithAllAttributes = context.getDerivationOfAttributes(allAttributes);
+			LatticeNode nodeWithAllAttributes = new LatticeNode(extentWithAllAttributes, allAttributes, lattice.getDic());
+			lattice.addNode(nodeWithAllAttributes);
+		}
+	}
+	
+	private void recomputeExtents() {
+		for(LatticeNode node : lattice.getNodes()) {
+			node.getExtent().clear();
+			for(FormalObject obj : context.getObjects()) {
+				if(isSubsetOf(node.getIntent(), obj.getIntent())) node.addObject(obj);
+			}
+		}
 	}
 
 	private Boolean isSubsetOf(BitSet first, BitSet second) {
