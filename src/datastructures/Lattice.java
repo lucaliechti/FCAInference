@@ -6,7 +6,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import driver.LatticeBuilder;
@@ -30,8 +32,8 @@ public class Lattice {
 		String str = "\n";
 //		str += "Lattice nodes:";
 //		for(LatticeNode node : nodes)
-//			str += "\n" + node.getIntent() + ", " + node.getExtent().size(); //node.getNiceExtentString();
-		System.out.println(nodes.size() + " different nodes computed.");
+//			str += "\n" + node.getNiceString() ;//+ ", " + node.getExtent().size(); //node.getNiceExtentString();
+		System.out.println("Nodes: " + nodes.size() + ", edges: " + edges.size());
 //		str += "\n";
 		return str;
 	}
@@ -44,6 +46,7 @@ public class Lattice {
 	public void addEdge(LatticeNode from, LatticeNode to) {
 		LatticeEdge edge = new LatticeEdge(from, to);
 		edges.add(edge);
+		to.addToUpperNeighbours(from);
 	}
 	
 	public ArrayList<LatticeNode> getNodes() {
@@ -74,20 +77,69 @@ public class Lattice {
 	}
 
 	public void computeEdges() {
-		nodesByLevel = sortNodesIntoLevels();
-		int[] levelArray = extractLevelsAsArray();
-		int levelDistance = 1;
-		addNodesForLevelDistance(levelArray, levelDistance);
-		setTransitiveLinks();
+		nodesByLevel = sortNodesIntoLevels(nodes);
+		int[] levelArray = extractLevelsAsArray(nodesByLevel);
+		for(int levelDistance = 1; levelDistance < levelArray.length; levelDistance++) {
+			System.out.println("distance = " + levelDistance);
+			HashSet<LatticeNode> newIncomingEdge = addEdgesForLevelDistance(levelArray, levelDistance);
+			HashSet<LatticeNode> alreadyVisited = new HashSet<LatticeNode>();
+			setTransitiveLinks(newIncomingEdge, alreadyVisited);
+		}
 	}
 	
-	private void setTransitiveLinks() {
-		// TODO Auto-generated method stub
-		
+	private HashSet<LatticeNode> addEdgesForLevelDistance(int[] levelArray, int levelDistance) {
+		HashSet<LatticeNode> updatedNodes = new HashSet<LatticeNode>();
+		for(int i = 0; i < levelArray.length-levelDistance; i++){
+			ArrayList<LatticeNode> nodesAtUpperLevel = nodesByLevel.get(levelArray[i]);
+			ArrayList<LatticeNode> nodesAtLowerLevel = nodesByLevel.get(levelArray[i+levelDistance]);
+			System.out.println("  upperLevel = " + levelArray[i] + ", lowerLevel = " + levelArray[i+levelDistance]);
+			for(LatticeNode upperNode : nodesAtUpperLevel) {
+				for(LatticeNode lowerNode : nodesAtLowerLevel) {
+					if(LatticeBuilder.isSubsetOf(upperNode.getIntent(), lowerNode.getIntent()) && !upperNode.canTransitivelyReach(lowerNode)){
+						this.addEdge(upperNode, lowerNode);
+						System.out.println("    adding edge " + upperNode.getIntent() + " -> " + lowerNode.getIntent());
+						updatedNodes.add(lowerNode);
+					}
+				}
+			}
+		}
+		System.out.println("  Added edges of distance " + levelDistance + ". Updated nodes : ");
+		for(LatticeNode node : updatedNodes) System.out.println(node.getIntent() + ", ");
+		return updatedNodes;
 	}
 	
-	private int[] extractLevelsAsArray() {
-		Set<Integer> levels = nodesByLevel.keySet();
+	private void setTransitiveLinks(HashSet<LatticeNode> updatedNodes, HashSet<LatticeNode> alreadyVisited) {
+		System.out.println("Call to transitive links.");
+		System.out.println("updated nodes = "); for(LatticeNode n : updatedNodes) System.out.println(n.getIntent());
+		System.out.println("already visited nodes = "); for(LatticeNode n : alreadyVisited) System.out.println(n.getIntent());
+		HashMap<Integer, ArrayList<LatticeNode>> updatedNodesByLevel = sortNodesIntoLevels(updatedNodes);
+		System.out.println("keyset = " + updatedNodesByLevel.keySet());
+		int[] levelArray = extractLevelsAsArray(updatedNodesByLevel);
+		for(int i = levelArray.length-1; 0 <= i; i--) {
+			for(LatticeNode lowerNode : updatedNodesByLevel.get(levelArray[i])) {
+				if(!alreadyVisited.contains(lowerNode) && updatedNodes.contains(lowerNode)){
+					System.out.println("      setting transitive nodes for " + lowerNode.getIntent());
+					alreadyVisited = setTransitive(lowerNode, updatedNodes, alreadyVisited);
+				}
+			}
+		}
+	}
+	
+	//sets the list of transitively reachable nodes in all upper nodes that can reach target node, recursively
+	private HashSet<LatticeNode> setTransitive(LatticeNode lowerNode, HashSet<LatticeNode> updatedNodes, HashSet<LatticeNode> alreadyVisited) {
+		for(LatticeNode parent : lowerNode.getUpperNeighbours()) {
+		    System.out.println("        " + lowerNode.getIntent() + " is reachable from " + parent.getIntent());
+			parent.addToTransitivelyReachableNodes(lowerNode);
+			parent.addAllToTransitivelyReachableNodes(lowerNode.getTransitivelyReachableNodes());
+			alreadyVisited = setTransitive(parent, updatedNodes, alreadyVisited);
+		}
+		alreadyVisited.add(lowerNode);
+//		System.out.println("visited " + lowerNode.getIntent());
+		return alreadyVisited;
+	}
+
+	private int[] extractLevelsAsArray(HashMap<Integer, ArrayList<LatticeNode>> nodeMap) {
+		Set<Integer> levels = nodeMap.keySet();
 		int[] levelArray = new int[levels.size()];
 		int pos = 0;
 		for(int level : levels) levelArray[pos++] = level;
@@ -95,23 +147,12 @@ public class Lattice {
 		return levelArray;
 	}
 
-	private void addNodesForLevelDistance(int[] levelArray, int levelDistance) {
-		for(int i = 0; i < levelArray.length-1; i++){
-			ArrayList<LatticeNode> nodesAtUpperLevel = nodesByLevel.get(i);
-			ArrayList<LatticeNode> nodesAtLowerLevel = nodesByLevel.get(i+levelDistance);
-			for(LatticeNode upperNode : nodesAtUpperLevel) {
-				for(LatticeNode lowerNode : nodesAtLowerLevel) {
-					//TODO: Must not be transitively reachable
-					if(LatticeBuilder.isSubsetOf(upperNode.getIntent(), lowerNode.getIntent()))
-						this.addEdge(upperNode, lowerNode);
-				}
-			}
-		}
-	}
+
 	
-	private HashMap<Integer, ArrayList<LatticeNode>> sortNodesIntoLevels() {
+	//takes a Collection of LatticeNodes and returns a HashMap where the key is the number of attributes
+	private HashMap<Integer, ArrayList<LatticeNode>> sortNodesIntoLevels(Collection<LatticeNode> nodesToSort) {
 		HashMap<Integer, ArrayList<LatticeNode>> levels = new HashMap<Integer, ArrayList<LatticeNode>>();
-		for(LatticeNode node : nodes) {
+		for(LatticeNode node : nodesToSort) {
 			int numAttributes = node.getIntent().cardinality();
 			if(levels.get(numAttributes) == null) {
 				ArrayList<LatticeNode> newList = new ArrayList<LatticeNode>();

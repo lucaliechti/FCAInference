@@ -26,9 +26,9 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add BibTex repos
-		docs.add(repoFolder + "BibTex\\BordatTest.bib");
+//		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\scg.bib");
-//		docs.add(repoFolder + "BibTex\\listb.bib");
+		docs.add(repoFolder + "BibTex\\listb.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");

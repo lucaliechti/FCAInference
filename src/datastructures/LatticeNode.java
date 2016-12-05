@@ -1,6 +1,5 @@
 package datastructures;
 
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,6 +11,7 @@ public class LatticeNode {
 	private HashSet<LatticeNode> transitivelyReachable;
 	private int nodeNumber;
 	private Dictionary dic;
+	private HashSet<LatticeNode> upperNeighbours;
 	
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
 		this.intent = intent;
@@ -19,6 +19,7 @@ public class LatticeNode {
 			for(FormalObject obj : hashSet) extent.add(obj);
 		this.transitivelyReachable = new HashSet<LatticeNode>();
 		this.dic = _dic;
+		this.upperNeighbours = new HashSet<LatticeNode>();
 	}
 	
 	public BitSet getIntent() {
@@ -38,7 +39,7 @@ public class LatticeNode {
 	}
 	
 	//attention, this is not very recursive yet
-	public void addAllToTransitivelyReachableNodes(ArrayList<LatticeNode> nodes) {
+	public void addAllToTransitivelyReachableNodes(HashSet<LatticeNode> nodes) {
 		this.transitivelyReachable.addAll(nodes);
 	}
 	
@@ -46,7 +47,9 @@ public class LatticeNode {
 		this.extent.add(obj);
 	}
 	
-	public Boolean isTransitivelyReachable(LatticeNode node) {
+	//this is always called from the UPPER node, because only the upper node contains a list of all lower nodes
+	//that can be transitively reached from it.
+	public Boolean canTransitivelyReach(LatticeNode node) {
 		return transitivelyReachable.contains(node);
 	}
 	
@@ -83,5 +86,17 @@ public class LatticeNode {
 		}
 		niceExtent += ")";
 		return niceExtent;
+	}
+
+	public void addToUpperNeighbours(LatticeNode from) {
+		this.upperNeighbours.add(from);
+	}
+	
+	public HashSet<LatticeNode> getUpperNeighbours() {
+		return this.upperNeighbours;
+	}
+	
+	public HashSet<LatticeNode> getTransitivelyReachableNodes() {
+		return this.transitivelyReachable;
 	}
 }
