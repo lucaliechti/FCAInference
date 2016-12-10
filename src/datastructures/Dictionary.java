@@ -1,32 +1,36 @@
 package datastructures;
 
-import java.util.HashMap;
 import java.util.Set;
+import org.apache.commons.collections4.bidimap.TreeBidiMap;
 
 public class Dictionary {
-	
-	private HashMap<String, Integer> attributes;
+
+	private TreeBidiMap<Integer, String> attributes;
 	private int nextAttributeNumber;
 	
 	public Dictionary() {
-		this.attributes = new HashMap<String, Integer>();
+		this.attributes = new TreeBidiMap<Integer, String>();
 		this.nextAttributeNumber = 0;
 	}
 	
-	public Boolean containsAttribute(String _attr){
-		return attributes.containsKey(_attr);
+	public Boolean containsAttribute(String attr){
+		return attributes.containsValue(attr);
 	}
 	
-	public void addAttribute(String _attr){
-		attributes.put(_attr, nextAttributeNumber++);
+	public void addAttribute(String attr){
+		attributes.put(nextAttributeNumber++, attr);
 	}
 	
-	public int getAttributePosition(String _attr){
-		return attributes.get(_attr);
+	public int getAttributePosition(String attr){
+		return attributes.getKey(attr);
+	}
+	
+	public String getAttribute(int i) {
+		return attributes.get(i);
 	}
 	
 	public Set<String> getContents(){
-		return attributes.keySet();
+		return attributes.values();
 	}
 	
 	public int getSize(){

@@ -3,20 +3,22 @@ package datastructures;
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 public class LatticeNode {
 	private HashSet<FormalObject> extent;
+	private HashSet<FormalObject> ownObjects;
 	private BitSet intent;
 	private HashSet<LatticeNode> transitivelyReachable;
 	private int nodeNumber;
 	private Dictionary dic;
 	private HashSet<LatticeNode> upperNeighbours;
+
 	
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
 		this.intent = intent;
 		this.extent = new HashSet<FormalObject>();
 			for(FormalObject obj : hashSet) extent.add(obj);
+		this.ownObjects = new HashSet<FormalObject>();
 		this.transitivelyReachable = new HashSet<LatticeNode>();
 		this.dic = _dic;
 		this.upperNeighbours = new HashSet<LatticeNode>();
@@ -47,6 +49,10 @@ public class LatticeNode {
 		this.extent.add(obj);
 	}
 	
+	public void addToOwnObjects(FormalObject obj) {
+		this.ownObjects.add(obj);
+	}
+	
 	//this is always called from the UPPER node, because only the upper node contains a list of all lower nodes
 	//that can be transitively reached from it.
 	public Boolean canTransitivelyReach(LatticeNode node) {
@@ -62,13 +68,10 @@ public class LatticeNode {
 	}
 	
 	public String getNiceString() {
-		Set<String> allAttributes = dic.getContents();
 		String nice = "{";
 		for(int i = 0; i < intent.length(); i++) {
 			if(intent.get(i)){
-				for(String attr : allAttributes){
-					if(dic.getAttributePosition(attr) == i) nice += attr;
-				}
+				nice += dic.getAttribute(i);
 				if(i < intent.length()-1) nice += ", ";
 			}
 		}

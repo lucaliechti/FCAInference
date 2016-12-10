@@ -49,31 +49,6 @@ public class FormalContext {
 		catch (FileNotFoundException e) { e.printStackTrace(); } 
 		catch (UnsupportedEncodingException e) { e.printStackTrace(); }
 	}
-
-//	private String createSLFString() {
-//		String export = "";
-//		export += "[Lattice]\n";
-//		export += objects.size() + "\n";
-//		export += dic.getSize() + "\n";
-//		export += "[Objects]\n";
-//		for(FormalObject obj : objects){
-//			export += obj.getName() + getObjectNumber(obj.getName()) + "\n";
-//		}
-//		export += "[Attributes]\n";
-//		for(String attr : dic.getContents())
-//			export += attr + "\n";
-//		export += "[relation]\n";
-//		for(FormalObject obj : objects){
-//			BitSet bitset = obj.getExtent();
-//			String currentObject = "";
-//			for(int i = 0; i < dic.getSize(); i++){
-//				if(bitset.get(i)) currentObject += "1 ";
-//				else currentObject += "0 ";
-//			}
-//			export += currentObject + "\n";
-//		}
-//		return export;
-//	}
 	
 	private String createCXTString(){
 		//sortObjects(); //--------------------------- commented OUT for test purposes only!
@@ -85,11 +60,8 @@ public class FormalContext {
 			export += obj.getName() + getObjectNumber(obj.getName()) + "\n";
 		}
 		//prints out attributes in order
-		for(int i = 0; i < dic.getSize(); i++) {
-			for(String attr : dic.getContents()){	
-				if(dic.getAttributePosition(attr) == i) export += attr + "\n";
-			}
-		}
+		for(int i = 0; i < dic.getSize(); i++)
+			export += dic.getAttribute(i) + "\n";
 		for(FormalObject obj : objects){
 			BitSet intent = obj.getIntent();
 			String currentObject = "";

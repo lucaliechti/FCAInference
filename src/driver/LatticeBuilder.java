@@ -28,7 +28,7 @@ public class LatticeBuilder {
 		addNodeWithAllAttributes();
 		recomputeExtents(); // this should not be necessary
 		lattice.computeEdges();
-//		System.out.println(lattice.latticeStats());
+		System.out.println(lattice.latticeStats());
 		return lattice;
 	}
 
@@ -89,6 +89,7 @@ public class LatticeBuilder {
 			node.getExtent().clear();
 			for(FormalObject obj : context.getObjects()) {
 				if(isSubsetOf(node.getIntent(), obj.getIntent())) node.addObject(obj);
+				if(node.getIntent().equals(obj.getIntent())) node.addToOwnObjects(obj);
 			}
 		}
 	}
