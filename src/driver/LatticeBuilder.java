@@ -28,7 +28,7 @@ public class LatticeBuilder {
 		addNodeWithAllAttributes();
 		recomputeExtents(); // this should not be necessary
 		lattice.computeEdges();
-		System.out.println(lattice.latticeStats());
+//		System.out.println(lattice.latticeStats());
 		return lattice;
 	}
 
