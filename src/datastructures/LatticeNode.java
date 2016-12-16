@@ -1,5 +1,6 @@
 package datastructures;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ public class LatticeNode {
 	private int nodeNumber;
 	private Dictionary dic;
 	private HashSet<LatticeNode> upperNeighbours;
+	private ArrayList<String> ownAttributes;
 
 	
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
@@ -22,6 +24,7 @@ public class LatticeNode {
 		this.transitivelyReachable = new HashSet<LatticeNode>();
 		this.dic = _dic;
 		this.upperNeighbours = new HashSet<LatticeNode>();
+		this.ownAttributes = new ArrayList<String>();
 	}
 	
 	public BitSet getIntent() {
@@ -63,8 +66,12 @@ public class LatticeNode {
 		return nodeNumber;
 	}
 	
-	public int getNumberOfObjects() {
-		return intent.size();
+	public int numberOfObjects() {
+		return extent.size();
+	}
+	
+	public int numberOfOwnObjects() {
+		return ownObjects.size();
 	}
 	
 	public String getNiceString() {
@@ -95,11 +102,26 @@ public class LatticeNode {
 		this.upperNeighbours.add(from);
 	}
 	
-	public HashSet<LatticeNode> getUpperNeighbours() {
+	public HashSet<LatticeNode> upperNeighbours() {
 		return this.upperNeighbours;
 	}
 	
 	public HashSet<LatticeNode> getTransitivelyReachableNodes() {
 		return this.transitivelyReachable;
+	}
+	
+	public void addToOwnAttributes(String attr) {
+		this.ownAttributes.add(attr);
+	}
+	
+	public String getNiceAttributes() {
+		String attr = "";
+		for(int i = 0; i < ownAttributes.size(); i++){
+			attr += ownAttributes.get(i);
+			if(i < ownAttributes.size()-1)
+				attr += ", ";
+		}
+		if(attr.length() > 0) attr += "\n";
+		return attr;
 	}
 }

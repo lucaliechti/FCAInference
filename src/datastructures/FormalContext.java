@@ -14,11 +14,13 @@ public class FormalContext {
 	private ArrayList<FormalObject> objects;
 	private HashMap<String, Integer> objectNumbers;
 	private Dictionary dic;
+	private HashMap<String, Integer> attributeSupport;
 	
 	public FormalContext() {
 		this.objects = new ArrayList<FormalObject>();
 		this.objectNumbers = new HashMap<String, Integer>();
 		this.dic = new Dictionary();
+		this.attributeSupport = new HashMap<String, Integer>();
 	}
 	
 	//the BitSet is created at the time of the object being added to the context
@@ -27,12 +29,20 @@ public class FormalContext {
 		for(String attribute : object.getAttributes()){
 			if(!dic.containsAttribute(attribute))
 				dic.addAttribute(attribute);
+			countAttribute(attribute); //counts all attributes to find more and less important ones
 			intent.set(dic.getAttributePosition(attribute));
 		}
 		object.setIntent(intent);
 		objects.add(object);
 	}
 	
+	private void countAttribute(String attribute) {
+		if(!attributeSupport.containsKey(attribute))
+			attributeSupport.put(attribute, 1);
+		else
+			attributeSupport.put(attribute, attributeSupport.get(attribute)+1);
+	}
+
 	public void exportContextToFile(String outputFile){
 		String exportString = createCXTString();
 		System.out.print("Writing context to file... ");
@@ -121,5 +131,22 @@ public class FormalContext {
 	
 	public BitSet getDerivationOfSingleObject(FormalObject obj) {
 		return obj.getIntent();
+	}
+	
+	public String attributeSupport() {
+		String support = "";
+		for(String attr : attributeSupport.keySet())
+			support += attr + ": " + attributeSupport.get(attr) + "\n";
+		return support;
+	}
+	
+	public HashMap<String, Integer> getAttributeSupport() {
+		return this.attributeSupport;
+	}
+
+	public void removeAttribute(String attr) {
+		int position = dic.getAttributePosition(attr);
+		for(FormalObject obj : objects)
+			obj.getIntent().set(position, false);
 	}
 }

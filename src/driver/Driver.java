@@ -53,6 +53,12 @@ public class Driver {
 		
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
-		lattice.exportLatticeToFile(graphvizFolder + parser.getTargetLatticeFilename(doc));
+//		lattice.exportLatticeToFile(graphvizFolder + parser.getTargetLatticeFilename(doc));
+		
+		ContextCleanser lc = new ContextCleanser(fc, lattice);
+		lc.removeAttributesWithLeastSupport();
+		LatticeBuilder lb2 = new LatticeBuilder(fc);
+		Lattice lattice2 = lb2.buildLattice();
+//		lattice2.exportLatticeToFile(graphvizFolder + "1" + parser.getTargetLatticeFilename(doc));
 	}
 }

@@ -27,6 +27,13 @@ public class Lattice {
 		this.dic = _dic;
 		this.nodesByLevel = new HashMap<Integer, ArrayList<LatticeNode>>();
 	}
+	
+	public void clear() {
+		nodes.clear();
+		edges.clear();
+		nodesByLevel.clear();
+		currentNodeNumber = 0;
+	}
 
 	public String latticeStats() { 
 		return "Nodes: " + nodes.size() + ", edges: " + edges.size();
@@ -52,7 +59,8 @@ public class Lattice {
 		String latticeString = "";
 		latticeString += "digraph d{\n";
 		for(LatticeNode node : nodes)
-			latticeString += node.getNodeNumber() + " [label=\"" + node.getIntent() + "\"]\n";
+			latticeString += node.getNodeNumber() + " [label=\"" + node.getNiceAttributes() + node.getIntent() 
+			+ "\next.: " + node.numberOfObjects() + "\nown: " + node.numberOfOwnObjects() + "\"]\n";
 		for(LatticeEdge edge: edges)
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
@@ -110,7 +118,7 @@ public class Lattice {
 	}
 	
 	private void addUpdatedNodes(LatticeNode lowerNode, HashMap<Integer, ArrayList<LatticeNode>> updatedNodesByLevel) {
-		for(LatticeNode parent : lowerNode.getUpperNeighbours()){
+		for(LatticeNode parent : lowerNode.upperNeighbours()){
 			if(updatedNodesByLevel.get(parent.getIntent().cardinality()) == null)
 				updatedNodesByLevel.put(parent.getIntent().cardinality(), new ArrayList<LatticeNode>());
 			if(!updatedNodesByLevel.get(parent.getIntent().cardinality()).contains(parent))
@@ -120,7 +128,7 @@ public class Lattice {
 
 	//sets the list of transitively reachable nodes in all upper nodes that can reach target node
 	private void setTransitive(LatticeNode lowerNode) {
-		for(LatticeNode parent : lowerNode.getUpperNeighbours()) {
+		for(LatticeNode parent : lowerNode.upperNeighbours()) {
 			parent.addToTransitivelyReachableNodes(lowerNode);
 			parent.addAllToTransitivelyReachableNodes(lowerNode.getTransitivelyReachableNodes());
 		}
@@ -168,5 +176,32 @@ public class Lattice {
 	
 	public Dictionary getDic() {
 		return dic;
+	}
+
+	//computes where in the lattice which attribute exists for the first time
+	//every attribute has exactly one such node, of which all subnodes contain it
+	public void computeAttributes() {
+		int[] levelArray = extractLevelsAsArray(nodesByLevel);
+		LatticeNode topNode = nodesByLevel.get(levelArray[0]).get(0);
+		for(int i = 0; i < topNode.getIntent().size(); i++){
+			if(topNode.getIntent().get(i))
+				topNode.addToOwnAttributes(dic.getAttribute(i));
+		}
+		//nodes with upper neighbours
+		for(int j = 1; j < levelArray.length; j++) {
+			ArrayList<LatticeNode> thisLevelsNodes = nodesByLevel.get(levelArray[j]);
+			for(LatticeNode node : thisLevelsNodes) {
+				BitSet empty = new BitSet(dic.getSize());
+				BitSet thisIntent = (BitSet)node.getIntent().clone();
+				for(LatticeNode un : node.upperNeighbours()){
+					empty.or(un.getIntent());
+				}
+				thisIntent.xor(empty);
+				for(int k = 0; k < thisIntent.size(); k++){
+					if(thisIntent.get(k))
+						node.addToOwnAttributes(dic.getAttribute(k));
+				}
+			}
+		}
 	}
 }
