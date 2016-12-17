@@ -29,7 +29,7 @@ public class LatticeBuilder {
 		recomputeExtents(); // this should not be necessary
 		lattice.computeEdges();
 		lattice.computeAttributes();
-		System.out.println(lattice.latticeStats());
+//		System.out.println(lattice.latticeStats());
 		return lattice;
 	}
 

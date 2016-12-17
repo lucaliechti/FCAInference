@@ -36,7 +36,7 @@ public class Lattice {
 	}
 
 	public String latticeStats() { 
-		return "Nodes: " + nodes.size() + ", edges: " + edges.size();
+		return "Nodes: " + nodes.size() + ", with own objects: " + nodesWithOwnObjects() + ", edges: " + edges.size();
 	}
 	
 	public void addNode(LatticeNode node) {
@@ -48,6 +48,7 @@ public class Lattice {
 		LatticeEdge edge = new LatticeEdge(from, to);
 		edges.add(edge);
 		to.addToUpperNeighbours(from);
+		from.addToLowerNeighbours(to);
 	}
 	
 	public ArrayList<LatticeNode> getNodes() {
@@ -60,12 +61,18 @@ public class Lattice {
 		latticeString += "digraph d{\n";
 		for(LatticeNode node : nodes)
 			latticeString += node.getNodeNumber() + " [label=\"" + node.getNiceAttributes() + node.getIntent() 
-			+ "\next.: " + node.numberOfObjects() + "\nown: " + node.numberOfOwnObjects() + "\"]\n";
+			+ "\next.: " + node.numberOfObjects() + "\nown: " + node.numberOfOwnObjects() + "\"" + peripheries(node) + "]\n";
 		for(LatticeEdge edge: edges)
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
 		writeToFile(latticeString, outputFile);
 		System.out.println("done.");
+	}
+
+	private String peripheries(LatticeNode node) {
+		if(node.numberOfOwnObjects() > 0){
+			return ", peripheries = 2"; }
+		return "";
 	}
 
 	private void writeToFile(String exportString, String outputFile) {
@@ -203,5 +210,21 @@ public class Lattice {
 				}
 			}
 		}
+	}
+	
+	public int nodesWithOwnObjects() {
+		int count = 0;
+		for(LatticeNode node : nodes) {
+			if(node.numberOfOwnObjects() > 0) count++;
+		}
+		return count;
+	}
+	
+	public HashMap<Integer, ArrayList<LatticeNode>> nodesByLevel() {
+		return nodesByLevel;
+	}
+	
+	public int[] levelArray() {
+		return extractLevelsAsArray(nodesByLevel);
 	}
 }

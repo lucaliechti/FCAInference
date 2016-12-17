@@ -13,6 +13,7 @@ public class LatticeNode {
 	private int nodeNumber;
 	private Dictionary dic;
 	private HashSet<LatticeNode> upperNeighbours;
+	private HashSet<LatticeNode> lowerNeighbours;
 	private ArrayList<String> ownAttributes;
 
 	
@@ -24,6 +25,7 @@ public class LatticeNode {
 		this.transitivelyReachable = new HashSet<LatticeNode>();
 		this.dic = _dic;
 		this.upperNeighbours = new HashSet<LatticeNode>();
+		this.lowerNeighbours = new HashSet<LatticeNode>();
 		this.ownAttributes = new ArrayList<String>();
 	}
 	
@@ -102,8 +104,16 @@ public class LatticeNode {
 		this.upperNeighbours.add(from);
 	}
 	
+	public void addToLowerNeighbours(LatticeNode to) {
+		this.lowerNeighbours.add(to);
+	}
+	
 	public HashSet<LatticeNode> upperNeighbours() {
 		return this.upperNeighbours;
+	}
+	
+	public HashSet<LatticeNode> lowerNeighbours() {
+		return this.lowerNeighbours;
 	}
 	
 	public HashSet<LatticeNode> getTransitivelyReachableNodes() {
@@ -123,5 +133,9 @@ public class LatticeNode {
 		}
 		if(attr.length() > 0) attr += "\n";
 		return attr;
+	}
+
+	public HashSet<FormalObject> ownObjects() {
+		return ownObjects;
 	}
 }

@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Collections;
-import java.util.Comparator;
+//import java.util.Collections;
+//import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -84,13 +84,13 @@ public class FormalContext {
 		return export;
 	}
 	
-	private void sortObjects(){
-		Collections.sort(objects, new Comparator<FormalObject>() {
-			public int compare(FormalObject obj1, FormalObject obj2) {
-				return obj1.getName().compareTo(obj2.getName());
-			}
-		});
-	}
+//	private void sortObjects(){
+//		Collections.sort(objects, new Comparator<FormalObject>() {
+//			public int compare(FormalObject obj1, FormalObject obj2) {
+//				return obj1.getName().compareTo(obj2.getName());
+//			}
+//		});
+//	}
 	
 	//returns an int enumerating all objects of the same type
 	//like this, we have book0, book1, book2 etc.
