@@ -20,7 +20,7 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
@@ -29,7 +29,7 @@ public class Driver {
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\scg.bib");
 //		docs.add(repoFolder + "BibTex\\listb.bib");
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
@@ -56,10 +56,10 @@ public class Driver {
 		lattice.exportLatticeToFile(graphvizFolder + parser.getTargetLatticeFilename(doc));
 		
 		ContextCleanser lc = new ContextCleanser(fc, lattice);
-		lc.mergeNodes(10, 1);
+		lc.mergeNodes(10, 1, 5);
 		LatticeBuilder lb2 = new LatticeBuilder(fc);
 		Lattice lattice2 = lb2.buildLattice();
-		System.out.println("Lattice stats before: " + lattice2.latticeStats());
+		System.out.println("Lattice stats after:\t" + lattice2.latticeStats());
 		System.out.println("---END CLEANSING---");
 		lattice2.exportLatticeToFile(graphvizFolder + "1" + parser.getTargetLatticeFilename(doc));
 	}

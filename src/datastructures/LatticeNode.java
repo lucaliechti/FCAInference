@@ -15,7 +15,6 @@ public class LatticeNode {
 	private HashSet<LatticeNode> upperNeighbours;
 	private HashSet<LatticeNode> lowerNeighbours;
 	private ArrayList<String> ownAttributes;
-
 	
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
 		this.intent = intent;

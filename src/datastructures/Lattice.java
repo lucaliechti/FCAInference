@@ -36,7 +36,7 @@ public class Lattice {
 	}
 
 	public String latticeStats() { 
-		return "Nodes: " + nodes.size() + ", with own objects: " + nodesWithOwnObjects() + ", edges: " + edges.size();
+		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() + "\tclusterIndex: " + String.format("%.3f", clusterIndex());
 	}
 	
 	public void addNode(LatticeNode node) {
@@ -226,5 +226,58 @@ public class Lattice {
 	
 	public int[] levelArray() {
 		return extractLevelsAsArray(nodesByLevel);
+	}
+	
+	private double clusterIndex() {
+		double index = 0.0d;
+		int[] numbersOfOwnObjects = numbersOfOwnObjects();
+		double[] normalized = new double[numbersOfOwnObjects.length];
+		double sum = 0;
+		int min = findMin(numbersOfOwnObjects);
+		int max = findMax(numbersOfOwnObjects);
+		assert (min <= max);
+		int span = max - min;
+		//normalize
+		for(int i = 0; i < numbersOfOwnObjects.length; i++)// { System.out.print("Normalizing " + numbersOfOwnObjects[i] + ": ");
+			normalized[i] = ((double)numbersOfOwnObjects[i] - min) / (double)(span);// System.out.println("Normalized = " + normalized[i]); }
+		//calculate sum
+		for(int j = 0; j < normalized.length; j++)
+			sum += normalized[j];
+		double avg = sum/normalized.length;
+		//add squared values to index
+		for(int k = 0; k < normalized.length; k++)
+			index += (normalized[k]-avg)*(normalized[k]-avg);
+//		System.out.println("avg = " + String.format("%.3f", avg));
+//		System.out.println(index + " divided by " + normalized.length + " = " + (index / normalized.length));
+		index /= Math.sqrt(normalized.length); 
+		return index;
+	}
+
+	//returns an int array with all numbers of own objects of nodes, 
+	//duplicates included (because we need the average)
+	private int[] numbersOfOwnObjects() {
+		int[] numbers = new int[nodesWithOwnObjects()];
+		int pos = 0;
+		for(LatticeNode node : nodes) {
+			if(node.numberOfOwnObjects() > 0) numbers[pos++] = node.numberOfOwnObjects();
+		}
+		assert(pos == nodesWithOwnObjects()-1);
+		return numbers;
+	}
+	
+	private int findMin(int[] array) {
+		int min = Integer.MAX_VALUE; //should be safe
+		for(int i = 0; i < array.length; i++){
+			if(array[i] < min) min = array[i];
+		}
+		return min;
+	}
+	
+	private int findMax(int[] array) {
+		int max = -1;
+		for(int i = 0; i < array.length; i++){
+			if(max < array[i]) max = array[i];
+		}
+		return max;
 	}
 }
