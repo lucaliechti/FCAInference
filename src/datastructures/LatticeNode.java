@@ -2,6 +2,7 @@ package datastructures;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -136,5 +137,42 @@ public class LatticeNode {
 
 	public HashSet<FormalObject> ownObjects() {
 		return ownObjects;
+	}
+	
+	public String typesOfExtent() {
+		return typesOfFormalObjects(extent);
+	}
+	
+	public String typesOfOwnObjects() {
+		return typesOfFormalObjects(ownObjects);
+	}
+	
+	private String typesOfFormalObjects(HashSet<FormalObject> set) {
+		if(set.size() > 0) {
+			HashMap<String, Integer> counts = new HashMap<String, Integer>();
+			String type = "";
+			for(FormalObject obj : set){
+				type = obj.getName();
+				if(!counts.containsKey(type))
+					counts.put(type, 1);
+				else
+					counts.put(type, counts.get(type)+1);
+			}
+			if(counts.keySet().size() == 1)
+				return "100% " + type;
+			else {
+				int highest = 0;
+				String highestAttr = "";
+				for(String attr : counts.keySet()) {
+					if(counts.get(attr) > highest) {
+						highest = counts.get(attr);
+						highestAttr = attr;
+					}
+				}
+				return (100*highest)/set.size() + "% " + highestAttr;
+			}	
+		}
+		else
+			return "empty";
 	}
 }

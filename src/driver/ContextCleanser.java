@@ -24,33 +24,33 @@ public class ContextCleanser {
 	
 	//checks which attributes appear the least amount of times in the data
 	//and completely removes these attributes from the context
-	public void removeAttributesWithLeastSupport() {
+	public void removeAttributesWithLeastSupport(int treshold) {
 		System.out.println("---BEGIN CLEANSING---");
 		HashMap<String, Integer> attributeSupport = context.getAttributeSupport();
 		HashSet<Integer> supportSet = new HashSet<Integer>();
 		supportSet.addAll(attributeSupport.values());
 		Integer[] supportArray = supportSet.toArray(new Integer[supportSet.size()]);
 		Arrays.sort(supportArray);
-		final int TRESHOLD = supportArray[3];
+		final int TRESHOLD = supportArray[treshold];
 		System.out.println("Deleting all attributes that occur at most " + TRESHOLD + " times.");
 		int deleted = 0;
-		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + ", ");
-		System.out.println("Lattice stats before: " + lattice.latticeStats());
+		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + "\t");
+		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
 		for(String attr : context.getDictionary().getContents()){
 			if(attributeSupport.get(attr) <= TRESHOLD){
 				deleted++;
 				context.removeAttribute(attr);
 			}
 		}
-		System.out.print("Nr of attributes after: " + (context.numberOfAttributes()-deleted) + ", ");
+		System.out.print("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
 	}
 	
 	public void mergeNodes(int factor, int attrDiff, int percent) {
 		System.out.println("---BEGIN CLEANSING---");
-		System.out.println("Merging all nodes with their biggest neighbours if they\n"
-				+ "\t- have at least " + factor + " times more own objects\n" 
-				+ "\t- have at most " + attrDiff + " more/less attribute(s)\n" 
-				+ "\t- make up at most " + percent + "% of all objects.");
+//		System.out.println("Merging all nodes with their biggest neighbours if they\n"
+//				+ "\t- have at least " + factor + " times more own objects\n" 
+//				+ "\t- have at most " + attrDiff + " more/less attribute(s)\n" 
+//				+ "\t- make up at most " + percent + "% of all objects.");
 		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
 		attributeDifference = attrDiff;
 		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();

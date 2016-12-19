@@ -60,8 +60,11 @@ public class Lattice {
 		String latticeString = "";
 		latticeString += "digraph d{\n";
 		for(LatticeNode node : nodes)
-			latticeString += node.getNodeNumber() + " [label=\"" + node.getNiceAttributes() + node.getIntent() 
-			+ "\next.: " + node.numberOfObjects() + "\nown: " + node.numberOfOwnObjects() + "\"" + peripheries(node) + "]\n";
+			latticeString += node.getNodeNumber() 
+			+ " [label=\"" + node.getNiceAttributes() + node.getIntent() 
+			+ "\next.: " + node.numberOfObjects() + " (" + node.typesOfExtent() + ") "
+			+ "\nown: " + node.numberOfOwnObjects()  + " (" + node.typesOfOwnObjects() + ") "
+			+ "\"" + peripheries(node) + "]\n";
 		for(LatticeEdge edge: edges)
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
@@ -231,10 +234,11 @@ public class Lattice {
 	private double clusterIndex() {
 		double index = 0.0d;
 		int[] numbersOfOwnObjects = numbersOfOwnObjects();
+		Arrays.sort(numbersOfOwnObjects);
 		double[] normalized = new double[numbersOfOwnObjects.length];
 		double sum = 0;
-		int min = findMin(numbersOfOwnObjects);
-		int max = findMax(numbersOfOwnObjects);
+		int min = numbersOfOwnObjects[0];
+		int max = numbersOfOwnObjects[numbersOfOwnObjects.length-1];
 		assert (min <= max);
 		int span = max - min;
 		//normalize
@@ -244,12 +248,17 @@ public class Lattice {
 		for(int j = 0; j < normalized.length; j++)
 			sum += normalized[j];
 		double avg = sum/normalized.length;
+		double median = 0.5d;
+		double standardvalue = median; //choose here between avg and median
+		if(normalized.length %2 == 0)
+			median = (normalized[normalized.length/2] + normalized[(normalized.length/2)-1])/2;
+		else
+			median = normalized[(int)Math.floor(normalized.length/2)];
 		//add squared values to index
 		for(int k = 0; k < normalized.length; k++)
-			index += (normalized[k]-avg)*(normalized[k]-avg);
-//		System.out.println("avg = " + String.format("%.3f", avg));
-//		System.out.println(index + " divided by " + normalized.length + " = " + (index / normalized.length));
-		index /= Math.sqrt(normalized.length); 
+			index += (normalized[k]-standardvalue)*(normalized[k]-standardvalue);
+		index /= Math.sqrt(normalized.length);
+		assert (0 <= index && index <= 1);
 		return index;
 	}
 
@@ -263,21 +272,5 @@ public class Lattice {
 		}
 		assert(pos == nodesWithOwnObjects()-1);
 		return numbers;
-	}
-	
-	private int findMin(int[] array) {
-		int min = Integer.MAX_VALUE; //should be safe
-		for(int i = 0; i < array.length; i++){
-			if(array[i] < min) min = array[i];
-		}
-		return min;
-	}
-	
-	private int findMax(int[] array) {
-		int max = -1;
-		for(int i = 0; i < array.length; i++){
-			if(max < array[i]) max = array[i];
-		}
-		return max;
 	}
 }

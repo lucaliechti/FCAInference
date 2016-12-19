@@ -57,6 +57,7 @@ public class Driver {
 		
 		ContextCleanser lc = new ContextCleanser(fc, lattice);
 		lc.mergeNodes(10, 1, 5);
+//		lc.removeAttributesWithLeastSupport(2);
 		LatticeBuilder lb2 = new LatticeBuilder(fc);
 		Lattice lattice2 = lb2.buildLattice();
 		System.out.println("Lattice stats after:\t" + lattice2.latticeStats());
