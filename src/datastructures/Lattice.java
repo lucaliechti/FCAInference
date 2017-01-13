@@ -56,7 +56,7 @@ public class Lattice {
 	}
 
 	public void exportLatticeToFile(String outputFile){
-		System.out.print("Writing lattice to file... ");
+//		System.out.print("Writing lattice to file... ");
 		String latticeString = "";
 		latticeString += "digraph d{\n";
 		for(LatticeNode node : nodes)
@@ -69,7 +69,7 @@ public class Lattice {
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
 		writeToFile(latticeString, outputFile);
-		System.out.println("done.");
+//		System.out.println("done.");
 	}
 
 	private String peripheries(LatticeNode node) {

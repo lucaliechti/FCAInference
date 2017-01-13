@@ -47,7 +47,7 @@ public class ContextCleanser {
 	}
 	
 	//changes the intents of objects that are very close to other objects.
-	//after running this, the lattice has to be recomputed :/
+	//after running this, the lattice has to be recomputed
 	public void mergeNodes(int factor, int attrDiff, int percent) {
 		System.out.println("---BEGIN CLEANSING---");
 		System.out.println("Merging all nodes with their biggest neighbours if they\n"
@@ -103,35 +103,45 @@ public class ContextCleanser {
 		   		&& mergeCandidate.getIntent().cardinality() <= (smallNode.getIntent().cardinality() + attributeDifference));
 	}
 	
-	public void tinker() {
-		System.out.println("tinkering...");
+	public double tinker() {
+//		System.out.println("tinkering...");
 		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
 		int[] levelArray = lattice.levelArray();
 		double highScore = 0.0;
 		String highScoreMerge = "";
+		LatticeNode firstNode = null;
+		LatticeNode secondNode = null;
 		for(int i = 0; i < levelArray.length; i++) {
 			ArrayList<LatticeNode> thisLevelNodes = latticeLevelNodes.get(levelArray[i]);
 			for(LatticeNode node : thisLevelNodes) {
 				for(LatticeNode upper : node.upperNeighbours()) {
-					if(editDistance(node, upper) > highScore) {
-						highScore = editDistance(node, upper);
-						highScoreMerge = node.getIntent() + " -> " + upper.getIntent() + 
-								" (up, score = " + new DecimalFormat("#.##").format(editDistance(node, upper)) + ")";
+					if(mergeScore(node, upper) > highScore) {
+						highScore = mergeScore(node, upper);
+						highScoreMerge = "merged " /*+ node.getIntent() + " -> " + upper.getIntent()*/ + 
+								" (up, score = " + new DecimalFormat("#.##").format(mergeScore(node, upper)) + ")";
+						firstNode = node;
+						secondNode = upper;
 					}
 				}
 				for(LatticeNode lower : node.lowerNeighbours()) {
-					if(editDistance(node, lower) > highScore) {
-						highScore = editDistance(node, lower);
-						highScoreMerge = node.getIntent() + " -> " + lower.getIntent() + 
-								" (down, score = " + new DecimalFormat("#.##").format(editDistance(node, lower)) + ")";
+					if(mergeScore(node, lower) > highScore) {
+						highScore = mergeScore(node, lower);
+						highScoreMerge = "merged " /*+ node.getIntent() + " -> " + lower.getIntent()*/ + 
+								" (down, score = " + new DecimalFormat("#.##").format(mergeScore(node, lower)) + ")";
+						firstNode = node;
+						secondNode = lower;
 					}
 				}
 			}
 		}
-		System.out.println(highScoreMerge);
+		if(highScore > 0.0) {
+			mergeInto(firstNode, secondNode);
+			System.out.println(highScoreMerge);
+		}
+		return highScore;
 	}
 
-	private double editDistance(LatticeNode node, LatticeNode candidate) {
+	private double mergeScore(LatticeNode node, LatticeNode candidate) {
 		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() <= node.numberOfOwnObjects())
 			return 0.0;
 		double ownObjectRatio = candidate.numberOfOwnObjects()/(double)node.numberOfOwnObjects();
@@ -139,5 +149,11 @@ public class ContextCleanser {
 		if(node.lowerNeighbours().contains(candidate))
 			return 2*(ownObjectRatio/percentOfObjects);
 		return ownObjectRatio/percentOfObjects;
+	}
+	
+	private void mergeInto(LatticeNode firstNode, LatticeNode secondNode) {
+		BitSet mergedIntent = (BitSet)secondNode.getIntent().clone();
+		for(FormalObject obj : firstNode.ownObjects())
+			obj.setIntent(mergedIntent);
 	}
 }

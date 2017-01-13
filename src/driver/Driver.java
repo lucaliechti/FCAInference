@@ -20,7 +20,7 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
@@ -28,7 +28,7 @@ public class Driver {
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\scg.bib");
-//		docs.add(repoFolder + "BibTex\\listb.bib");
+		docs.add(repoFolder + "BibTex\\listb.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
@@ -53,16 +53,22 @@ public class Driver {
 		
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
-		lattice.exportLatticeToFile(graphvizFolder + parser.getTargetLatticeFilename(doc));
+		lattice.exportLatticeToFile(graphvizFolder + "0_" + parser.getTargetLatticeFilename(doc));
 		
+		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
-		cc.tinker();
+		double score = 1d;
+		int i = 1;
+		while(score > 0d) {
+			score = cc.tinker();
+			lattice.clear();
+			lattice = lb.buildLattice();
+			System.out.println("Lattice stats after merge " + i + ": " + lattice.latticeStats());
+			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
+		}
+		System.out.println("performed " + (i-2) + " merges in total.");
 //		cc.mergeNodes(10, 1, 5);
 //		cc.removeRareAttributes(2);
-//		LatticeBuilder lb2 = new LatticeBuilder(fc);
-//		Lattice lattice2 = lb2.buildLattice();
-//		System.out.println("Lattice stats after:\t" + lattice.latticeStats());
 //		System.out.println("---END CLEANSING---");
-//		lattice.exportLatticeToFile(graphvizFolder + "edit_" + parser.getTargetLatticeFilename(doc));
 	}
 }

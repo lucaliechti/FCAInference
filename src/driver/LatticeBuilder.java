@@ -29,6 +29,7 @@ public class LatticeBuilder {
 		computeExtents();
 		lattice.computeEdges();
 		lattice.computeAttributes();
+		alreadyAddedObjects.clear();
 		return lattice;
 	}
 
