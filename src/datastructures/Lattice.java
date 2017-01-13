@@ -88,6 +88,7 @@ public class Lattice {
 		catch (UnsupportedEncodingException e) { e.printStackTrace(); }
 	}
 
+	//together with the next four functions, calculates and inserts edges in a lattice with only nodes.
 	public void computeEdges() {
 		nodesByLevel = sortNodesIntoLevels(nodes);
 		int[] levelArray = extractLevelsAsArray(nodesByLevel);
@@ -240,16 +241,20 @@ public class Lattice {
 		int min = numbersOfOwnObjects[0];
 		int max = numbersOfOwnObjects[numbersOfOwnObjects.length-1];
 		assert (min <= max);
-		int span = max - min;
+		//calculate sum of objects
+		for(int i = 0; i < numbersOfOwnObjects.length; i++)
+			sum += numbersOfOwnObjects[i];
+//		System.out.println("Sum: " + sum);
 		//normalize
-		for(int i = 0; i < numbersOfOwnObjects.length; i++)// { System.out.print("Normalizing " + numbersOfOwnObjects[i] + ": ");
-			normalized[i] = ((double)numbersOfOwnObjects[i] - min) / (double)(span);// System.out.println("Normalized = " + normalized[i]); }
-		//calculate sum
-		for(int j = 0; j < normalized.length; j++)
-			sum += normalized[j];
-		double avg = sum/normalized.length;
+		for(int j = 0; j < numbersOfOwnObjects.length; j++)
+			normalized[j] = ((double)numbersOfOwnObjects[j]) / (double)(sum);
+		double normalizedSum = 0.0d;
+		for(int k = 0; k < normalized.length; k++)//{
+			normalizedSum += normalized[k];// System.out.println(normalized[k]); }
+		double avg = normalizedSum/(double)nodesWithOwnObjects();
+//		System.out.println("Avg.: " + avg);
 		double median = 0.5d;
-		double standardvalue = median; //choose here between avg and median
+		double standardvalue = avg; //choose here between avg and median
 		if(normalized.length %2 == 0)
 			median = (normalized[normalized.length/2] + normalized[(normalized.length/2)-1])/2;
 		else

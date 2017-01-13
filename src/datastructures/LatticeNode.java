@@ -76,6 +76,10 @@ public class LatticeNode {
 		return ownObjects.size();
 	}
 	
+	public Boolean hasOwnObjects() {
+		return (ownObjects.size() > 0);
+	}
+	
 	public String getNiceString() {
 		String nice = "{";
 		for(int i = 0; i < intent.length(); i++) {

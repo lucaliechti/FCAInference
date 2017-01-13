@@ -1,5 +1,6 @@
 package driver;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -24,7 +25,7 @@ public class ContextCleanser {
 	
 	//checks which attributes appear the least amount of times in the data
 	//and completely removes these attributes from the context
-	public void removeAttributesWithLeastSupport(int treshold) {
+	public void removeRareAttributes(int treshold) {
 		System.out.println("---BEGIN CLEANSING---");
 		HashMap<String, Integer> attributeSupport = context.getAttributeSupport();
 		HashSet<Integer> supportSet = new HashSet<Integer>();
@@ -45,12 +46,14 @@ public class ContextCleanser {
 		System.out.print("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
 	}
 	
+	//changes the intents of objects that are very close to other objects.
+	//after running this, the lattice has to be recomputed :/
 	public void mergeNodes(int factor, int attrDiff, int percent) {
 		System.out.println("---BEGIN CLEANSING---");
-//		System.out.println("Merging all nodes with their biggest neighbours if they\n"
-//				+ "\t- have at least " + factor + " times more own objects\n" 
-//				+ "\t- have at most " + attrDiff + " more/less attribute(s)\n" 
-//				+ "\t- make up at most " + percent + "% of all objects.");
+		System.out.println("Merging all nodes with their biggest neighbours if they\n"
+				+ "\t- have at least " + factor + " times more own objects\n" 
+				+ "\t- have at most " + attrDiff + " more/less attribute(s)\n" 
+				+ "\t- make up at most " + percent + "% of all objects.");
 		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
 		attributeDifference = attrDiff;
 		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
@@ -58,14 +61,13 @@ public class ContextCleanser {
 		for(int i = 0; i < levelArray.length; i++) {
 			ArrayList<LatticeNode> thisLevelNodes = latticeLevelNodes.get(levelArray[i]);
 			for(LatticeNode node : thisLevelNodes) {
-				if(node.numberOfOwnObjects() > 0 && node.numberOfOwnObjects() < (percent*context.getObjects().size()/100)) {
+				if(node.hasOwnObjects() && node.numberOfOwnObjects() < (percent*context.getObjects().size()/100)) {
 					//find out which lower node has the most own objects
 					LatticeNode mergeCandidate = findMergeCandidate(node.lowerNeighbours());
 					//if criteria fit, merge upper node into lower
 					if(isMergeCandidateFor(mergeCandidate, node)){
 						for(FormalObject obj : node.ownObjects()){
 							obj.setIntent((BitSet)mergeCandidate.getIntent().clone());
-							//TODO: recompute upper and lower neighbours
 						}
 					}
 					//if that didn't happen but there's an UPPER candidate, merge upward
@@ -99,5 +101,43 @@ public class ContextCleanser {
 		return (mergeCandidate != null 
 				&& smallNode.numberOfOwnObjects()*10 <= mergeCandidate.numberOfOwnObjects()
 		   		&& mergeCandidate.getIntent().cardinality() <= (smallNode.getIntent().cardinality() + attributeDifference));
+	}
+	
+	public void tinker() {
+		System.out.println("tinkering...");
+		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
+		int[] levelArray = lattice.levelArray();
+		double highScore = 0.0;
+		String highScoreMerge = "";
+		for(int i = 0; i < levelArray.length; i++) {
+			ArrayList<LatticeNode> thisLevelNodes = latticeLevelNodes.get(levelArray[i]);
+			for(LatticeNode node : thisLevelNodes) {
+				for(LatticeNode upper : node.upperNeighbours()) {
+					if(editDistance(node, upper) > highScore) {
+						highScore = editDistance(node, upper);
+						highScoreMerge = node.getIntent() + " -> " + upper.getIntent() + 
+								" (up, score = " + new DecimalFormat("#.##").format(editDistance(node, upper)) + ")";
+					}
+				}
+				for(LatticeNode lower : node.lowerNeighbours()) {
+					if(editDistance(node, lower) > highScore) {
+						highScore = editDistance(node, lower);
+						highScoreMerge = node.getIntent() + " -> " + lower.getIntent() + 
+								" (down, score = " + new DecimalFormat("#.##").format(editDistance(node, lower)) + ")";
+					}
+				}
+			}
+		}
+		System.out.println(highScoreMerge);
+	}
+
+	private double editDistance(LatticeNode node, LatticeNode candidate) {
+		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() <= node.numberOfOwnObjects())
+			return 0.0;
+		double ownObjectRatio = candidate.numberOfOwnObjects()/(double)node.numberOfOwnObjects();
+		double percentOfObjects = node.numberOfOwnObjects()/(double)context.getObjects().size()*100.0;
+		if(node.lowerNeighbours().contains(candidate))
+			return 2*(ownObjectRatio/percentOfObjects);
+		return ownObjectRatio/percentOfObjects;
 	}
 }

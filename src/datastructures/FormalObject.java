@@ -17,14 +17,16 @@ public class FormalObject {
 	public boolean isSubsetOf(BitSet bs) {
 		BitSet thisIntent = (BitSet)intent.clone();
 		thisIntent.and(bs);
-		if(thisIntent.equals(intent)) return true;
+		if(thisIntent.equals(intent))
+			return true;
 		return false;
 	}
 	
 	public boolean isSupersetOf(BitSet bs) {
 		BitSet thisIntent = (BitSet)intent.clone();
 		thisIntent.and(bs);
-		if(thisIntent.equals(bs)) return true;
+		if(thisIntent.equals(bs))
+			return true;
 		return false;
 	}
 	
@@ -46,5 +48,4 @@ public class FormalObject {
 	public void setIntent(BitSet intent) {
 		this.intent = intent;
 	}
-
 }

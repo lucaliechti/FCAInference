@@ -26,10 +26,9 @@ public class LatticeBuilder {
 		//Norris algorithm
 		for(FormalObject g : context.getObjects()) add(g);
 		addNodeWithAllAttributes();
-		recomputeExtents(); // this should not be necessary
+		computeExtents();
 		lattice.computeEdges();
 		lattice.computeAttributes();
-//		System.out.println(lattice.latticeStats());
 		return lattice;
 	}
 
@@ -66,6 +65,7 @@ public class LatticeBuilder {
 		alreadyAddedObjects.add(g);
 	}
 	
+	//helper function for Norris algorithm
 	private boolean hFunction(FormalObject g, HashSet<FormalObject> extent) {
 		for(FormalObject h : context.getObjects()) {
 			if(h != g && alreadyAddedObjects.contains(h) && !extent.contains(h) && isSubsetOf(g.getIntent(), h.getIntent())) {
@@ -85,7 +85,7 @@ public class LatticeBuilder {
 		}
 	}
 	
-	private void recomputeExtents() {
+	private void computeExtents() {
 		for(LatticeNode node : lattice.getNodes()) {
 			node.getExtent().clear();
 			for(FormalObject obj : context.getObjects()) {
