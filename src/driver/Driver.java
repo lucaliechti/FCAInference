@@ -20,22 +20,23 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
+		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
-//		docs.add(repoFolder + "BibTex\\scg.bib");
-		docs.add(repoFolder + "BibTex\\listb.bib");
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
+//		docs.add(repoFolder + "BibTex\\BordatTest3.bib");
+		docs.add(repoFolder + "BibTex\\scg.bib");
+//		docs.add(repoFolder + "BibTex\\listb.bib");					//
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
 		
 //		//add JSON repos
-//		docs.add(repoFolder + "JSON\\SIRA\\alle.js");
+//		docs.add(repoFolder + "JSON\\SIRA\\alle.js");				//
 
 		for(String doc : docs)
 			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc));
@@ -53,22 +54,27 @@ public class Driver {
 		
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
-		lattice.exportLatticeToFile(graphvizFolder + "0_" + parser.getTargetLatticeFilename(doc));
+		lattice.exportLatticeToFile(graphvizFolder + "0a_" + parser.getTargetLatticeFilename(doc));
 		
-		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
+		System.out.println("Nr\tScore\tNodes\tWithOwn\tedges\tindex\tclean");
+		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
+		cc.removeSingletonObjects();
+//		cc.removeRareAttributes(0);
+		lattice.clear();
+		lattice = lb.buildLattice();
+//		System.out.println("del\t---" + "\t" + lattice.latticeStats());	//if we have deleted rare attributes
+		System.out.println("2+\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
+		lattice.exportLatticeToFile(graphvizFolder + "0b_" + parser.getTargetLatticeFilename(doc));
 		double score = 1d;
 		int i = 1;
 		while(score > 0d) {
 			score = cc.tinker();
 			lattice.clear();
 			lattice = lb.buildLattice();
-			System.out.println("Lattice stats after merge " + i + ": " + lattice.latticeStats());
+			if(score > 0d) System.out.println(i + "\t" + String.format("%.1f", score) + "\t" + lattice.latticeStats());
 			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
 		}
 		System.out.println("performed " + (i-2) + " merges in total.");
-//		cc.mergeNodes(10, 1, 5);
-//		cc.removeRareAttributes(2);
-//		System.out.println("---END CLEANSING---");
 	}
 }

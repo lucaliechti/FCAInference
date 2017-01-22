@@ -26,117 +26,54 @@ public class ContextCleanser {
 	//checks which attributes appear the least amount of times in the data
 	//and completely removes these attributes from the context
 	public void removeRareAttributes(int treshold) {
-		System.out.println("---BEGIN CLEANSING---");
 		HashMap<String, Integer> attributeSupport = context.getAttributeSupport();
 		HashSet<Integer> supportSet = new HashSet<Integer>();
 		supportSet.addAll(attributeSupport.values());
 		Integer[] supportArray = supportSet.toArray(new Integer[supportSet.size()]);
 		Arrays.sort(supportArray);
 		final int TRESHOLD = supportArray[treshold];
-		System.out.println("Deleting all attributes that occur at most " + TRESHOLD + " times.");
-		int deleted = 0;
-		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + "\t");
-		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
+//		System.out.println("Deleting all attributes that occur at most " + TRESHOLD + " times.");
+//		int deleted = 0;
+//		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + "\n");
 		for(String attr : context.getDictionary().getContents()){
 			if(attributeSupport.get(attr) <= TRESHOLD){
-				deleted++;
+//				deleted++;
 				context.removeAttribute(attr);
 			}
 		}
-		System.out.print("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
-	}
-	
-	//changes the intents of objects that are very close to other objects.
-	//after running this, the lattice has to be recomputed
-	public void mergeNodes(int factor, int attrDiff, int percent) {
-		System.out.println("---BEGIN CLEANSING---");
-		System.out.println("Merging all nodes with their biggest neighbours if they\n"
-				+ "\t- have at least " + factor + " times more own objects\n" 
-				+ "\t- have at most " + attrDiff + " more/less attribute(s)\n" 
-				+ "\t- make up at most " + percent + "% of all objects.");
-		System.out.println("Lattice stats before:\t" + lattice.latticeStats());
-		attributeDifference = attrDiff;
-		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
-		int[] levelArray = lattice.levelArray();
-		for(int i = 0; i < levelArray.length; i++) {
-			ArrayList<LatticeNode> thisLevelNodes = latticeLevelNodes.get(levelArray[i]);
-			for(LatticeNode node : thisLevelNodes) {
-				if(node.hasOwnObjects() && node.numberOfOwnObjects() < (percent*context.getObjects().size()/100)) {
-					//find out which lower node has the most own objects
-					LatticeNode mergeCandidate = findMergeCandidate(node.lowerNeighbours());
-					//if criteria fit, merge upper node into lower
-					if(isMergeCandidateFor(mergeCandidate, node)){
-						for(FormalObject obj : node.ownObjects()){
-							obj.setIntent((BitSet)mergeCandidate.getIntent().clone());
-						}
-					}
-					//if that didn't happen but there's an UPPER candidate, merge upward
-					else{
-						LatticeNode upperMergeCandidate = findMergeCandidate(node.upperNeighbours());
-						if(isMergeCandidateFor(upperMergeCandidate, node)){
-							for(FormalObject obj : node.ownObjects()){
-								obj.setIntent((BitSet)upperMergeCandidate.getIntent().clone());
-								//TODO: recompute upper and lower neighbours
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	private LatticeNode findMergeCandidate(HashSet<LatticeNode> neighbours) {
-		int mostOwnObjects = 0;
-		LatticeNode mergeCandidate = null;
-		for(LatticeNode lowerNode : neighbours){
-			if(lowerNode.numberOfOwnObjects() > mostOwnObjects){
-				mostOwnObjects = lowerNode.numberOfOwnObjects();
-				mergeCandidate = lowerNode;
-			}
-		}
-		return mergeCandidate;
-	}
-	
-	private Boolean isMergeCandidateFor(LatticeNode mergeCandidate, LatticeNode smallNode) {
-		return (mergeCandidate != null 
-				&& smallNode.numberOfOwnObjects()*10 <= mergeCandidate.numberOfOwnObjects()
-		   		&& mergeCandidate.getIntent().cardinality() <= (smallNode.getIntent().cardinality() + attributeDifference));
+//		System.out.println("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
 	}
 	
 	public double tinker() {
-//		System.out.println("tinkering...");
 		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
 		int[] levelArray = lattice.levelArray();
 		double highScore = 0.0;
-		String highScoreMerge = "";
 		LatticeNode firstNode = null;
 		LatticeNode secondNode = null;
 		for(int i = 0; i < levelArray.length; i++) {
 			ArrayList<LatticeNode> thisLevelNodes = latticeLevelNodes.get(levelArray[i]);
 			for(LatticeNode node : thisLevelNodes) {
-				for(LatticeNode upper : node.upperNeighbours()) {
-					if(mergeScore(node, upper) > highScore) {
-						highScore = mergeScore(node, upper);
-						highScoreMerge = "merged " /*+ node.getIntent() + " -> " + upper.getIntent()*/ + 
-								" (up, score = " + new DecimalFormat("#.##").format(mergeScore(node, upper)) + ")";
-						firstNode = node;
-						secondNode = upper;
+				//specify which nodes can be merged into
+				ArrayList<LatticeNode> mergeCandidates = new ArrayList<LatticeNode>();
+				mergeCandidates.addAll(node.upperNeighbours());
+				mergeCandidates.addAll(node.lowerNeighbours());
+				//nodes from same level with at least one shared parent
+				for(LatticeNode parent : node.upperNeighbours()){
+					for(LatticeNode child : parent.lowerNeighbours()){
+						if(child != node)	mergeCandidates.add(child);
 					}
 				}
-				for(LatticeNode lower : node.lowerNeighbours()) {
-					if(mergeScore(node, lower) > highScore) {
-						highScore = mergeScore(node, lower);
-						highScoreMerge = "merged " /*+ node.getIntent() + " -> " + lower.getIntent()*/ + 
-								" (down, score = " + new DecimalFormat("#.##").format(mergeScore(node, lower)) + ")";
+				for(LatticeNode candidate : mergeCandidates) {
+					if(mergeScore(node, candidate) > highScore) {
+						highScore = mergeScore(node, candidate);
 						firstNode = node;
-						secondNode = lower;
+						secondNode = candidate;
 					}
 				}
 			}
 		}
 		if(highScore > 0.0) {
 			mergeInto(firstNode, secondNode);
-			System.out.println(highScoreMerge);
 		}
 		return highScore;
 	}
@@ -146,8 +83,6 @@ public class ContextCleanser {
 			return 0.0;
 		double ownObjectRatio = candidate.numberOfOwnObjects()/(double)node.numberOfOwnObjects();
 		double percentOfObjects = node.numberOfOwnObjects()/(double)context.getObjects().size()*100.0;
-		if(node.lowerNeighbours().contains(candidate))
-			return 2*(ownObjectRatio/percentOfObjects);
 		return ownObjectRatio/percentOfObjects;
 	}
 	
@@ -155,5 +90,30 @@ public class ContextCleanser {
 		BitSet mergedIntent = (BitSet)secondNode.getIntent().clone();
 		for(FormalObject obj : firstNode.ownObjects())
 			obj.setIntent(mergedIntent);
+		lattice.setLastMergedInto((BitSet)secondNode.getIntent().clone());
+	}
+
+	public void removeSingletonObjects() {
+		HashMap<Integer, ArrayList<FormalObject>> nodeArray = new HashMap<Integer, ArrayList<FormalObject>>();
+		int i = 0;
+		int k = context.getObjects().size();
+		//fill node array
+		for(FormalObject obj : context.getObjects()) {
+			if(nodeArray.containsKey(obj.getIntent().hashCode()))
+				nodeArray.get(obj.getIntent().hashCode()).add(obj);
+			else {
+				ArrayList<FormalObject> newArray = new ArrayList<FormalObject>();
+				newArray.add(obj);
+				nodeArray.put(obj.getIntent().hashCode(), newArray);
+			}
+		}
+		//delete singleton objects from context
+		for(int hash : nodeArray.keySet()) {
+			if(nodeArray.get(hash).size() == 1){
+				context.getObjects().remove(nodeArray.get(hash).get(0));
+				i++;
+			}
+		}
+		System.out.println("Removed " + i + "/" + k + " objects from context.");
 	}
 }

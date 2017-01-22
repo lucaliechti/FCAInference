@@ -19,6 +19,7 @@ public class Lattice {
 	private HashMap<Integer, ArrayList<LatticeNode>> nodesByLevel;
 	private int currentNodeNumber;
 	private Dictionary dic;
+	private BitSet lastMergedInto; //used to keep track of which node has last been merged into in the tinker algorithm
 	
 	public Lattice(Dictionary _dic) {
 		this.nodes = new ArrayList<LatticeNode>();
@@ -26,6 +27,7 @@ public class Lattice {
 		this.currentNodeNumber = 0;
 		this.dic = _dic;
 		this.nodesByLevel = new HashMap<Integer, ArrayList<LatticeNode>>();
+		this.lastMergedInto = null;
 	}
 	
 	public void clear() {
@@ -36,7 +38,9 @@ public class Lattice {
 	}
 
 	public String latticeStats() { 
-		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() + "\tclusterIndex: " + String.format("%.3f", clusterIndex());
+//		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() 
+//		+ "\tclusterIndex: " + String.format("%.3f", clusterIndex()) + "\tcleanliness: " + String.format("%.1f", cleanliness()) + "%";
+		return nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", cleanliness());
 	}
 	
 	public void addNode(LatticeNode node) {
@@ -64,17 +68,25 @@ public class Lattice {
 			+ " [label=\"" + node.getNiceAttributes() + node.getIntent() 
 			+ "\next.: " + node.numberOfObjects() + " (" + node.typesOfExtent() + ") "
 			+ "\nown: " + node.numberOfOwnObjects()  + " (" + node.typesOfOwnObjects() + ") "
-			+ "\"" + peripheries(node) + "]\n";
+//			+ "\n merges into : " + node.mergesInto()
+			+ "\"" + peripheries(node) + color(node) + "]\n";
 		for(LatticeEdge edge: edges)
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
 		writeToFile(latticeString, outputFile);
 //		System.out.println("done.");
 	}
+	
+	//paints the node that was last merged into red
+	private String color(LatticeNode node) {
+		if(this.lastMergedInto != null && this.lastMergedInto.equals(node.getIntent()))
+			return ", style = filled, color = red";
+		return "";
+	}
 
 	private String peripheries(LatticeNode node) {
-		if(node.numberOfOwnObjects() > 0){
-			return ", peripheries = 2"; }
+		if(node.numberOfOwnObjects() > 0)
+			return ", peripheries = 2";
 		return "";
 	}
 
@@ -277,5 +289,21 @@ public class Lattice {
 		}
 		assert(pos == nodesWithOwnObjects()-1);
 		return numbers;
+	}
+
+	public void setLastMergedInto(BitSet intent) {
+		this.lastMergedInto = intent;
+	}
+	
+	public double cleanliness() {
+		int majority = 0;
+		int total = 0;
+		for(LatticeNode node : nodes) {
+			if(node.hasOwnObjects()){
+				majority += node.majority(); 
+				total += node.numberOfOwnObjects();
+			}
+		}
+		return ((double)majority/(double)total)*100;
 	}
 }

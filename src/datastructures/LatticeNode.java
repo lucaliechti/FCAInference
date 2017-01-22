@@ -16,6 +16,7 @@ public class LatticeNode {
 	private HashSet<LatticeNode> upperNeighbours;
 	private HashSet<LatticeNode> lowerNeighbours;
 	private ArrayList<String> ownAttributes;
+	private Boolean mergedInto;
 	
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
 		this.intent = intent;
@@ -27,6 +28,7 @@ public class LatticeNode {
 		this.upperNeighbours = new HashSet<LatticeNode>();
 		this.lowerNeighbours = new HashSet<LatticeNode>();
 		this.ownAttributes = new ArrayList<String>();
+		this.mergedInto = false;
 	}
 	
 	public BitSet getIntent() {
@@ -151,32 +153,57 @@ public class LatticeNode {
 		return typesOfFormalObjects(ownObjects);
 	}
 	
+	public void setMergedInto() {
+		this.mergedInto = true;
+	}
+	
+	public boolean mergedInto() {
+		return mergedInto;
+	}
+	
+	public int majority() {
+		HashMap<String, Integer> counts = countObjectTypes(ownObjects);
+		String majorityType = mostFrequentType(counts);
+		return counts.get(majorityType);
+	}
+	
 	private String typesOfFormalObjects(HashSet<FormalObject> set) {
 		if(set.size() > 0) {
-			HashMap<String, Integer> counts = new HashMap<String, Integer>();
-			String type = "";
-			for(FormalObject obj : set){
-				type = obj.getName();
-				if(!counts.containsKey(type))
-					counts.put(type, 1);
-				else
-					counts.put(type, counts.get(type)+1);
-			}
+			HashMap<String, Integer> counts = countObjectTypes(set);
 			if(counts.keySet().size() == 1)
-				return "100% " + type;
+				return "100% " + counts.keySet().toArray()[0];
 			else {
-				int highest = 0;
-				String highestAttr = "";
-				for(String attr : counts.keySet()) {
-					if(counts.get(attr) > highest) {
-						highest = counts.get(attr);
-						highestAttr = attr;
-					}
-				}
+				String highestAttr = mostFrequentType(counts);
+				int highest = counts.get(highestAttr);
 				return (100*highest)/set.size() + "% " + highestAttr;
 			}	
 		}
 		else
 			return "empty";
+	}
+	
+	private String mostFrequentType(HashMap<String, Integer> counts) {
+		int highest = 0;
+		String highestAttr = "";
+		for(String attr : counts.keySet()) {
+			if(counts.get(attr) > highest) {
+				highest = counts.get(attr);
+				highestAttr = attr;
+			}
+		}
+		return highestAttr;
+	}
+
+	private HashMap<String, Integer> countObjectTypes(HashSet<FormalObject> set) {
+		HashMap<String, Integer> counts = new HashMap<String, Integer>();
+		String type = "";
+		for(FormalObject obj : set){
+			type = obj.getName();
+			if(!counts.containsKey(type))
+				counts.put(type, 1);
+			else
+				counts.put(type, counts.get(type)+1);
+		}
+		return counts;
 	}
 }
