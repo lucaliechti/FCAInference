@@ -22,15 +22,15 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\ebay.xml");
 		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
+		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
+		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\BordatTest3.bib");
-		docs.add(repoFolder + "BibTex\\scg.bib");
-//		docs.add(repoFolder + "BibTex\\listb.bib");					//
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
+//		docs.add(repoFolder + "BibTex\\scg.bib");
+		docs.add(repoFolder + "BibTex\\listb.bib");					//
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
@@ -56,10 +56,10 @@ public class Driver {
 		Lattice lattice = lb.buildLattice();
 		lattice.exportLatticeToFile(graphvizFolder + "0a_" + parser.getTargetLatticeFilename(doc));
 		
-		System.out.println("Nr\tScore\tNodes\tWithOwn\tedges\tindex\tclean");
+		System.out.println("Nr\tScore\tNodes\tWithOwn\tedges\tindex\tclean\tnull\tleg");
 		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
-		cc.removeSingletonObjects();
+//		cc.removeSingletonObjects();
 //		cc.removeRareAttributes(0);
 		lattice.clear();
 		lattice = lb.buildLattice();

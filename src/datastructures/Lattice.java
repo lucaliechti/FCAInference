@@ -20,6 +20,7 @@ public class Lattice {
 	private int currentNodeNumber;
 	private Dictionary dic;
 	private BitSet lastMergedInto; //used to keep track of which node has last been merged into in the tinker algorithm
+	private HashMap<Integer, ArrayList<FormalObject>> bookkeeping; //used to calculate the number of NULLs and legacy values
 	
 	public Lattice(Dictionary _dic) {
 		this.nodes = new ArrayList<LatticeNode>();
@@ -28,6 +29,7 @@ public class Lattice {
 		this.dic = _dic;
 		this.nodesByLevel = new HashMap<Integer, ArrayList<LatticeNode>>();
 		this.lastMergedInto = null;
+		this.bookkeeping = null;
 	}
 	
 	public void clear() {
@@ -40,7 +42,8 @@ public class Lattice {
 	public String latticeStats() { 
 //		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() 
 //		+ "\tclusterIndex: " + String.format("%.3f", clusterIndex()) + "\tcleanliness: " + String.format("%.1f", cleanliness()) + "%";
-		return nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", cleanliness());
+		return nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.3f", cleanliness())
+		+ "\t" + String.format("%.3f", nullPercentage()) + "\t" + String.format("%.3f", legacyPercentage());
 	}
 	
 	public void addNode(LatticeNode node) {
@@ -65,8 +68,8 @@ public class Lattice {
 		latticeString += "digraph d{\n";
 		for(LatticeNode node : nodes)
 			latticeString += node.getNodeNumber() 
-			+ " [label=\"" + node.getNiceAttributes() + node.getIntent() 
-			+ "\next.: " + node.numberOfObjects() + " (" + node.typesOfExtent() + ") "
+			+ " [label=\"" + node.getNiceAttributes() //+ node.getIntent() ---------------------excluding intent for the moment
+			+ "ext.: " + node.numberOfObjects() + " (" + node.typesOfExtent() + ") "
 			+ "\nown: " + node.numberOfOwnObjects()  + " (" + node.typesOfOwnObjects() + ") "
 //			+ "\n merges into : " + node.mergesInto()
 			+ "\"" + peripheries(node) + color(node) + "]\n";
@@ -305,5 +308,91 @@ public class Lattice {
 			}
 		}
 		return ((double)majority/(double)total)*100;
+	}
+	
+	public void initialiseBookkeeping() {
+		if(bookkeeping == null){
+			bookkeeping = new HashMap<Integer, ArrayList<FormalObject>>();
+			for(LatticeNode node : nodes){
+				if(node.hasOwnObjects()){
+					for(FormalObject ownObject : node.ownObjects()){
+						if(bookkeeping.containsKey(ownObject.getIntent().hashCode()))
+							bookkeeping.get(ownObject.getIntent().hashCode()).add(ownObject);
+						else {
+							ArrayList<FormalObject> newList = new ArrayList<FormalObject>();
+							newList.add(ownObject);
+							bookkeeping.put(ownObject.getIntent().hashCode(), newList);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//when all objects of one node (the mergee) are merged into another node (the merger),
+	//we keep track of this in the bookkeeping datastructure used to calculate NULLs and legacies
+	public void updateBookkeeping(LatticeNode mergee, LatticeNode merger) {
+		int mergeeHash = mergee.getIntent().hashCode();
+		int mergerHash = merger.getIntent().hashCode();
+		ArrayList<FormalObject> mergedObjects = bookkeeping.get(mergeeHash);
+		for(FormalObject obj : mergedObjects){
+			FormalObject copy = new FormalObject();
+			copy.setIntent((BitSet)obj.getIntent().clone());
+			bookkeeping.get(mergerHash).add(copy);
+		}
+		bookkeeping.remove(mergeeHash);
+	}
+	
+	private int totalCardinality() {
+		int card = 0;
+		for(LatticeNode node : nodes)
+			card += node.getIntent().cardinality()*node.numberOfOwnObjects();
+		return card;
+	}
+	
+	private int nulls() {
+		int nulls = 0;
+		for(int hash : bookkeeping.keySet()){
+			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
+			BitSet archetype = findArchetype(hash, nodeObjects);
+			for(FormalObject comp : nodeObjects){
+				BitSet nullSet = (BitSet)archetype.clone();
+				nullSet.xor(comp.getIntent());
+				nullSet.and(archetype);
+				nulls += nullSet.cardinality();
+			}
+		}
+		return nulls;
+	}
+	
+	private int legacies() {
+		int legacies = 0;
+		for(int hash : bookkeeping.keySet()){
+			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
+			BitSet archetype = findArchetype(hash, nodeObjects);
+			for(FormalObject comp : nodeObjects){
+				BitSet legSet = (BitSet)archetype.clone();
+				legSet.xor(comp.getIntent());
+				legSet.and(comp.getIntent());
+				legacies += legSet.cardinality();
+			}
+		}
+		return legacies;
+	}
+	
+	private BitSet findArchetype(int hash, ArrayList<FormalObject> objectArray) {
+		for(FormalObject obj : objectArray){
+			if(obj.getIntent().hashCode() == hash)
+				return (BitSet)obj.getIntent().clone();
+		}
+		return null;
+	}
+	
+	private double nullPercentage() {
+		return (double)nulls()/(double)totalCardinality()*100;
+	}
+	
+	private double legacyPercentage() {
+		return (double)legacies()/(double)totalCardinality()*100;
 	}
 }

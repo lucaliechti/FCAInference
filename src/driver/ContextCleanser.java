@@ -58,13 +58,13 @@ public class ContextCleanser {
 				mergeCandidates.addAll(node.upperNeighbours());
 				mergeCandidates.addAll(node.lowerNeighbours());
 				//nodes from same level with at least one shared parent
-				for(LatticeNode parent : node.upperNeighbours()){
-					for(LatticeNode child : parent.lowerNeighbours()){
-						if(child != node)	mergeCandidates.add(child);
-					}
-				}
+//				for(LatticeNode parent : node.upperNeighbours()){
+//					for(LatticeNode child : parent.lowerNeighbours()){
+//						if(child != node)	mergeCandidates.add(child);
+//					}
+//				}
 				for(LatticeNode candidate : mergeCandidates) {
-					if(mergeScore(node, candidate) > highScore) {
+					if(mergeScore(node, candidate) >= highScore) {
 						highScore = mergeScore(node, candidate);
 						firstNode = node;
 						secondNode = candidate;
@@ -88,6 +88,7 @@ public class ContextCleanser {
 	
 	private void mergeInto(LatticeNode firstNode, LatticeNode secondNode) {
 		BitSet mergedIntent = (BitSet)secondNode.getIntent().clone();
+		lattice.updateBookkeeping(firstNode, secondNode);
 		for(FormalObject obj : firstNode.ownObjects())
 			obj.setIntent(mergedIntent);
 		lattice.setLastMergedInto((BitSet)secondNode.getIntent().clone());
