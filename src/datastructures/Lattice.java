@@ -21,6 +21,7 @@ public class Lattice {
 	private Dictionary dic;
 	private BitSet lastMergedInto; //used to keep track of which node has last been merged into in the tinker algorithm
 	private HashMap<Integer, ArrayList<FormalObject>> bookkeeping; //used to calculate the number of NULLs and legacy values
+	private ArrayList<FormalObject> removedSingletons;
 	
 	public Lattice(Dictionary _dic) {
 		this.nodes = new ArrayList<LatticeNode>();
@@ -30,6 +31,7 @@ public class Lattice {
 		this.nodesByLevel = new HashMap<Integer, ArrayList<LatticeNode>>();
 		this.lastMergedInto = null;
 		this.bookkeeping = null;
+		this.removedSingletons = new ArrayList<FormalObject>();
 	}
 	
 	public void clear() {
@@ -394,5 +396,41 @@ public class Lattice {
 	
 	private double legacyPercentage() {
 		return (double)legacies()/(double)totalCardinality()*100;
+	}
+
+	public void addToRemovedSingletons(FormalObject singleton) {
+		this.removedSingletons.add(singleton);
+	}
+
+	public void retrofitSingletons() {
+		for(FormalObject single : removedSingletons) {
+			LatticeNode bestFit = findBestNodeFit(single);//find suitable latticeNode WITH own objects for each formalObject in singleton array.
+			//add the objects to those nodes. TODO: Does this really have to require two function calls?
+			bestFit.addObject(single);
+			bestFit.addToOwnObjects(single);
+			//update the bookkeeping datastructure, ie. add the formalObject to the hash of the closest node. Do not re-compute anything.
+			bookkeeping.get(bestFit.getIntent().hashCode()).add(single);
+		}
+	}
+
+	private LatticeNode findBestNodeFit(FormalObject single) {
+		BitSet singleIntent = single.getIntent();
+		LatticeNode bestFit = null;
+		int bestFitScore = dic.getSize(); //worst possible score: all attributes exactly XOR
+		int bestFitOwnObjects = 0;
+		for(LatticeNode node : nodes){
+			BitSet nodeIntent = (BitSet)node.getIntent().clone();
+			nodeIntent.xor(singleIntent);
+			int currentScore = nodeIntent.cardinality();
+			int currentOwnObjects = node.numberOfOwnObjects();
+			if(currentScore <= bestFitScore && currentOwnObjects > bestFitOwnObjects){
+				bestFit = node;
+				bestFitScore = currentScore;
+				bestFitOwnObjects = currentOwnObjects;
+			}
+		}
+		assert (bestFit != null);
+		System.out.println("Retrofitting " + single.getIntent() + " into " + bestFit.getIntent() + " (score = " + bestFitScore + ", own = " + bestFitOwnObjects + ")");
+		return bestFit;
 	}
 }

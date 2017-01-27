@@ -1,6 +1,5 @@
 package driver;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -16,7 +15,6 @@ public class ContextCleanser {
 	
 	private Lattice lattice;
 	private FormalContext context;
-	private int attributeDifference;
 	
 	public ContextCleanser(FormalContext _context, Lattice _lattice){
 		this.lattice = _lattice;
@@ -112,6 +110,7 @@ public class ContextCleanser {
 		for(int hash : nodeArray.keySet()) {
 			if(nodeArray.get(hash).size() == 1){
 				context.getObjects().remove(nodeArray.get(hash).get(0));
+				lattice.addToRemovedSingletons(nodeArray.get(hash).get(0));
 				i++;
 			}
 		}

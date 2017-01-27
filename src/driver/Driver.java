@@ -28,7 +28,7 @@ public class Driver {
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\BordatTest3.bib");
-//		docs.add(repoFolder + "BibTex\\scg.bib");
+		docs.add(repoFolder + "BibTex\\scg.bib");					//
 		docs.add(repoFolder + "BibTex\\listb.bib");					//
 		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
@@ -59,7 +59,7 @@ public class Driver {
 		System.out.println("Nr\tScore\tNodes\tWithOwn\tedges\tindex\tclean\tnull\tleg");
 		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
-//		cc.removeSingletonObjects();
+		cc.removeSingletonObjects();
 //		cc.removeRareAttributes(0);
 		lattice.clear();
 		lattice = lb.buildLattice();
@@ -68,13 +68,18 @@ public class Driver {
 		lattice.exportLatticeToFile(graphvizFolder + "0b_" + parser.getTargetLatticeFilename(doc));
 		double score = 1d;
 		int i = 1;
-		while(score > 0d) {
+		while(score > 1d) {
+			// the if(score > 0d) line should logically go here, and we would print the result anyways, 
+			//except in the first round (because that's already printed above)
 			score = cc.tinker();
 			lattice.clear();
 			lattice = lb.buildLattice();
-			if(score > 0d) System.out.println(i + "\t" + String.format("%.1f", score) + "\t" + lattice.latticeStats());
+			if(score > 0d) System.out.println(i + "\t" + String.format("%.2f", score) + "\t" + lattice.latticeStats());
 			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
 		}
-		System.out.println("performed " + (i-2) + " merges in total.");
+		lattice.retrofitSingletons();
+		System.out.println("final\t\t" + lattice.latticeStats());
+		lattice.exportLatticeToFile(graphvizFolder + "final_" + parser.getTargetLatticeFilename(doc));
+//		System.out.println("performed " + (i-2) + " merges in total.");
 	}
 }
