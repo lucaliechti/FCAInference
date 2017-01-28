@@ -67,8 +67,6 @@ public class LatticeBuilder {
 			LatticeNode newNode = new LatticeNode(gSet, g.getIntent(), lattice.getDic());
 			if(!maximalConcept.getIntent().equals(newNode.getIntent())) //only add an object if it hasn't already been added as the maximal concept!
 					lattice.addNode(newNode);
-//			System.out.println("added new node with intent = " + newNode.getIntent());
-//			System.out.println("nodes in total = " + lattice.getNodes().size());
 		}
 		alreadyAddedObjects.add(g);
 	}
@@ -86,11 +84,9 @@ public class LatticeBuilder {
 	private void addNodeWithAllAttributes() {	
 		BitSet allAttributes = new BitSet(lattice.getDic().getSize());
 		allAttributes.set(0, lattice.getDic().getSize()); //second parameter is EXCLUSIVE, so not dictionarySize-1
-		if(!lattice.containsNodeWithIntent(allAttributes)){ //TODO: Check if this does what we want it to.
-			//TODO this does not work
+		if(!lattice.containsNodeWithIntent(allAttributes)){
 			HashSet<FormalObject> extentWithAllAttributes = context.getDerivationOfAttributes(allAttributes);
 			LatticeNode nodeWithAllAttributes = new LatticeNode(extentWithAllAttributes, allAttributes, lattice.getDic());
-//			System.out.println("adding node with all attributes, namely: " + nodeWithAllAttributes.getIntent());
 			lattice.addNode(nodeWithAllAttributes);
 		}
 	}

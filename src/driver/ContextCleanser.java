@@ -114,6 +114,6 @@ public class ContextCleanser {
 				i++;
 			}
 		}
-		System.out.println("Removed " + i + "/" + k + " objects from context.");
+//		System.out.println("Removed " + i + "/" + k + " objects from context.");
 	}
 }

@@ -20,7 +20,7 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
+		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");			//
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");			//
@@ -28,7 +28,7 @@ public class Driver {
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\Test2.bib");
-		docs.add(repoFolder + "BibTex\\scg.bib");					//
+//		docs.add(repoFolder + "BibTex\\scg.bib");					//
 //		docs.add(repoFolder + "BibTex\\listb.bib");					//
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
@@ -54,33 +54,42 @@ public class Driver {
 		
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
-		lattice.exportLatticeToFile(graphvizFolder + "0a_" + parser.getTargetLatticeFilename(doc));
+		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
 		
-		System.out.println("Nr\tScore\tNodes\tWithOwn\tedges\tindex\tclean\tnull\tleg");
+		System.out.println("\nNr\tScore\tNodes\tWithOwn\tedges\tindex\tclean\tnull\tleg");
+		System.out.println("-------------------------------------------------------------------");
 		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
+		
+		///SINGLETONS PT. 1///
 		cc.removeSingletonObjects();
-//		cc.removeRareAttributes(0);
 		lattice.clear();
 		lattice = lb.buildLattice();
+		System.out.println("noSing\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
+		lattice.exportLatticeToFile(graphvizFolder + "0b_withoutSingletons_" + parser.getTargetLatticeFilename(doc));
+		
+		///RARE ATTRIBUTES///
+//		cc.removeRareAttributes(0);
+//		lattice.clear();
+//		lattice = lb.buildLattice();
 //		System.out.println("del\t---" + "\t" + lattice.latticeStats());	//if we have deleted rare attributes
-		System.out.println("2+\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
-		lattice.exportLatticeToFile(graphvizFolder + "0b_" + parser.getTargetLatticeFilename(doc));
-		double score = 100000d;
+//		lattice.exportLatticeToFile(graphvizFolder + "0c_withoutRareAttributes_" + parser.getTargetLatticeFilename(doc));
+		
+		///TINKER///
+		double score = cc.tinker();
 		int i = 1;
-		while(score > 0d) {
-			// the if(score > 0d) line should logically go here, and we would print the result anyways, 
-			//except in the first round (because that's already printed above)
-			//TODO: completely do this method the other way round and calculate the new score only at the end
-			score = cc.tinker();
+		while(score > 1d) {
 			lattice.clear();
 			lattice = lb.buildLattice();
-			if(score > 0d) System.out.println(i + "\t" + String.format("%.2f", score) + "\t" + lattice.latticeStats());
+			System.out.println(i + "\t" + String.format("%.2f", score) + "\t" + lattice.latticeStats());
 			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
+			score = cc.tinker();
 		}
+		
+		///SINGLETONS PT. 2///
 		lattice.retrofitSingletons();
-		System.out.println("final\t\t" + lattice.latticeStats());
-		lattice.exportLatticeToFile(graphvizFolder + "final_" + parser.getTargetLatticeFilename(doc));
-//		System.out.println("performed " + (i-2) + " merges in total.");
+		System.out.println("retfit\t\t" + lattice.latticeStats());
+		lattice.exportLatticeToFile(graphvizFolder + i + "_retroFit_" + parser.getTargetLatticeFilename(doc));
+		System.out.println("-------------------------------------------------------------------\n\n");
 	}
 }
