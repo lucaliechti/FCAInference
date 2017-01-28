@@ -44,8 +44,8 @@ public class Lattice {
 	public String latticeStats() { 
 //		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() 
 //		+ "\tclusterIndex: " + String.format("%.3f", clusterIndex()) + "\tcleanliness: " + String.format("%.1f", cleanliness()) + "%";
-		return nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.3f", cleanliness())
-		+ "\t" + String.format("%.3f", nullPercentage()) + "\t" + String.format("%.3f", legacyPercentage());
+		return nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", cleanliness())
+		+ "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage());
 	}
 	
 	public void addNode(LatticeNode node) {
@@ -430,7 +430,7 @@ public class Lattice {
 			}
 		}
 		assert (bestFit != null);
-		System.out.println("Retrofitting " + single.getIntent() + " into " + bestFit.getIntent() + " (score = " + bestFitScore + ", own = " + bestFitOwnObjects + ")");
+//		System.out.println("Retrofitting " + single.getIntent() + " into " + bestFit.getIntent() + " (score = " + bestFitScore + ", own = " + bestFitOwnObjects + ")");
 		return bestFit;
 	}
 }

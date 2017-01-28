@@ -15,11 +15,13 @@ public class LatticeBuilder {
 	private FormalContext context;
 	private Lattice lattice;
 	private ArrayList<FormalObject> alreadyAddedObjects;
+	private FormalConcept maximalConcept;
 
 	public LatticeBuilder(FormalContext _context) {
 		this.context = _context;
 		this.lattice = new Lattice(_context.getDictionary());
 		this.alreadyAddedObjects = new ArrayList<FormalObject>();
+		this.maximalConcept = null;
 	}
 
 	public Lattice buildLattice(){
@@ -39,6 +41,7 @@ public class LatticeBuilder {
 		//this happens only at the very beginning
 		if (lattice.isEmpty())	{
 			FormalConcept maxConcept = computeMaximalConcept();
+			maximalConcept = maxConcept;
 			lattice.addNode(new LatticeNode(maxConcept.getExtent(), maxConcept.getIntent(), lattice.getDic()));
 		}
 		for(int i = 0; i < lattice.getNodes().size(); i++) {
@@ -62,7 +65,10 @@ public class LatticeBuilder {
 			HashSet<FormalObject> gSet = new HashSet<FormalObject>();
 			gSet.add(g);
 			LatticeNode newNode = new LatticeNode(gSet, g.getIntent(), lattice.getDic());
-			lattice.addNode(newNode);
+			if(!maximalConcept.getIntent().equals(newNode.getIntent())) //only add an object if it hasn't already been added as the maximal concept!
+					lattice.addNode(newNode);
+//			System.out.println("added new node with intent = " + newNode.getIntent());
+//			System.out.println("nodes in total = " + lattice.getNodes().size());
 		}
 		alreadyAddedObjects.add(g);
 	}
@@ -79,10 +85,12 @@ public class LatticeBuilder {
 	
 	private void addNodeWithAllAttributes() {	
 		BitSet allAttributes = new BitSet(lattice.getDic().getSize());
-		allAttributes.set(0, lattice.getDic().getSize());
-		if(!lattice.containsNodeWithIntent(allAttributes)){
+		allAttributes.set(0, lattice.getDic().getSize()); //second parameter is EXCLUSIVE, so not dictionarySize-1
+		if(!lattice.containsNodeWithIntent(allAttributes)){ //TODO: Check if this does what we want it to.
+			//TODO this does not work
 			HashSet<FormalObject> extentWithAllAttributes = context.getDerivationOfAttributes(allAttributes);
 			LatticeNode nodeWithAllAttributes = new LatticeNode(extentWithAllAttributes, allAttributes, lattice.getDic());
+//			System.out.println("adding node with all attributes, namely: " + nodeWithAllAttributes.getIntent());
 			lattice.addNode(nodeWithAllAttributes);
 		}
 	}

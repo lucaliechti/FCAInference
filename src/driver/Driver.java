@@ -20,17 +20,17 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
+//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
-		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
-		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
+//		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");			//
+//		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");			//
 		
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
-//		docs.add(repoFolder + "BibTex\\BordatTest3.bib");
+//		docs.add(repoFolder + "BibTex\\Test2.bib");
 		docs.add(repoFolder + "BibTex\\scg.bib");					//
-		docs.add(repoFolder + "BibTex\\listb.bib");					//
-		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
+//		docs.add(repoFolder + "BibTex\\listb.bib");					//
+//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
 //		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
@@ -66,11 +66,12 @@ public class Driver {
 //		System.out.println("del\t---" + "\t" + lattice.latticeStats());	//if we have deleted rare attributes
 		System.out.println("2+\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
 		lattice.exportLatticeToFile(graphvizFolder + "0b_" + parser.getTargetLatticeFilename(doc));
-		double score = 1d;
+		double score = 100000d;
 		int i = 1;
-		while(score > 1d) {
+		while(score > 0d) {
 			// the if(score > 0d) line should logically go here, and we would print the result anyways, 
 			//except in the first round (because that's already printed above)
+			//TODO: completely do this method the other way round and calculate the new score only at the end
 			score = cc.tinker();
 			lattice.clear();
 			lattice = lb.buildLattice();
