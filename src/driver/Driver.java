@@ -23,7 +23,7 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
+		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");			//
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");			//
@@ -47,11 +47,11 @@ public class Driver {
 //		docs.add(repoFolder + "JSON\\SIRA\\alle.js");				//
 
 		//PARSING SINGLE FILES
-//		for(String doc : docs)
-//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc));
+		for(String doc : docs)
+			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc));
 		
 		//PARSING ALL FILES IN FOLDER
-		parseFolder(folder, outputFolder, graphvizFolder, factory);
+//		parseFolder(folder, outputFolder, graphvizFolder, factory);
 		
 		System.out.println("All done.");
 	}
@@ -111,6 +111,6 @@ public class Driver {
 		assert(fold.isDirectory());
 		String[] inFiles = fold.list();
 		for(int i = 0; i < inFiles.length; i++)
-			if(inFiles[i].equals("www.netlib.org#bibnet#authors#l#lanczos-cornelius.bib")) { parseDocument(inFolder + "\\" + inFiles[i], outFolder, gvFolder, fac.makeParser(inFiles[i])); }
+			parseDocument(inFolder + "\\" + inFiles[i], outFolder, gvFolder, fac.makeParser(inFiles[i]));
 	}
 }

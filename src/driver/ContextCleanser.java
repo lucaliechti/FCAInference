@@ -6,6 +6,7 @@ import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import datastructures.Dictionary;
 import datastructures.FormalContext;
 import datastructures.FormalObject;
 import datastructures.Lattice;
@@ -15,13 +16,23 @@ public class ContextCleanser {
 	
 	private Lattice lattice;
 	private FormalContext context;
+	private Dictionary dic;
 	
 	public ContextCleanser(FormalContext _context, Lattice _lattice){
 		this.lattice = _lattice;
 		this.context = _context;
+		this.dic = _context.getDictionary();
 	}
 	
-	public ContextCleanser() {
+	//only for the bitSet hash. TODO: Make static class, refactor
+	public ContextCleanser(Dictionary _dic) {
+		this.lattice = null;
+		this.context = null;
+		this.dic = _dic;
+	}
+	
+	//only for testing
+	public ContextCleanser(){
 		this.lattice = null;
 		this.context = null;
 	}
@@ -125,6 +136,8 @@ public class ContextCleanser {
 //		System.out.println("Removed " + i + "/" + k + " objects from context.");
 	}
 	
+	//creates a String from a BitSet where true = 1 and false = 0.
+	//limits or pads the string to the length of the dictionary of the current context.
 	public String bitsetHash (BitSet set) {
 		String hash = "";
 		for(int i = 0; i < set.size(); i++){
@@ -133,6 +146,16 @@ public class ContextCleanser {
 			else
 				hash += "0";
 		}
-		return hash;
+		if(hash.length() < dic.getSize()){
+			String padding = "";
+			for(int j = 0; j < (dic.getSize()-hash.length()); j++)
+				padding += "0";
+			hash += padding;
+			return hash;
+		}
+		else if(hash.length() > dic.getSize())
+			return hash.substring(0, dic.getSize());
+		else
+			return hash;
 	}
 }

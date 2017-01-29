@@ -34,7 +34,7 @@ public class Lattice {
 		this.lastMergedInto = null;
 		this.bookkeeping = null;
 		this.removedSingletons = new ArrayList<FormalObject>();
-		this.cc = new ContextCleanser();
+		this.cc = new ContextCleanser(_dic);
 	}
 	
 	public void clear() {
@@ -316,7 +316,7 @@ public class Lattice {
 	}
 	
 	public void initialiseBookkeeping() {
-		ContextCleanser cc = new ContextCleanser();
+		ContextCleanser cc = new ContextCleanser(dic);
 		if(bookkeeping == null){
 			bookkeeping = new HashMap<String, ArrayList<FormalObject>>();
 			for(LatticeNode node : nodes){
@@ -413,7 +413,8 @@ public class Lattice {
 			bestFit.addObject(single);
 			bestFit.addToOwnObjects(single);
 			//update the bookkeeping datastructure, ie. add the formalObject to the hash of the closest node. Do not re-compute anything.
-			bookkeeping.get(cc.bitsetHash(bestFit.getIntent())).add(single);
+			try{bookkeeping.get(cc.bitsetHash(bestFit.getIntent())).add(single);}
+			catch (NullPointerException npe) {System.out.println("best Fit for " + single.getIntent() + " (" + cc.bitsetHash(single.getIntent()) + ": " + bestFit.getIntent() + "(" + cc.bitsetHash(bestFit.getIntent()) + ")");}
 		}
 	}
 
