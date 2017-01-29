@@ -21,6 +21,11 @@ public class ContextCleanser {
 		this.context = _context;
 	}
 	
+	public ContextCleanser() {
+		this.lattice = null;
+		this.context = null;
+	}
+	
 	//checks which attributes appear the least amount of times in the data
 	//and completely removes these attributes from the context
 	public void removeRareAttributes(int treshold) {
@@ -30,15 +35,18 @@ public class ContextCleanser {
 		Integer[] supportArray = supportSet.toArray(new Integer[supportSet.size()]);
 		Arrays.sort(supportArray);
 		final int TRESHOLD = supportArray[treshold];
+		System.out.print("Deleted attributes: ");
 //		System.out.println("Deleting all attributes that occur at most " + TRESHOLD + " times.");
 //		int deleted = 0;
 //		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + "\n");
 		for(String attr : context.getDictionary().getContents()){
 			if(attributeSupport.get(attr) <= TRESHOLD){
 //				deleted++;
+				System.out.print(attr + " // ");
 				context.removeAttribute(attr);
 			}
 		}
+		System.out.println("");
 //		System.out.println("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
 	}
 	
@@ -95,7 +103,7 @@ public class ContextCleanser {
 	public void removeSingletonObjects() {
 		HashMap<Integer, ArrayList<FormalObject>> nodeArray = new HashMap<Integer, ArrayList<FormalObject>>();
 		int i = 0;
-		int k = context.getObjects().size();
+//		int k = context.getObjects().size();
 		//fill node array
 		for(FormalObject obj : context.getObjects()) {
 			if(nodeArray.containsKey(obj.getIntent().hashCode()))
@@ -115,5 +123,16 @@ public class ContextCleanser {
 			}
 		}
 //		System.out.println("Removed " + i + "/" + k + " objects from context.");
+	}
+	
+	public String bitsetHash (BitSet set) {
+		String hash = "";
+		for(int i = 0; i < set.size(); i++){
+			if(set.get(i))
+				hash += "1";
+			else
+				hash += "0";
+		}
+		return hash;
 	}
 }

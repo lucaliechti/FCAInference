@@ -1,5 +1,6 @@
 package driver;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import parsers.NoSQLParser;
@@ -10,7 +11,9 @@ import factories.ParserFactory;
 
 public class Driver {
 	public static void main(String[] args){
+		String folder = "C:\\Users\\Luca Liechti\\Desktop\\IESL";
 		String repoFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\NoSQL repos\\";
+		String ieslFolder = "C:\\Users\\Luca Liechti\\Desktop\\IESL\\";
 		String outputFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\context files\\";	
 		String graphvizFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\graphviz files\\";
 		ArrayList<String> docs = new ArrayList<String>();
@@ -20,10 +23,15 @@ public class Driver {
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
+//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
 //		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
 //		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");			//
 //		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");			//
+		
+		
+		//add IESL repos
+//		docs.add(ieslFolder + "gp-bibliography.bib");
+//		docs.add(ieslFolder + "visinfo.zib.de#EVlib#Bibliography#EVL-1998.bib");
 		
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
@@ -38,8 +46,13 @@ public class Driver {
 //		//add JSON repos
 //		docs.add(repoFolder + "JSON\\SIRA\\alle.js");				//
 
-		for(String doc : docs)
-			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc));
+		//PARSING SINGLE FILES
+//		for(String doc : docs)
+//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc));
+		
+		//PARSING ALL FILES IN FOLDER
+		parseFolder(folder, outputFolder, graphvizFolder, factory);
+		
 		System.out.println("All done.");
 	}
 	
@@ -78,7 +91,7 @@ public class Driver {
 		///TINKER///
 		double score = cc.tinker();
 		int i = 1;
-		while(score > 1d) {
+		while(score > 0d) {
 			lattice.clear();
 			lattice = lb.buildLattice();
 			System.out.println(i + "\t" + String.format("%.2f", score) + "\t" + lattice.latticeStats());
@@ -91,5 +104,13 @@ public class Driver {
 		System.out.println("retfit\t\t" + lattice.latticeStats());
 		lattice.exportLatticeToFile(graphvizFolder + i + "_retroFit_" + parser.getTargetLatticeFilename(doc));
 		System.out.println("-------------------------------------------------------------------\n\n");
+	}
+	
+	private static void parseFolder(String inFolder, String outFolder, String gvFolder, ParserFactory fac) {
+		File fold = new File(inFolder);
+		assert(fold.isDirectory());
+		String[] inFiles = fold.list();
+		for(int i = 0; i < inFiles.length; i++)
+			if(inFiles[i].equals("www.netlib.org#bibnet#authors#l#lanczos-cornelius.bib")) { parseDocument(inFolder + "\\" + inFiles[i], outFolder, gvFolder, fac.makeParser(inFiles[i])); }
 	}
 }

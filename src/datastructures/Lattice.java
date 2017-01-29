@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import driver.ContextCleanser;
 import driver.LatticeBuilder;
 
 public class Lattice {
@@ -20,8 +21,9 @@ public class Lattice {
 	private int currentNodeNumber;
 	private Dictionary dic;
 	private BitSet lastMergedInto; //used to keep track of which node has last been merged into in the tinker algorithm
-	private HashMap<Integer, ArrayList<FormalObject>> bookkeeping; //used to calculate the number of NULLs and legacy values
+	private HashMap<String, ArrayList<FormalObject>> bookkeeping; //used to calculate the number of NULLs and legacy values
 	private ArrayList<FormalObject> removedSingletons;
+	private ContextCleanser cc;
 	
 	public Lattice(Dictionary _dic) {
 		this.nodes = new ArrayList<LatticeNode>();
@@ -32,6 +34,7 @@ public class Lattice {
 		this.lastMergedInto = null;
 		this.bookkeeping = null;
 		this.removedSingletons = new ArrayList<FormalObject>();
+		this.cc = new ContextCleanser();
 	}
 	
 	public void clear() {
@@ -313,17 +316,18 @@ public class Lattice {
 	}
 	
 	public void initialiseBookkeeping() {
+		ContextCleanser cc = new ContextCleanser();
 		if(bookkeeping == null){
-			bookkeeping = new HashMap<Integer, ArrayList<FormalObject>>();
+			bookkeeping = new HashMap<String, ArrayList<FormalObject>>();
 			for(LatticeNode node : nodes){
 				if(node.hasOwnObjects()){
 					for(FormalObject ownObject : node.ownObjects()){
-						if(bookkeeping.containsKey(ownObject.getIntent().hashCode()))
-							bookkeeping.get(ownObject.getIntent().hashCode()).add(ownObject);
+						if(bookkeeping.containsKey(cc.bitsetHash(ownObject.getIntent())))
+							bookkeeping.get(cc.bitsetHash(ownObject.getIntent())).add(ownObject);
 						else {
 							ArrayList<FormalObject> newList = new ArrayList<FormalObject>();
 							newList.add(ownObject);
-							bookkeeping.put(ownObject.getIntent().hashCode(), newList);
+							bookkeeping.put(cc.bitsetHash(ownObject.getIntent()), newList);
 						}
 					}
 				}
@@ -334,8 +338,8 @@ public class Lattice {
 	//when all objects of one node (the mergee) are merged into another node (the merger),
 	//we keep track of this in the bookkeeping datastructure used to calculate NULLs and legacies
 	public void updateBookkeeping(LatticeNode mergee, LatticeNode merger) {
-		int mergeeHash = mergee.getIntent().hashCode();
-		int mergerHash = merger.getIntent().hashCode();
+		String mergeeHash = cc.bitsetHash(mergee.getIntent());
+		String mergerHash = cc.bitsetHash(merger.getIntent());
 		ArrayList<FormalObject> mergedObjects = bookkeeping.get(mergeeHash);
 		for(FormalObject obj : mergedObjects){
 			FormalObject copy = new FormalObject();
@@ -354,7 +358,7 @@ public class Lattice {
 	
 	private int nulls() {
 		int nulls = 0;
-		for(int hash : bookkeeping.keySet()){
+		for(String hash : bookkeeping.keySet()){
 			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
 			BitSet archetype = findArchetype(hash, nodeObjects);
 			for(FormalObject comp : nodeObjects){
@@ -369,7 +373,7 @@ public class Lattice {
 	
 	private int legacies() {
 		int legacies = 0;
-		for(int hash : bookkeeping.keySet()){
+		for(String hash : bookkeeping.keySet()){
 			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
 			BitSet archetype = findArchetype(hash, nodeObjects);
 			for(FormalObject comp : nodeObjects){
@@ -382,9 +386,9 @@ public class Lattice {
 		return legacies;
 	}
 	
-	private BitSet findArchetype(int hash, ArrayList<FormalObject> objectArray) {
+	private BitSet findArchetype(String hash, ArrayList<FormalObject> objectArray) {
 		for(FormalObject obj : objectArray){
-			if(obj.getIntent().hashCode() == hash)
+			if(cc.bitsetHash(obj.getIntent()).equals(hash))
 				return (BitSet)obj.getIntent().clone();
 		}
 		return null;
@@ -409,7 +413,7 @@ public class Lattice {
 			bestFit.addObject(single);
 			bestFit.addToOwnObjects(single);
 			//update the bookkeeping datastructure, ie. add the formalObject to the hash of the closest node. Do not re-compute anything.
-			bookkeeping.get(bestFit.getIntent().hashCode()).add(single);
+			bookkeeping.get(cc.bitsetHash(bestFit.getIntent())).add(single);
 		}
 	}
 
