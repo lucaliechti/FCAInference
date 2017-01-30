@@ -315,20 +315,22 @@ public class Lattice {
 		return ((double)majority/(double)total)*100;
 	}
 	
+	public Boolean bookkeepingIsNull() {
+		return bookkeeping == null;
+	}
+	
 	public void initialiseBookkeeping() {
 		ContextCleanser cc = new ContextCleanser(dic);
-		if(bookkeeping == null){
-			bookkeeping = new HashMap<String, ArrayList<FormalObject>>();
-			for(LatticeNode node : nodes){
-				if(node.hasOwnObjects()){
-					for(FormalObject ownObject : node.ownObjects()){
-						if(bookkeeping.containsKey(cc.bitsetHash(ownObject.getIntent())))
-							bookkeeping.get(cc.bitsetHash(ownObject.getIntent())).add(ownObject);
-						else {
-							ArrayList<FormalObject> newList = new ArrayList<FormalObject>();
-							newList.add(ownObject);
-							bookkeeping.put(cc.bitsetHash(ownObject.getIntent()), newList);
-						}
+		bookkeeping = new HashMap<String, ArrayList<FormalObject>>();
+		for(LatticeNode node : nodes){
+			if(node.hasOwnObjects()){
+				for(FormalObject ownObject : node.ownObjects()){
+					if(bookkeeping.containsKey(cc.bitsetHash(ownObject.getIntent())))
+						bookkeeping.get(cc.bitsetHash(ownObject.getIntent())).add(ownObject);
+					else {
+						ArrayList<FormalObject> newList = new ArrayList<FormalObject>();
+						newList.add(ownObject);
+						bookkeeping.put(cc.bitsetHash(ownObject.getIntent()), newList);
 					}
 				}
 			}
@@ -361,6 +363,7 @@ public class Lattice {
 		for(String hash : bookkeeping.keySet()){
 			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
 			BitSet archetype = findArchetype(hash, nodeObjects);
+//			System.out.println(archetype);
 			for(FormalObject comp : nodeObjects){
 				BitSet nullSet = (BitSet)archetype.clone();
 				nullSet.xor(comp.getIntent());

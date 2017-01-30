@@ -31,7 +31,7 @@ public class LatticeBuilder {
 		computeExtents();
 		lattice.computeEdges();
 		lattice.computeAttributes();
-		lattice.initialiseBookkeeping();
+		if(lattice.bookkeepingIsNull()) lattice.initialiseBookkeeping();
 		alreadyAddedObjects.clear();
 		return lattice;
 	}

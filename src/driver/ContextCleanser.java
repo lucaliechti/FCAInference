@@ -46,7 +46,7 @@ public class ContextCleanser {
 		Integer[] supportArray = supportSet.toArray(new Integer[supportSet.size()]);
 		Arrays.sort(supportArray);
 		final int TRESHOLD = supportArray[treshold];
-		System.out.print("Deleted attributes: ");
+		System.out.print("Deleted attributes (Treshold = " + TRESHOLD + "): ");
 //		System.out.println("Deleting all attributes that occur at most " + TRESHOLD + " times.");
 //		int deleted = 0;
 //		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + "\n");
@@ -104,6 +104,7 @@ public class ContextCleanser {
 	}
 	
 	private void mergeInto(LatticeNode firstNode, LatticeNode secondNode) {
+//		System.out.println("\tmerging " + firstNode.getIntent() + " (" + bitsetHash(firstNode.getIntent()) + ") -> " + secondNode.getIntent() + " (" + bitsetHash(secondNode.getIntent()) + ")"); 
 		BitSet mergedIntent = (BitSet)secondNode.getIntent().clone();
 		lattice.updateBookkeeping(firstNode, secondNode);
 		for(FormalObject obj : firstNode.ownObjects())
