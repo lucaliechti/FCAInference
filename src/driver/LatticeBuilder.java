@@ -9,6 +9,7 @@ import datastructures.FormalContext;
 import datastructures.FormalObject;
 import datastructures.Lattice;
 import datastructures.LatticeNode;
+import tools.Timer;
 
 public class LatticeBuilder {
 	
@@ -25,8 +26,10 @@ public class LatticeBuilder {
 	}
 
 	public Lattice buildLattice(){
+		Timer timer = new Timer();
 		//Norris algorithm
 		for(FormalObject g : context.getObjects()) add(g);
+		lattice.setTime(timer.timeElapsed());
 		addNodeWithAllAttributes();
 		computeExtents();
 		lattice.computeEdges();

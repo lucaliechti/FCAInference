@@ -24,6 +24,7 @@ public class Lattice {
 	private HashMap<String, ArrayList<FormalObject>> bookkeeping; //used to calculate the number of NULLs and legacy values
 	private ArrayList<FormalObject> removedSingletons;
 	private ContextCleanser cc;
+	private long time;
 	
 	public Lattice(Dictionary _dic) {
 		this.nodes = new ArrayList<LatticeNode>();
@@ -35,6 +36,7 @@ public class Lattice {
 		this.bookkeeping = null;
 		this.removedSingletons = new ArrayList<FormalObject>();
 		this.cc = new ContextCleanser(_dic);
+		this.time = 0;
 	}
 	
 	public void clear() {
@@ -47,10 +49,20 @@ public class Lattice {
 	public String latticeStats() { 
 //		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() 
 //		+ "\tclusterIndex: " + String.format("%.3f", clusterIndex()) + "\tcleanliness: " + String.format("%.1f", cleanliness()) + "%";
-		return nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", cleanliness())
-		+ "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage());
+		return numberOfAttributes() + "\t" + nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", cleanliness())
+		+ "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage()) + "\t" + time;
 	}
 	
+	private int numberOfAttributes() {
+		BitSet ORset = new BitSet(dic.getSize());
+		for(LatticeNode node : nodes){
+			for(FormalObject obj : node.ownObjects()) {
+				ORset.or(obj.getIntent());
+			}
+		}
+		return ORset.cardinality();
+	}
+
 	public void addNode(LatticeNode node) {
 		node.setNodeNumber(++currentNodeNumber);
 		nodes.add(node);
@@ -362,7 +374,7 @@ public class Lattice {
 		int nulls = 0;
 		for(String hash : bookkeeping.keySet()){
 			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
-			BitSet archetype = findArchetype(hash, nodeObjects);
+			BitSet archetype = bitsetFromHash(hash/*, nodeObjects*/);
 //			System.out.println(archetype);
 			for(FormalObject comp : nodeObjects){
 				BitSet nullSet = (BitSet)archetype.clone();
@@ -378,7 +390,7 @@ public class Lattice {
 		int legacies = 0;
 		for(String hash : bookkeeping.keySet()){
 			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
-			BitSet archetype = findArchetype(hash, nodeObjects);
+			BitSet archetype = bitsetFromHash(hash/*, nodeObjects*/);
 			for(FormalObject comp : nodeObjects){
 				BitSet legSet = (BitSet)archetype.clone();
 				legSet.xor(comp.getIntent());
@@ -389,12 +401,18 @@ public class Lattice {
 		return legacies;
 	}
 	
-	private BitSet findArchetype(String hash, ArrayList<FormalObject> objectArray) {
-		for(FormalObject obj : objectArray){
-			if(cc.bitsetHash(obj.getIntent()).equals(hash))
-				return (BitSet)obj.getIntent().clone();
+	private BitSet bitsetFromHash(String hash/*, ArrayList<FormalObject> objectArray*/) {
+//		for(FormalObject obj : objectArray){
+//			if(cc.bitsetHash(obj.getIntent()).equals(hash))
+//				return (BitSet)obj.getIntent().clone();
+//		}
+//		return null;
+		BitSet set = new BitSet(hash.length());
+		for(int i = 0; i < hash.length(); i++){
+			if(hash.charAt(i) == '1')
+				set.set(i);
 		}
-		return null;
+		return set;
 	}
 	
 	private double nullPercentage() {
@@ -413,11 +431,11 @@ public class Lattice {
 		for(FormalObject single : removedSingletons) {
 			LatticeNode bestFit = findBestNodeFit(single);//find suitable latticeNode WITH own objects for each formalObject in singleton array.
 			//add the objects to those nodes. TODO: Does this really have to require two function calls?
+			single.setIntent(bestFit.getIntent());/////////////////////////////////////////////////////
 			bestFit.addObject(single);
 			bestFit.addToOwnObjects(single);
 			//update the bookkeeping datastructure, ie. add the formalObject to the hash of the closest node. Do not re-compute anything.
-			try{bookkeeping.get(cc.bitsetHash(bestFit.getIntent())).add(single);}
-			catch (NullPointerException npe) {System.out.println("best Fit for " + single.getIntent() + " (" + cc.bitsetHash(single.getIntent()) + ": " + bestFit.getIntent() + "(" + cc.bitsetHash(bestFit.getIntent()) + ")");}
+			bookkeeping.get(cc.bitsetHash(bestFit.getIntent())).add(single);
 		}
 	}
 
@@ -440,5 +458,9 @@ public class Lattice {
 		assert (bestFit != null);
 //		System.out.println("Retrofitting " + single.getIntent() + " into " + bestFit.getIntent() + " (score = " + bestFitScore + ", own = " + bestFitOwnObjects + ")");
 		return bestFit;
+	}
+
+	public void setTime(long timeElapsed) {
+		this.time = timeElapsed;
 	}
 }

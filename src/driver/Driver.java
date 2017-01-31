@@ -21,17 +21,17 @@ public class Driver {
 		
 		//CONFIGURE HERE
 		double mergeStop = 0d;
-		Boolean retroFitSingletons = false;
 		Boolean deleteRareAttributes = true;
+		Boolean retroFitSingletons = true;
 		
 //		//add XML repos
 //		docs.add(repoFolder + "XML\\mondial.xml");
 //		docs.add(repoFolder + "XML\\SigmodRecord.xml");
 //		docs.add(repoFolder + "XML\\ebay.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
-//		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
-//		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");			//
-//		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");			//
+		docs.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");		//
+		docs.add(repoFolder + "XML\\DBLP\\316NoSql.xml");			//
+		docs.add(repoFolder + "XML\\DBLP\\1000FCA.xml");			//
+		docs.add(repoFolder + "XML\\DBLP\\1000Schema.xml");			//
 		
 		//add IESL repos
 //		docs.add(ieslFolder + "gp-bibliography.bib");
@@ -40,19 +40,19 @@ public class Driver {
 		//add BibTex repos
 //		docs.add(repoFolder + "BibTex\\BordatTest.bib");
 //		docs.add(repoFolder + "BibTex\\Test2.bib");
-//		docs.add(repoFolder + "BibTex\\scg.bib");					//
-//		docs.add(repoFolder + "BibTex\\listb.bib");					//
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
-//		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+		docs.add(repoFolder + "BibTex\\scg.bib");					//
+		docs.add(repoFolder + "BibTex\\listb.bib");					//
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");	//
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");		//
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");	//
+		docs.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");		//
 		
 //		//add JSON repos
-//		docs.add(repoFolder + "JSON\\SIRA\\alle.js");				//
+		docs.add(repoFolder + "JSON\\SIRA\\alle.js");				//
 
 		//PARSING SINGLE FILES
-//		for(String doc : docs)
-//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop);
+		for(String doc : docs)
+			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop);
 		
 		//PARSING ALL FILES IN FOLDER
 		parseFolder(folder, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop);
@@ -72,8 +72,8 @@ public class Driver {
 		Lattice lattice = lb.buildLattice();
 		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
 		
-		System.out.println("\nNr\tScore\tNodes\tWithOwn\tedges\tindex\tclean\tnull\tleg");
-		System.out.println("-------------------------------------------------------------------");
+		System.out.println("\nNr\tScore\tAttr\tNodes\tWithOwn\tedges\tindex\tclean\tnull\tleg\ttime");
+		System.out.println("-----------------------------------------------------------------------------------");
 		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
 		
@@ -98,7 +98,7 @@ public class Driver {
 	
 		///TINKER///
 		double score = cc.tinker();
-		int i = 0;
+		int i = 1;
 		while(score > mergeStop) {
 			lattice.clear();
 			lattice = lb.buildLattice();
@@ -106,6 +106,7 @@ public class Driver {
 			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
 			score = cc.tinker();
 		}
+		System.out.println("final (" + (--i) + ")\t" + lattice.latticeStats());
 		
 		///SINGLETONS PT. 2///
 		if(retroFitSingletons) {
@@ -114,7 +115,7 @@ public class Driver {
 			lattice.exportLatticeToFile(graphvizFolder + i + "_retroFit_" + parser.getTargetLatticeFilename(doc));
 		}
 		
-		System.out.println("-------------------------------------------------------------------\n\n");
+		System.out.println("-----------------------------------------------------------------------------------\n\n");
 	}
 	
 	private static void parseFolder(String inFolder, String outFolder, String gvFolder, ParserFactory fac, Boolean retroFitSingletons, Boolean deleteRareAttributes, double mergeStop) {
