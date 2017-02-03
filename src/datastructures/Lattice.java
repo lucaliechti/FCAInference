@@ -18,6 +18,7 @@ public class Lattice {
 	private ArrayList<LatticeNode> nodes;
 	private ArrayList<LatticeEdge> edges;
 	private HashMap<Integer, ArrayList<LatticeNode>> nodesByLevel;
+	private FormalContext context;
 	private int currentNodeNumber;
 	private Dictionary dic;
 	private BitSet lastMergedInto; //used to keep track of which node has last been merged into in the tinker algorithm
@@ -26,9 +27,10 @@ public class Lattice {
 	private ContextCleanser cc;
 	private long time;
 	
-	public Lattice(Dictionary _dic) {
+	public Lattice(Dictionary _dic, FormalContext _context) {
 		this.nodes = new ArrayList<LatticeNode>();
 		this.edges = new ArrayList<LatticeEdge>();
+		this.context = _context;
 		this.currentNodeNumber = 0;
 		this.dic = _dic;
 		this.nodesByLevel = new HashMap<Integer, ArrayList<LatticeNode>>();
@@ -49,8 +51,9 @@ public class Lattice {
 	public String latticeStats() { 
 //		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() 
 //		+ "\tclusterIndex: " + String.format("%.3f", clusterIndex()) + "\tcleanliness: " + String.format("%.1f", cleanliness()) + "%";
-		return numberOfAttributes() + "\t" + nodes.size() + "\t" + nodesWithOwnObjects() + "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", cleanliness())
-		+ "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage()) + "\t" + time;
+		return context.getObjects().size() + "\t" + types() + "\t" + numberOfAttributes() + "\t" + nodes.size() + "\t" + nodesWithOwnObjects() 
+		+ "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", inMajority())
+		+ "\t" + String.format("%.1f", inCleanNodes()) + "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage()) + "\t" + time;
 	}
 	
 	private int numberOfAttributes() {
@@ -315,7 +318,7 @@ public class Lattice {
 		this.lastMergedInto = intent;
 	}
 	
-	public double cleanliness() {
+	public double inMajority() {
 		int majority = 0;
 		int total = 0;
 		for(LatticeNode node : nodes) {
@@ -325,6 +328,19 @@ public class Lattice {
 			}
 		}
 		return ((double)majority/(double)total)*100;
+	}
+	
+	public double inCleanNodes() {
+		int inClean = 0;
+		int total = 0;
+		for(LatticeNode node : nodes) {
+			if(node.hasOwnObjects()){
+				if(node.typesOfFormalObjects(node.ownObjects()).substring(0,4).equals("100%"))
+					inClean += node.numberOfOwnObjects();
+				total += node.numberOfOwnObjects();
+			}
+		}
+		return ((double)inClean/(double)total)*100;
 	}
 	
 	public Boolean bookkeepingIsNull() {
@@ -436,6 +452,7 @@ public class Lattice {
 			bestFit.addToOwnObjects(single);
 			//update the bookkeeping datastructure, ie. add the formalObject to the hash of the closest node. Do not re-compute anything.
 			bookkeeping.get(cc.bitsetHash(bestFit.getIntent())).add(single);
+			context.addObject(single);
 		}
 	}
 
@@ -458,6 +475,13 @@ public class Lattice {
 		assert (bestFit != null);
 //		System.out.println("Retrofitting " + single.getIntent() + " into " + bestFit.getIntent() + " (score = " + bestFitScore + ", own = " + bestFitOwnObjects + ")");
 		return bestFit;
+	}
+	
+	public int types() {
+		HashSet<String> types = new HashSet<String>();
+		for(FormalObject obj : context.getObjects())
+			types.add(obj.getName());
+		return types.size();
 	}
 
 	public void setTime(long timeElapsed) {

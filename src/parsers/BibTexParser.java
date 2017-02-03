@@ -10,9 +10,9 @@ import datastructures.FormalObject;
 
 public class BibTexParser implements NoSQLParser {
 	
-	public ArrayList<FormalObject> parseFile(String file){
+	public ArrayList<FormalObject> parseFile(String file, int MAX_OBJECTS){
 		ArrayList<String> splitObjects = splitFile(file); //split the input file
-		return createFormalObjects(splitObjects); //extract attributes from split objects		
+		return createFormalObjects(splitObjects, MAX_OBJECTS); //extract attributes from split objects		
 	}
 
 	private ArrayList<String> splitFile(String file) {
@@ -45,7 +45,7 @@ public class BibTexParser implements NoSQLParser {
 		return splitString;
 	}
 	
-	private ArrayList<FormalObject> createFormalObjects(ArrayList<String> splitObjects) {
+	private ArrayList<FormalObject> createFormalObjects(ArrayList<String> splitObjects, int MAX_OBJECTS) {
 		ArrayList<FormalObject> parsedObjects = new ArrayList<FormalObject>();
 		System.out.print("Parsing objects to context... ");
 		//extract the attributes from each object
@@ -67,10 +67,11 @@ public class BibTexParser implements NoSQLParser {
 			}
 			currentObject.setAttributes(attributes);
 			currentObject.setName(name);
-			if(++k <= 200) //Comment in/out to look at all/n objects
+			if(MAX_OBJECTS == 0 || ++k <= MAX_OBJECTS)
 				parsedObjects.add(currentObject); 
 		}
 		System.out.println("done.");
+		assert (parsedObjects.size() <= MAX_OBJECTS);
 		return parsedObjects;
 	}
 

@@ -24,7 +24,7 @@ public class FormalContext {
 	}
 	
 	//the BitSet is created at the time of the object being added to the context
-	public void addObject(FormalObject object){
+	public void createAndAddObject(FormalObject object){
 		BitSet intent = new BitSet();
 		for(String attribute : object.getAttributes()){
 			if(!dic.containsAttribute(attribute))
@@ -34,6 +34,10 @@ public class FormalContext {
 		}
 		object.setIntent(intent);
 		objects.add(object);
+	}
+	
+	public void addObject(FormalObject obj) {
+		objects.add(obj);
 	}
 	
 	private void countAttribute(String attribute) {

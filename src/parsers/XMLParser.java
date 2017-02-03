@@ -19,14 +19,15 @@ public class XMLParser implements NoSQLParser {
 	private String wantedObjects = "info";
 	private String nameAttribute = "type";
 	
-	public ArrayList<FormalObject> parseFile(String file){
-		ArrayList<Element> wantedElements = extractElements(file); //split the input file
+	public ArrayList<FormalObject> parseFile(String file, int MAX_OBJECTS){
+		ArrayList<Element> wantedElements = extractElements(file, MAX_OBJECTS); //split the input file
 		return createFormalObjects(wantedElements); //extract attributes from split objects		
 	}
 
-	private ArrayList<Element> extractElements(String file) {
+	private ArrayList<Element> extractElements(String file, int MAX_OBJECTS) {
 		ArrayList<Element> wantedElements = new ArrayList<Element>();
 		ElementFilter ef = new ElementFilter();
+		int numberOfParsedObjects = 0;
 		try {
 			File inputFile = new File(file);
 			SAXBuilder saxBuilder = new SAXBuilder();
@@ -35,11 +36,15 @@ public class XMLParser implements NoSQLParser {
 			Iterator<Element> allElementsIterator = rootElement.getDescendants(ef);
 			while(allElementsIterator.hasNext()) {
 				Element currentElement = allElementsIterator.next();
-				if(currentElement.getName().equals(wantedObjects)) wantedElements.add(currentElement);
+				if(currentElement.getName().equals(wantedObjects) && (MAX_OBJECTS == 0 || MAX_OBJECTS < numberOfParsedObjects)) {
+					wantedElements.add(currentElement);
+					numberOfParsedObjects++;
+				}
 			}
 		}
 		catch (JDOMException e) { e.printStackTrace(); }
 		catch (IOException e) { e.printStackTrace(); }
+		assert ((MAX_OBJECTS == 0 || numberOfParsedObjects <= MAX_OBJECTS) && wantedElements.size() <= MAX_OBJECTS);
 		return wantedElements;
 	}
 	

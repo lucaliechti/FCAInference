@@ -20,7 +20,7 @@ public class LatticeBuilder {
 
 	public LatticeBuilder(FormalContext _context) {
 		this.context = _context;
-		this.lattice = new Lattice(_context.getDictionary());
+		this.lattice = new Lattice(_context.getDictionary(), _context);
 		this.alreadyAddedObjects = new ArrayList<FormalObject>();
 		this.maximalConcept = null;
 	}
@@ -30,10 +30,15 @@ public class LatticeBuilder {
 		//Norris algorithm
 		for(FormalObject g : context.getObjects()) add(g);
 		lattice.setTime(timer.timeElapsed());
+//		System.out.println("Added all objects in " + timer.timeElapsed() + " ms."); timer.reset();
 		addNodeWithAllAttributes();
+//		System.out.println("Added node with all attributes in " + timer.timeElapsed() + " ms."); timer.reset();
 		computeExtents();
+//		System.out.println("Computed extents in " + timer.timeElapsed() + " ms."); timer.reset();
 		lattice.computeEdges();
+//		System.out.println("Computed edges in " + timer.timeElapsed() + " ms."); timer.reset();
 		lattice.computeAttributes();
+//		System.out.println("Computed which attribute enters where in " + timer.timeElapsed() + " ms.");
 		if(lattice.bookkeepingIsNull()) lattice.initialiseBookkeeping();
 		alreadyAddedObjects.clear();
 		return lattice;

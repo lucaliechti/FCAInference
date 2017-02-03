@@ -167,7 +167,7 @@ public class LatticeNode {
 		return counts.get(majorityType);
 	}
 	
-	private String typesOfFormalObjects(HashSet<FormalObject> set) {
+	protected String typesOfFormalObjects(HashSet<FormalObject> set) {
 		if(set.size() > 0) {
 			HashMap<String, Integer> counts = countObjectTypes(set);
 			if(counts.keySet().size() == 1)

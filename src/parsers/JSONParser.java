@@ -17,9 +17,9 @@ public class JSONParser implements NoSQLParser {
 	private String nameAttribute = "file";
 
 	@Override
-	public ArrayList<FormalObject> parseFile(String file) {
+	public ArrayList<FormalObject> parseFile(String file, int MAX_OBJECTS) {
 		JSONArray jarray = extractJSONarray(file);
-		return(createFormalObjects(jarray));
+		return(createFormalObjects(jarray, MAX_OBJECTS));
 	}
 
 	private JSONArray extractJSONarray(String file) {
@@ -34,11 +34,12 @@ public class JSONParser implements NoSQLParser {
 		return array;
 	}
 	
-	private ArrayList<FormalObject> createFormalObjects(JSONArray jarray) {
+	private ArrayList<FormalObject> createFormalObjects(JSONArray jarray, int MAX_OBJECTS) {
 		ArrayList<FormalObject> parsedObjects = new ArrayList<FormalObject>();
 		System.out.print("Parsing objects to context... ");
+		if(MAX_OBJECTS == 0) MAX_OBJECTS = jarray.length();	//declare how many objects we want. If all, just parse the whole array
 		try{
-			for(int i = 0; i < jarray.length(); i++) {
+			for(int i = 0; i < MAX_OBJECTS; i++) {
 				FormalObject formalObj = new FormalObject();
 				ArrayList<String> formalAttr = new ArrayList<String>();
 				JSONObject obj = jarray.getJSONObject(i);
@@ -53,6 +54,7 @@ public class JSONParser implements NoSQLParser {
 		}
 		catch(JSONException jsone) { jsone.printStackTrace(); }
 		System.out.print("Done.");
+		assert (parsedObjects.size() <= MAX_OBJECTS);
 		return parsedObjects;
 	}
 

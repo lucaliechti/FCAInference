@@ -6,7 +6,7 @@ import datastructures.FormalObject;
 
 public interface NoSQLParser {
 	
-	public ArrayList<FormalObject> parseFile(String file);
+	public ArrayList<FormalObject> parseFile(String file, int nrObj);
 
 	public String getTargetContextFilename(String doc);
 	
