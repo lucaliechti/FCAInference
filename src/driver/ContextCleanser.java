@@ -61,7 +61,7 @@ public class ContextCleanser {
 //		System.out.println("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
 	}
 	
-	public double tinker() {
+	public double tinker(Boolean noOwnAttr) {
 		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
 		int[] levelArray = lattice.levelArray();
 		double highScore = 0.0;
@@ -81,23 +81,31 @@ public class ContextCleanser {
 //					}
 //				}
 				for(LatticeNode candidate : mergeCandidates) {
-					if(mergeScore(node, candidate) >= highScore) {
-						highScore = mergeScore(node, candidate);
+					double currentMergeScore = mergeScore(node, candidate, noOwnAttr);
+					if(currentMergeScore >= highScore) {
+						highScore = currentMergeScore;
 						firstNode = node;
 						secondNode = candidate;
 					}
 				}
 			}
 		}
-		if(highScore > 0.0) {
+		System.out.println("highscore = " + highScore);
+		//we are only merging nodes if they differ by no more than two attributes
+		if(highScore > 0.0 /*&& attributeDifference(firstNode, secondNode) <= 2*/) {///////////////super important stuff///////////////////
 			mergeInto(firstNode, secondNode);
+			return highScore;
 		}
-		return highScore;
+		return -1;
 	}
 
-	private double mergeScore(LatticeNode node, LatticeNode candidate) {
-		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() <= node.numberOfOwnObjects())
-			return 0.0;
+	private double mergeScore(LatticeNode node, LatticeNode candidate, Boolean noOwnAttr) {
+		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() < node.numberOfOwnObjects())
+			return 0d;
+		if(noOwnAttr && candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node)){//////////all new////////////
+			System.out.println("not merging into node with attribute(s) " + candidate.getNiceAttributes());
+			return 0d;
+		}
 		double ownObjectRatio = candidate.numberOfOwnObjects()/(double)node.numberOfOwnObjects();
 		double percentOfObjects = node.numberOfOwnObjects()/(double)context.getObjects().size()*100.0;
 		return ownObjectRatio/percentOfObjects;
@@ -158,5 +166,12 @@ public class ContextCleanser {
 			return hash.substring(0, dic.getSize());
 		else
 			return hash;
+	}
+	
+	//returns the number of attributes that are different in two lattice nodes
+	public int attributeDifference(LatticeNode node1, LatticeNode node2){
+		BitSet set1 = (BitSet)node1.getIntent().clone();
+		set1.xor(node2.getIntent());
+		return set1.cardinality();
 	}
 }

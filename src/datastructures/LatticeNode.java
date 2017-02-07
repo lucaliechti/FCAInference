@@ -206,4 +206,8 @@ public class LatticeNode {
 		}
 		return counts;
 	}
+	
+	public Boolean hasOwnAttributes() {
+		return ownAttributes.size() > 0;
+	}
 }

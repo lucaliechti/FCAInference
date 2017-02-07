@@ -11,13 +11,13 @@ import factories.ParserFactory;
 
 public class Driver {
 	public static void main(String[] args){
-		String folder200 = "C:\\Users\\Luca Liechti\\Desktop\\IESL200";
-		String folder2000 = "C:\\Users\\Luca Liechti\\Desktop\\IESL2000";
+		String iesl100 = "C:\\Users\\Luca Liechti\\Desktop\\IESL100";
+		String iesl1000 = "C:\\Users\\Luca Liechti\\Desktop\\IESL1000";
 		String repoFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\NoSQL repos\\";
 		String outputFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\context files\\";	
 		String graphvizFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\graphviz files\\";
-		ArrayList<String> docs200 = new ArrayList<String>();
-		ArrayList<String> docs2000 = new ArrayList<String>();
+		ArrayList<String> docs100 = new ArrayList<String>();
+		ArrayList<String> docs1000 = new ArrayList<String>();
 		ParserFactory factory = new ParserFactory();
 		
 		//CONFIGURE HERE
@@ -25,32 +25,39 @@ public class Driver {
 		Boolean deleteRareAttributes = false;
 		Boolean retroFitSingletons = false;
 		
-//		//add XML repos
-//		docs2000.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
-//		docs2000.add(repoFolder + "XML\\DBLP\\316NoSql.xml");
-//		docs2000.add(repoFolder + "XML\\DBLP\\1000FCA.xml");
-//		docs2000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
+		//add XML repos
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Complexity.xml");
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Database.xml");
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Inference.xml");
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Library.xml");
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add BibTex repos
-//		docs200.add(repoFolder + "BibTex\\scg.bib");
-//		docs200.add(repoFolder + "BibTex\\listb.bib");
-//		docs2000.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
-//		docs2000.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
-//		docs2000.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
-//		docs2000.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+//		docs100.add(repoFolder + "BibTex\\scg.bib");
+//		docs100.add(repoFolder + "BibTex\\listb.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Complexity.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Inference.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
+//		docs100.add(repoFolder + "BibTex\\zbMATH\\500.bib");
 		
-//		//add JSON repos
-		docs2000.add(repoFolder + "JSON\\SIRA\\alle.js");
+		//add JSON repos
+//		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
 
 		//PARSING SINGLE FILES
-		for(String doc : docs200)
-			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 200);
-		for(String doc : docs2000)
-			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 2000);
+//		for(String doc : docs100)
+//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 500);
+//		for(String doc : docs1000)
+//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
 		
 		//PARSING ALL FILES IN FOLDER
-//		parseFolder(folder200, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 200);
-//		parseFolder(folder2000, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 200);
+//		parseFolder(repoFolder + "BibTex\\zbMATH100", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
+		parseFolder(repoFolder + "BibTex\\zbMATH500", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 500);
+//		parseFolder(iesl100, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
+//		parseFolder(iesl1000, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
 		
 		System.out.println("All done.");
 	}
@@ -67,6 +74,9 @@ public class Driver {
 		Lattice lattice = lb.buildLattice();
 		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
 		
+		Boolean noOwnAttr = false; //prevent merges from happening into nodes with own attributes!
+		
+		String graphvizString = "::" + fileName(doc) + "\ndot \"" + graphvizFolder + "0a_original_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0a_original_" + fileName(doc) + ".png\"\n";
 		System.out.println("\nNr\tScore\tObjects\tTypes\tAttr\tNodes\tWithOwn\tedges\tindex\tmajor\tinClean\tnull\tleg\ttime");
 		System.out.println("------------------------------------------------------------------------------------------------------------");
 		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
@@ -79,7 +89,8 @@ public class Driver {
 			lattice = lb.buildLattice();
 			lattice.initialiseBookkeeping();
 			System.out.println("del\t---" + "\t" + lattice.latticeStats());	//if we have deleted rare attributes
-			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutRareAttributes_" + parser.getTargetLatticeFilename(doc));
+			lattice.exportLatticeToFile(graphvizFolder + "0b_withoutRareAttributes_" + parser.getTargetLatticeFilename(doc));
+			graphvizString += "dot \"" + graphvizFolder + "0b_withoutRareAttributes_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0b_withoutRareAttributes_" + fileName(doc) + ".png\"\n";
 		}
 		
 		///SINGLETONS PT. 1///
@@ -88,18 +99,20 @@ public class Driver {
 			lattice.clear();
 			lattice = lb.buildLattice();
 			System.out.println("noSing\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
-			lattice.exportLatticeToFile(graphvizFolder + "0b_withoutSingletons_" + parser.getTargetLatticeFilename(doc));
+			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutSingletons_" + parser.getTargetLatticeFilename(doc));
+			graphvizString += "dot \"" + graphvizFolder + "0c_withoutSingletons_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0c_withoutSingletons_" + fileName(doc) + ".png\"\n";
 		}
 	
 		///TINKER///
-		double score = cc.tinker();
+		double score = cc.tinker(noOwnAttr);
 		int i = 1;
 		while(score > mergeStop) {
 			lattice.clear();
 			lattice = lb.buildLattice();
-//			System.out.println(i + "\t" + String.format("%.2f", score) + "\t" + lattice.latticeStats());
+			System.out.println(i + "\t" + String.format("%.1f", score) + "\t" + lattice.latticeStats());
 			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
-			score = cc.tinker();
+			graphvizString += "dot \"" + graphvizFolder + (i-1) + "_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\" + (i-1) + "_" + fileName(doc) + ".png\"\n";
+			score = cc.tinker(noOwnAttr);
 		}
 		if(!retroFitSingletons) System.out.println("final (" + (--i) + ")\t" + lattice.latticeStats());
 		
@@ -108,9 +121,12 @@ public class Driver {
 			lattice.retrofitSingletons();
 			System.out.println("retfit\t\t" + lattice.latticeStats());
 			lattice.exportLatticeToFile(graphvizFolder + i + "_retroFit_" + parser.getTargetLatticeFilename(doc));
+			graphvizString += "dot \"" + graphvizFolder + i + "_retroFit_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\" + i + "_retroFit_" + fileName(doc) + ".png\"\n";
 		}
 		
+		graphvizString += "\n";
 		System.out.println("------------------------------------------------------------------------------------------------------------\n\n");
+		System.out.println(graphvizString);
 	}
 	
 	private static void parseFolder(String inFolder, String outFolder, String gvFolder, ParserFactory fac, Boolean retroFitSingletons, Boolean deleteRareAttributes, double mergeStop, int obj) {
@@ -119,5 +135,9 @@ public class Driver {
 		String[] inFiles = fold.list();
 		for(int i = 0; i < inFiles.length; i++)
 			parseDocument(inFolder + "\\" + inFiles[i], outFolder, gvFolder, fac.makeParser(inFiles[i]), retroFitSingletons, deleteRareAttributes, mergeStop, obj);
+	}
+
+	private static String fileName(String path) {
+		return path.substring(path.lastIndexOf("\\")+1, path.length()-4);
 	}
 }

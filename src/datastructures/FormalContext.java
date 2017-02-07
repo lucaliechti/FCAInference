@@ -49,9 +49,9 @@ public class FormalContext {
 
 	public void exportContextToFile(String outputFile){
 		String exportString = createCXTString();
-		System.out.print("Writing context to file... ");
+//		System.out.print("Writing context to file... ");
 		writeToFile(exportString, outputFile);
-		System.out.println("done.");
+//		System.out.println("done.");
 	}
 
 	private void writeToFile(String exportString, String outputFile) {

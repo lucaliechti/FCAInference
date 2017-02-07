@@ -47,7 +47,8 @@ public class BibTexParser implements NoSQLParser {
 	
 	private ArrayList<FormalObject> createFormalObjects(ArrayList<String> splitObjects, int MAX_OBJECTS) {
 		ArrayList<FormalObject> parsedObjects = new ArrayList<FormalObject>();
-		System.out.print("Parsing objects to context... ");
+//		System.out.print("Parsing objects to context... ");
+		
 		//extract the attributes from each object
 		//for simplicity's sake, we assume that the '=' character only ever appears as separator between attribute and value
 		int k = 0;
@@ -70,7 +71,7 @@ public class BibTexParser implements NoSQLParser {
 			if(MAX_OBJECTS == 0 || ++k <= MAX_OBJECTS)
 				parsedObjects.add(currentObject); 
 		}
-		System.out.println("done.");
+//		System.out.println("done.");
 		assert (parsedObjects.size() <= MAX_OBJECTS);
 		return parsedObjects;
 	}
@@ -82,6 +83,6 @@ public class BibTexParser implements NoSQLParser {
 
 	@Override
 	public String getTargetLatticeFilename(String doc) {
-		return "bib_" + doc.substring(doc.lastIndexOf("\\")+1, doc.length()-4) + ".dot";
+		return doc.substring(doc.lastIndexOf("\\")+1, doc.length()-4) + ".dot";
 	}
 }

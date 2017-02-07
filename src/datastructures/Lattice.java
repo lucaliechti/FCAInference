@@ -49,13 +49,12 @@ public class Lattice {
 	}
 
 	public String latticeStats() { 
-//		return "Nodes: " + nodes.size() + "\twith own objects: " + nodesWithOwnObjects() + "\tedges: " + edges.size() 
-//		+ "\tclusterIndex: " + String.format("%.3f", clusterIndex()) + "\tcleanliness: " + String.format("%.1f", cleanliness()) + "%";
 		return context.getObjects().size() + "\t" + types() + "\t" + numberOfAttributes() + "\t" + nodes.size() + "\t" + nodesWithOwnObjects() 
 		+ "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", inMajority())
 		+ "\t" + String.format("%.1f", inCleanNodes()) + "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage()) + "\t" + time;
 	}
 	
+
 	private int numberOfAttributes() {
 		BitSet ORset = new BitSet(dic.getSize());
 		for(LatticeNode node : nodes){

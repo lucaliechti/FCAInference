@@ -36,7 +36,7 @@ public class XMLParser implements NoSQLParser {
 			Iterator<Element> allElementsIterator = rootElement.getDescendants(ef);
 			while(allElementsIterator.hasNext()) {
 				Element currentElement = allElementsIterator.next();
-				if(currentElement.getName().equals(wantedObjects) && (MAX_OBJECTS == 0 || MAX_OBJECTS < numberOfParsedObjects)) {
+				if(currentElement.getName().equals(wantedObjects) && (MAX_OBJECTS == 0 || numberOfParsedObjects < MAX_OBJECTS)) {
 					wantedElements.add(currentElement);
 					numberOfParsedObjects++;
 				}
@@ -50,7 +50,8 @@ public class XMLParser implements NoSQLParser {
 	
 	private ArrayList<FormalObject> createFormalObjects(ArrayList<Element> elements) {
 		ArrayList<FormalObject> parsedObjects = new ArrayList<FormalObject>();
-		System.out.print("Parsing objects to context... ");
+//		System.out.print("Parsing objects to context... ");
+		
 		//extract the attributes from each object
 		for(Element el : elements){
 			FormalObject object = new FormalObject();
@@ -65,7 +66,7 @@ public class XMLParser implements NoSQLParser {
 			object.setName(el.getChildTextNormalize(nameAttribute)); //... which child element is the name (comment one line out)
 			parsedObjects.add(object);
 		}
-		System.out.println("done.");
+//		System.out.println("done.");
 		return parsedObjects;
 	}
 	
@@ -76,6 +77,6 @@ public class XMLParser implements NoSQLParser {
 
 	@Override
 	public String getTargetLatticeFilename(String doc) {
-		return "xml_" + doc.substring(doc.lastIndexOf("\\")+1, doc.length()-4) + ".dot";
+		return doc.substring(doc.lastIndexOf("\\")+1, doc.length()-4) + ".dot";
 	}
 }
