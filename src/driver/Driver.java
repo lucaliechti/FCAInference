@@ -23,7 +23,7 @@ public class Driver {
 		//CONFIGURE HERE
 		double mergeStop = 0d;
 		Boolean deleteRareAttributes = false;
-		Boolean retroFitSingletons = false;
+		Boolean retroFitSingletons = true;
 		
 		//add XML repos
 		docs1000.add(repoFolder + "XML\\DBLP\\1000Complexity.xml");
@@ -34,8 +34,8 @@ public class Driver {
 		docs1000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add BibTex repos
-//		docs100.add(repoFolder + "BibTex\\scg.bib");
-//		docs100.add(repoFolder + "BibTex\\listb.bib");
+		docs100.add(repoFolder + "BibTex\\scg.bib");
+		docs100.add(repoFolder + "BibTex\\listb.bib");
 //		docs100.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
 //		docs100.add(repoFolder + "BibTex\\zbMATH\\100Complexity.bib");
 //		docs100.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
@@ -45,18 +45,18 @@ public class Driver {
 //		docs100.add(repoFolder + "BibTex\\zbMATH\\500.bib");
 		
 		//add JSON repos
-//		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
+		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
 
-		//PARSING SINGLE FILES
+//		//PARSING SINGLE FILES
 //		for(String doc : docs100)
-//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 500);
+//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 100);
 //		for(String doc : docs1000)
 //			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
 		
 		//PARSING ALL FILES IN FOLDER
 //		parseFolder(repoFolder + "BibTex\\zbMATH100", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
-		parseFolder(repoFolder + "BibTex\\zbMATH500", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 500);
-//		parseFolder(iesl100, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
+//		parseFolder(repoFolder + "BibTex\\zbMATH500", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 500);
+		parseFolder(iesl100, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
 //		parseFolder(iesl1000, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
 		
 		System.out.println("All done.");
@@ -74,7 +74,7 @@ public class Driver {
 		Lattice lattice = lb.buildLattice();
 		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
 		
-		Boolean noOwnAttr = false; //prevent merges from happening into nodes with own attributes!
+		Boolean noOwnAttr = true; //prevent merges from happening into nodes with own attributes!
 		
 		String graphvizString = "::" + fileName(doc) + "\ndot \"" + graphvizFolder + "0a_original_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0a_original_" + fileName(doc) + ".png\"\n";
 		System.out.println("\nNr\tScore\tObjects\tTypes\tAttr\tNodes\tWithOwn\tedges\tindex\tmajor\tinClean\tnull\tleg\ttime");
@@ -93,15 +93,25 @@ public class Driver {
 			graphvizString += "dot \"" + graphvizFolder + "0b_withoutRareAttributes_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0b_withoutRareAttributes_" + fileName(doc) + ".png\"\n";
 		}
 		
-		///SINGLETONS PT. 1///
+//		///SINGLETONS PT. 1 VERSION 1///
+//		if(retroFitSingletons){
+//			cc.removeSingletonObjects();
+//			lattice.clear();
+//			lattice = lb.buildLattice();
+//			System.out.println("noSing1\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
+//			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutSingletons_" + parser.getTargetLatticeFilename(doc));
+//			graphvizString += "dot \"" + graphvizFolder + "0c_withoutSingletons_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0c_withoutSingletons_" + fileName(doc) + ".png\"\n";
+//		}
+		
+		///SINGLETONS PT. 1 VERSION 2///
 		if(retroFitSingletons){
-			cc.removeSingletonObjects();
+			cc.removeActualSingletonObjects();
 			lattice.clear();
 			lattice = lb.buildLattice();
-			System.out.println("noSing\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
-			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutSingletons_" + parser.getTargetLatticeFilename(doc));
-			graphvizString += "dot \"" + graphvizFolder + "0c_withoutSingletons_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0c_withoutSingletons_" + fileName(doc) + ".png\"\n";
-		}
+			System.out.println("noSing2\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
+			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutSingletons2_" + parser.getTargetLatticeFilename(doc));
+			graphvizString += "dot \"" + graphvizFolder + "0c_withoutSingletons2_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0c_withoutSingletons2_" + fileName(doc) + ".png\"\n";
+		}		
 	
 		///TINKER///
 		double score = cc.tinker(noOwnAttr);
@@ -114,7 +124,7 @@ public class Driver {
 			graphvizString += "dot \"" + graphvizFolder + (i-1) + "_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\" + (i-1) + "_" + fileName(doc) + ".png\"\n";
 			score = cc.tinker(noOwnAttr);
 		}
-		if(!retroFitSingletons) System.out.println("final (" + (--i) + ")\t" + lattice.latticeStats());
+		System.out.println("final (" + (--i) + ")\t" + lattice.latticeStats());
 		
 		///SINGLETONS PT. 2///
 		if(retroFitSingletons) {

@@ -210,4 +210,17 @@ public class LatticeNode {
 	public Boolean hasOwnAttributes() {
 		return ownAttributes.size() > 0;
 	}
+	
+	//returns true if any parent or child node of this node has at least 1 own object.
+	public Boolean isConnected() {
+		for(LatticeNode upper : upperNeighbours()) {
+			if(upper.hasOwnObjects())
+				return true;
+		}
+		for(LatticeNode lower : lowerNeighbours()) {
+			if(lower.hasOwnObjects())
+				return true;
+		}
+		return false;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 import datastructures.Dictionary;
 import datastructures.FormalContext;
@@ -48,17 +49,13 @@ public class ContextCleanser {
 		final int TRESHOLD = supportArray[treshold];
 		System.out.print("Deleted attributes (Treshold = " + TRESHOLD + "): ");
 //		System.out.println("Deleting all attributes that occur at most " + TRESHOLD + " times.");
-//		int deleted = 0;
-//		System.out.print("Nr of attributes before: " + context.numberOfAttributes() + "\n");
 		for(String attr : context.getDictionary().getContents()){
 			if(attributeSupport.get(attr) <= TRESHOLD){
-//				deleted++;
 				System.out.print(attr + " // ");
 				context.removeAttribute(attr);
 			}
 		}
 		System.out.println("");
-//		System.out.println("Nr of attributes after:  " + (context.numberOfAttributes()-deleted) + "\t");
 	}
 	
 	public double tinker(Boolean noOwnAttr) {
@@ -90,7 +87,7 @@ public class ContextCleanser {
 				}
 			}
 		}
-		System.out.println("highscore = " + highScore);
+//		System.out.println("highscore = " + highScore);
 		//we are only merging nodes if they differ by no more than two attributes
 		if(highScore > 0.0 /*&& attributeDifference(firstNode, secondNode) <= 2*/) {///////////////super important stuff///////////////////
 			mergeInto(firstNode, secondNode);
@@ -102,13 +99,14 @@ public class ContextCleanser {
 	private double mergeScore(LatticeNode node, LatticeNode candidate, Boolean noOwnAttr) {
 		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() < node.numberOfOwnObjects())
 			return 0d;
-		if(noOwnAttr && candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node)){//////////all new////////////
-			System.out.println("not merging into node with attribute(s) " + candidate.getNiceAttributes());
+		if(noOwnAttr && ((candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node)) 
+					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate)))){//////////all new. Very test////////////		)){//
+//			System.out.println("not merging into node with attribute(s) " + candidate.getNiceAttributes());
 			return 0d;
 		}
 		double ownObjectRatio = candidate.numberOfOwnObjects()/(double)node.numberOfOwnObjects();
 		double percentOfObjects = node.numberOfOwnObjects()/(double)context.getObjects().size()*100.0;
-		return ownObjectRatio/percentOfObjects;
+		return ownObjectRatio/(double)node.numberOfOwnObjects(); //was divided by percent of objects before. Test
 	}
 	
 	private void mergeInto(LatticeNode firstNode, LatticeNode secondNode) {
@@ -121,28 +119,14 @@ public class ContextCleanser {
 	}
 
 	public void removeSingletonObjects() {
-		HashMap<Integer, ArrayList<FormalObject>> nodeArray = new HashMap<Integer, ArrayList<FormalObject>>();
-		int i = 0;
-//		int k = context.getObjects().size();
-		//fill node array
-		for(FormalObject obj : context.getObjects()) {
-			if(nodeArray.containsKey(obj.getIntent().hashCode()))
-				nodeArray.get(obj.getIntent().hashCode()).add(obj);
-			else {
-				ArrayList<FormalObject> newArray = new ArrayList<FormalObject>();
-				newArray.add(obj);
-				nodeArray.put(obj.getIntent().hashCode(), newArray);
+		for(LatticeNode node : lattice.getNodes()){
+			if(node.numberOfOwnObjects() == 1){
+				Iterator<FormalObject> it = node.ownObjects().iterator();
+				FormalObject obj = it.next(); //super awkward
+				context.getObjects().remove(obj);
+				lattice.addToRemovedSingletons(obj);
 			}
 		}
-		//delete singleton objects from context
-		for(int hash : nodeArray.keySet()) {
-			if(nodeArray.get(hash).size() == 1){
-				context.getObjects().remove(nodeArray.get(hash).get(0));
-				lattice.addToRemovedSingletons(nodeArray.get(hash).get(0));
-				i++;
-			}
-		}
-//		System.out.println("Removed " + i + "/" + k + " objects from context.");
 	}
 	
 	//creates a String from a BitSet where true = 1 and false = 0.
@@ -173,5 +157,16 @@ public class ContextCleanser {
 		BitSet set1 = (BitSet)node1.getIntent().clone();
 		set1.xor(node2.getIntent());
 		return set1.cardinality();
+	}
+
+	public void removeActualSingletonObjects() {
+		for(LatticeNode node : lattice.getNodes()){
+			if(node.numberOfOwnObjects() == 1 && !node.isConnected()){ //we try this out
+				Iterator<FormalObject> it = node.ownObjects().iterator();
+				FormalObject obj = it.next();
+				context.getObjects().remove(obj);
+				lattice.addToRemovedSingletons(obj);
+			}
+		}
 	}
 }

@@ -91,7 +91,7 @@ public class Lattice {
 			+ "ext.: " + node.numberOfObjects() + " (" + node.typesOfExtent() + ") "
 			+ "\nown: " + node.numberOfOwnObjects()  + " (" + node.typesOfOwnObjects() + ") "
 //			+ "\n merges into : " + node.mergesInto()
-			+ "\"" + peripheries(node) + color(node) + "]\n";
+			+ "\"" + peripheries(node) + /*color(node) +*/ "]\n";
 		for(LatticeEdge edge: edges)
 			latticeString += edge.getLowerNodeNumber() + "->" + edge.getUpperNodeNumber() + ";\n";
 		latticeString += "}";
