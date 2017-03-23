@@ -89,7 +89,7 @@ public class ContextCleanser {
 		}
 //		System.out.println("highscore = " + highScore);
 		//we are only merging nodes if they differ by no more than two attributes
-		if(highScore > 0.0 /*&& attributeDifference(firstNode, secondNode) <= 2*/) {///////////////super important stuff///////////////////
+		if(highScore > 0.0 && attributeDifference(firstNode, secondNode) <= 2) {///////////////super important stuff///////////////////
 			mergeInto(firstNode, secondNode);
 			return highScore;
 		}
@@ -99,8 +99,8 @@ public class ContextCleanser {
 	private double mergeScore(LatticeNode node, LatticeNode candidate, Boolean noOwnAttr) {
 		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() < node.numberOfOwnObjects())
 			return 0d;
-		if(noOwnAttr && ((candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node)) 
-					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate)))){//////////all new. Very test////////////		)){//
+		if(noOwnAttr && ((candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node) /*&& !node.isTopNode()*/) 
+					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate) /*&& !candidate.isTopNode()*/))){//////////all new. Very test////////////		)){//
 //			System.out.println("not merging into node with attribute(s) " + candidate.getNiceAttributes());
 			return 0d;
 		}

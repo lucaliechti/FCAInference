@@ -26,6 +26,7 @@ public class Lattice {
 	private ArrayList<FormalObject> removedSingletons;
 	private ContextCleanser cc;
 	private long time;
+	private int attributeCardinality;
 	
 	public Lattice(Dictionary _dic, FormalContext _context) {
 		this.nodes = new ArrayList<LatticeNode>();
@@ -51,7 +52,7 @@ public class Lattice {
 	public String latticeStats() { 
 		return context.getObjects().size() + "\t" + types() + "\t" + numberOfAttributes() + "\t" + nodes.size() + "\t" + nodesWithOwnObjects() 
 		+ "\t" + edges.size() + "\t" + String.format("%.3f", clusterIndex()) + "\t" + String.format("%.1f", inMajority())
-		+ "\t" + String.format("%.1f", inCleanNodes()) + "\t" + String.format("%.1f", nullPercentage()) + "\t" + String.format("%.1f", legacyPercentage()) + "\t" + time;
+		+ "\t" + String.format("%.1f", inCleanNodes()) + "\t" + String.format("%.3f", nullPercentage()) + "\t" + String.format("%.3f", legacyPercentage()) + "\t" + time;
 	}
 	
 
@@ -378,11 +379,11 @@ public class Lattice {
 		bookkeeping.remove(mergeeHash);
 	}
 	
-	private int totalCardinality() {
+	public void computeAttributeCardinality() {
 		int card = 0;
 		for(LatticeNode node : nodes)
 			card += node.getIntent().cardinality()*node.numberOfOwnObjects();
-		return card;
+		attributeCardinality = card;
 	}
 	
 	private int nulls() {
@@ -401,6 +402,17 @@ public class Lattice {
 		return nulls;
 	}
 	
+	private int totalTableSize() {
+		int size = 0;
+		for(String hash : bookkeeping.keySet()) {
+			BitSet archetype = bitsetFromHash(hash);
+			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
+			System.out.println(archetype + "(" + archetype.cardinality() + ")*" + nodeObjects.size());
+			size += (archetype.cardinality()*nodeObjects.size());
+		}
+		return size;
+	}
+	
 	private int legacies() {
 		int legacies = 0;
 		for(String hash : bookkeeping.keySet()){
@@ -410,18 +422,14 @@ public class Lattice {
 				BitSet legSet = (BitSet)archetype.clone();
 				legSet.xor(comp.getIntent());
 				legSet.and(comp.getIntent());
+//				System.out.println("legset = " + legSet + ", comp = " + comp.getIntent() + ", legacies um " + legSet.cardinality() + " erhöht");			///////////////
 				legacies += legSet.cardinality();
 			}
 		}
 		return legacies;
 	}
 	
-	private BitSet bitsetFromHash(String hash/*, ArrayList<FormalObject> objectArray*/) {
-//		for(FormalObject obj : objectArray){
-//			if(cc.bitsetHash(obj.getIntent()).equals(hash))
-//				return (BitSet)obj.getIntent().clone();
-//		}
-//		return null;
+	private BitSet bitsetFromHash(String hash) {
 		BitSet set = new BitSet(hash.length());
 		for(int i = 0; i < hash.length(); i++){
 			if(hash.charAt(i) == '1')
@@ -431,11 +439,14 @@ public class Lattice {
 	}
 	
 	private double nullPercentage() {
-		return (double)nulls()/(double)totalCardinality()*100;
+//		return (double)nulls()/(double)(attributeCardinality+nulls())*100;
+		System.out.println(nulls() + "; " + totalTableSize());
+		return (double)nulls()/(double)(totalTableSize())*100;
 	}
 	
 	private double legacyPercentage() {
-		return (double)legacies()/(double)totalCardinality()*100;
+//		System.out.println("legacies: " + legacies() + ", total: " + attributeCardinality);																	///////////////
+		return (double)legacies()/(double)attributeCardinality*100; 
 	}
 
 	public void addToRemovedSingletons(FormalObject singleton) {

@@ -23,40 +23,34 @@ public class Driver {
 		//CONFIGURE HERE
 		double mergeStop = 0d;
 		Boolean deleteRareAttributes = false;
-		Boolean retroFitSingletons = true;
-		
-		//add XML repos
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Complexity.xml");
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Database.xml");
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Inference.xml");
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Library.xml");
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
+		Boolean retroFitSingletons = false;
 		
 		//add BibTex repos
-		docs100.add(repoFolder + "BibTex\\scg.bib");
-		docs100.add(repoFolder + "BibTex\\listb.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Algebra.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Complexity.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Groups.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Inference.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Lattice.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\100Schema.bib");
-//		docs100.add(repoFolder + "BibTex\\zbMATH\\500.bib");
+//		docs100.add(repoFolder + "BibTex\\scg.bib");
+//		docs1000.add(repoFolder + "BibTex\\listb.bib");
+		
+		//add XML repos
+//		docs1000.add(repoFolder + "XML\\DBLP\\1000Complexity.xml");
+//		docs1000.add(repoFolder + "XML\\DBLP\\1000Database.xml");
+//		docs1000.add(repoFolder + "XML\\DBLP\\1000Inference.xml");
+//		docs1000.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
+//		docs1000.add(repoFolder + "XML\\DBLP\\1000Library.xml");
+//		docs1000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add JSON repos
-		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
+//		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
+		docs100.add("C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\NoSQL repos\\BibTex\\Test\\RunningExample.bib");
 
-//		//PARSING SINGLE FILES
-//		for(String doc : docs100)
-//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 100);
+		//PARSING SINGLE FILES
+		for(String doc : docs100)
+			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 100);
 //		for(String doc : docs1000)
-//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
+//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 500);
 		
 		//PARSING ALL FILES IN FOLDER
 //		parseFolder(repoFolder + "BibTex\\zbMATH100", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
 //		parseFolder(repoFolder + "BibTex\\zbMATH500", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 500);
-		parseFolder(iesl100, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
+//		parseFolder(iesl100, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
 //		parseFolder(iesl1000, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
 		
 		System.out.println("All done.");
@@ -72,9 +66,10 @@ public class Driver {
 		
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
+		lattice.computeAttributeCardinality();
 		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
 		
-		Boolean noOwnAttr = true; //prevent merges from happening into nodes with own attributes!
+		Boolean noOwnAttr = false; //prevent merges from happening into nodes with own attributes!
 		
 		String graphvizString = "::" + fileName(doc) + "\ndot \"" + graphvizFolder + "0a_original_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0a_original_" + fileName(doc) + ".png\"\n";
 		System.out.println("\nNr\tScore\tObjects\tTypes\tAttr\tNodes\tWithOwn\tedges\tindex\tmajor\tinClean\tnull\tleg\ttime");
@@ -119,7 +114,7 @@ public class Driver {
 		while(score > mergeStop) {
 			lattice.clear();
 			lattice = lb.buildLattice();
-			System.out.println(i + "\t" + String.format("%.1f", score) + "\t" + lattice.latticeStats());
+			System.out.println(i + "\t" + String.format("%.1f", score) + "\t" + lattice.latticeStats()); /////////////////////this line makes everything super verbose!
 			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
 			graphvizString += "dot \"" + graphvizFolder + (i-1) + "_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\" + (i-1) + "_" + fileName(doc) + ".png\"\n";
 			score = cc.tinker(noOwnAttr);

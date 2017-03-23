@@ -51,6 +51,7 @@ public class LatticeBuilder {
 			FormalConcept maxConcept = computeMaximalConcept();
 			maximalConcept = maxConcept;
 			lattice.addNode(new LatticeNode(maxConcept.getExtent(), maxConcept.getIntent(), lattice.getDic()));
+			lattice.getNodes().get(0).setTopNode();
 		}
 		for(int i = 0; i < lattice.getNodes().size(); i++) {
 			LatticeNode ab = lattice.getNodes().get(i);

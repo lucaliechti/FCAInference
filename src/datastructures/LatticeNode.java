@@ -17,6 +17,7 @@ public class LatticeNode {
 	private HashSet<LatticeNode> lowerNeighbours;
 	private ArrayList<String> ownAttributes;
 	private Boolean mergedInto;
+	private Boolean topNode;
 	
 	public LatticeNode(HashSet<FormalObject> hashSet, BitSet intent, Dictionary _dic) {
 		this.intent = intent;
@@ -29,6 +30,7 @@ public class LatticeNode {
 		this.lowerNeighbours = new HashSet<LatticeNode>();
 		this.ownAttributes = new ArrayList<String>();
 		this.mergedInto = false;
+		this.topNode = false;
 	}
 	
 	public BitSet getIntent() {
@@ -159,6 +161,14 @@ public class LatticeNode {
 	
 	public boolean mergedInto() {
 		return mergedInto;
+	}
+	
+	public void setTopNode() {
+		this.topNode = true;
+	}
+	
+	public Boolean isTopNode() {
+		return topNode;
 	}
 	
 	public int majority() {
