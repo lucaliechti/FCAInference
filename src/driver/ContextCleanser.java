@@ -88,8 +88,7 @@ public class ContextCleanser {
 			}
 		}
 //		System.out.println("highscore = " + highScore);
-		//we are only merging nodes if they differ by no more than two attributes
-		if(highScore > 0.0 && attributeDifference(firstNode, secondNode) <= 2) {///////////////super important stuff///////////////////
+		if(highScore > 0.0 /*&& attributeDifference(firstNode, secondNode) <= 2*/) {///////////////super important stuff. first of three merge criteria! comment in/out '&&' and everything after. out = 0, in = 1///////////////////
 			mergeInto(firstNode, secondNode);
 			return highScore;
 		}
@@ -100,7 +99,7 @@ public class ContextCleanser {
 		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() < node.numberOfOwnObjects())
 			return 0d;
 		if(noOwnAttr && ((candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node) /*&& !node.isTopNode()*/) 
-					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate) /*&& !candidate.isTopNode()*/))){//////////all new. Very test////////////		)){//
+					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate) /*&& !candidate.isTopNode()*/))){//third criterion
 //			System.out.println("not merging into node with attribute(s) " + candidate.getNiceAttributes());
 			return 0d;
 		}

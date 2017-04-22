@@ -440,7 +440,7 @@ public class Lattice {
 	
 	private double nullPercentage() {
 //		return (double)nulls()/(double)(attributeCardinality+nulls())*100;
-		System.out.println(nulls() + "; " + totalTableSize());
+//		System.out.println(nulls() + "; " + totalTableSize());
 		return (double)nulls()/(double)(totalTableSize())*100;
 	}
 	

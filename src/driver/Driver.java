@@ -23,7 +23,7 @@ public class Driver {
 		//CONFIGURE HERE
 		double mergeStop = 0d;
 		Boolean deleteRareAttributes = false;
-		Boolean retroFitSingletons = false;
+		Boolean retroFitSingletons = false; //second merge criterion. false = 0, true = 1
 		
 		//add BibTex repos
 //		docs100.add(repoFolder + "BibTex\\scg.bib");
@@ -32,20 +32,20 @@ public class Driver {
 		//add XML repos
 //		docs1000.add(repoFolder + "XML\\DBLP\\1000Complexity.xml");
 //		docs1000.add(repoFolder + "XML\\DBLP\\1000Database.xml");
-//		docs1000.add(repoFolder + "XML\\DBLP\\1000Inference.xml");
+		docs1000.add(repoFolder + "XML\\DBLP\\1000Inference.xml");
 //		docs1000.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
 //		docs1000.add(repoFolder + "XML\\DBLP\\1000Library.xml");
 //		docs1000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
 		
 		//add JSON repos
 //		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
-		docs100.add("C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\NoSQL repos\\BibTex\\Test\\RunningExample.bib");
+//		docs1000.add(repoFolder + "BibTex\\zbMATH500\\zb_groups.bib");
 
 		//PARSING SINGLE FILES
 		for(String doc : docs100)
 			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 100);
-//		for(String doc : docs1000)
-//			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 500);
+		for(String doc : docs1000)
+			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
 		
 		//PARSING ALL FILES IN FOLDER
 //		parseFolder(repoFolder + "BibTex\\zbMATH100", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
@@ -69,7 +69,7 @@ public class Driver {
 		lattice.computeAttributeCardinality();
 		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
 		
-		Boolean noOwnAttr = false; //prevent merges from happening into nodes with own attributes!
+		Boolean noOwnAttr = true; //third merge criterion. false = 0, true = 1
 		
 		String graphvizString = "::" + fileName(doc) + "\ndot \"" + graphvizFolder + "0a_original_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0a_original_" + fileName(doc) + ".png\"\n";
 		System.out.println("\nNr\tScore\tObjects\tTypes\tAttr\tNodes\tWithOwn\tedges\tindex\tmajor\tinClean\tnull\tleg\ttime");
