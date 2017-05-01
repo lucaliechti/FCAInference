@@ -1,6 +1,5 @@
 package driver;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import datasets.*;
@@ -17,6 +16,7 @@ public class Driver {
 		String graphvizFolder = System.getProperty("user.dir") + "\\interaction\\output-graph";
 		ArrayList<SemiStructuredDataset> datasets = new ArrayList<SemiStructuredDataset>();
 		ParserFactory factory = new ParserFactory();
+		//TODO: Add option to choose graphviz conversion file format
 		
 		//add datasets to be processed
 		datasets.add(new BibtexDataset(inputFolder + "\\" + "caltech_hp.bib"));
@@ -83,7 +83,7 @@ public class Driver {
 			System.out.println("noSing2\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
 			lattice.exportLatticeToFile(graphvizFolder + "\\" + "0c_withoutSingletons2_" + parser.getTargetLatticeFilename(fileName));
 			graphvizString += "dot \"" + graphvizFolder + "\\" + "0c_withoutSingletons2_" + fileName(fileName) + ".dot\" -Tpng -o \"" + graphvizFolder + "\\images\\0c_withoutSingletons2_" + fileName(fileName) + ".png\"\n";
-		}		
+		}
 	
 		///LATTICEMERGE///
 		double score = cc.latticeMerge(firstOption, thirdOption);
