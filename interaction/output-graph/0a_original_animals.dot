@@ -1,0 +1,33 @@
+digraph d{
+1 [label="ext.: 6 (16% Human) 
+own: 0 (empty) "]
+2 [label="four-legged
+ext.: 2 (50% Cat) 
+own: 2 (50% Cat) ", peripheries = 2]
+3 [label="hair-covered
+ext.: 3 (33% Cat) 
+own: 0 (empty) "]
+4 [label="ext.: 1 (100% Gibbon) 
+own: 1 (100% Gibbon) ", peripheries = 2]
+5 [label="thumbed
+ext.: 2 (50% Human) 
+own: 1 (100% Human) ", peripheries = 2]
+6 [label="intelligent
+ext.: 4 (25% Human) 
+own: 0 (empty) "]
+7 [label="marine
+ext.: 2 (50% Whale) 
+own: 2 (50% Whale) ", peripheries = 2]
+8 [label="ext.: 0 (empty) 
+own: 0 (empty) "]
+1->3;
+1->6;
+3->2;
+6->5;
+6->7;
+5->4;
+4->8;
+3->4;
+2->8;
+7->8;
+}

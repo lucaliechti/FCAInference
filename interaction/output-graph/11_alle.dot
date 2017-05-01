@@ -1,0 +1,214 @@
+digraph d{
+1 [label="file, org, inst, label, given-name, family-name
+ext.: 292 (19% epfl) 
+own: 0 (empty) "]
+2 [label="ext.: 103 (21% fhnw) 
+own: 89 (24% fhnw) ", peripheries = 2]
+3 [label="ext.: 172 (25% epfl) 
+own: 67 (43% epfl) ", peripheries = 2]
+4 [label="ext.: 2 (50% bfh) 
+own: 2 (50% bfh) ", peripheries = 2]
+5 [label="ext.: 16 (50% fho) 
+own: 0 (empty) "]
+6 [label="ext.: 14 (57% fho) 
+own: 14 (57% fho) ", peripheries = 2]
+7 [label="ext.: 104 (21% fhnw) 
+own: 0 (empty) "]
+8 [label="ext.: 173 (26% epfl) 
+own: 0 (empty) "]
+9 [label="ext.: 3 (33% bfh) 
+own: 0 (empty) "]
+10 [label="ext.: 1 (100% epfl) 
+own: 1 (100% epfl) ", peripheries = 2]
+11 [label="ext.: 255 (22% epfl) 
+own: 0 (empty) "]
+12 [label="ext.: 32 (40% epfl) 
+own: 20 (60% epfl) ", peripheries = 2]
+13 [label="title
+ext.: 286 (20% epfl) 
+own: 0 (empty) "]
+14 [label="ext.: 40 (35% epfl) 
+own: 1 (100% epfl) ", peripheries = 2]
+15 [label="ext.: 143 (19% usi) 
+own: 33 (78% usi) ", peripheries = 2]
+16 [label="ext.: 228 (19% epfl) 
+own: 9 (44% unisg) ", peripheries = 2]
+17 [label="ext.: 23 (34% fho) 
+own: 1 (100% hes-so) ", peripheries = 2]
+18 [label="ext.: 20 (40% fho) 
+own: 5 (40% supsi) ", peripheries = 2]
+19 [label="ext.: 148 (18% usi) 
+own: 0 (empty) "]
+20 [label="fields
+ext.: 233 (19% epfl) 
+own: 0 (empty) "]
+21 [label="ext.: 28 (28% fho) 
+own: 0 (empty) "]
+22 [label="ext.: 25 (32% fho) 
+own: 5 (100% supsi) ", peripheries = 2]
+23 [label="ext.: 285 (20% epfl) 
+own: 0 (empty) "]
+24 [label="ext.: 10 (40% unil) 
+own: 6 (66% unil) ", peripheries = 2]
+25 [label="ext.: 39 (33% epfl) 
+own: 6 (50% unige) ", peripheries = 2]
+26 [label="ext.: 3 (33% unisg) 
+own: 0 (empty) "]
+27 [label="ext.: 2 (50% unisg) 
+own: 0 (empty) "]
+28 [label="ext.: 1 (100% unisg) 
+own: 1 (100% unisg) ", peripheries = 2]
+29 [label="ext.: 151 (18% usi) 
+own: 0 (empty) "]
+30 [label="ext.: 5 (60% uzh) 
+own: 1 (100% uzh) ", peripheries = 2]
+31 [label="ext.: 145 (19% usi) 
+own: 0 (empty) "]
+32 [label="ext.: 4 (50% uzh) 
+own: 2 (100% uzh) ", peripheries = 2]
+33 [label="ext.: 146 (19% usi) 
+own: 0 (empty) "]
+34 [label="home-page
+ext.: 256 (22% epfl) 
+own: 0 (empty) "]
+35 [label="ext.: 33 (39% epfl) 
+own: 0 (empty) "]
+36 [label="ext.: 5 (40% uzh) 
+own: 1 (100% zfh) ", peripheries = 2]
+37 [label="role
+ext.: 41 (34% epfl) 
+own: 0 (empty) "]
+38 [label="since
+ext.: 152 (18% usi) 
+own: 0 (empty) "]
+39 [label="email
+ext.: 291 (19% epfl) 
+own: 0 (empty) "]
+40 [label="ext.: 40 (32% epfl) 
+own: 0 (empty) "]
+41 [label="ext.: 6 (50% uzh) 
+own: 0 (empty) "]
+42 [label="ext.: 178 (25% epfl) 
+own: 5 (100% zfh) ", peripheries = 2]
+43 [label="ext.: 196 (22% epfl) 
+own: 8 (100% zfh) ", peripheries = 2]
+44 [label="group
+ext.: 201 (22% epfl) 
+own: 4 (100% zfh) ", peripheries = 2]
+45 [label="ext.: 181 (24% epfl) 
+own: 9 (100% zfh) ", peripheries = 2]
+46 [label="group-page
+ext.: 182 (24% epfl) 
+own: 1 (100% zfh) ", peripheries = 2]
+47 [label="ext.: 17 (47% fho) 
+own: 1 (100% zfh) ", peripheries = 2]
+48 [label="representative
+ext.: 29 (27% fho) 
+own: 0 (empty) "]
+49 [label="ext.: 0 (empty) 
+own: 0 (empty) "]
+1->13;
+1->37;
+1->39;
+13->14;
+13->23;
+37->14;
+37->40;
+39->23;
+39->34;
+39->38;
+39->40;
+39->44;
+14->25;
+23->11;
+23->20;
+23->25;
+23->29;
+23->43;
+23->48;
+34->11;
+34->33;
+34->35;
+38->29;
+38->33;
+38->41;
+40->25;
+40->35;
+40->41;
+44->43;
+44->46;
+11->12;
+11->16;
+11->31;
+11->42;
+20->16;
+20->19;
+20->21;
+25->12;
+25->30;
+29->19;
+29->30;
+29->31;
+33->31;
+33->36;
+35->12;
+35->36;
+41->30;
+41->36;
+43->42;
+43->45;
+43->47;
+46->45;
+48->21;
+48->47;
+12->24;
+12->32;
+16->8;
+16->15;
+16->17;
+16->24;
+19->15;
+19->22;
+21->17;
+21->22;
+30->32;
+31->15;
+31->32;
+36->32;
+42->8;
+8->3;
+8->7;
+8->9;
+15->7;
+15->18;
+15->27;
+17->18;
+17->26;
+22->18;
+24->9;
+24->26;
+24->27;
+32->27;
+3->2;
+3->5;
+7->2;
+7->10;
+9->10;
+18->28;
+26->28;
+27->10;
+27->28;
+2->6;
+5->4;
+5->6;
+4->49;
+6->49;
+45->3;
+17->5;
+9->4;
+18->6;
+26->4;
+10->49;
+28->49;
+47->5;
+}

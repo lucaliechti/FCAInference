@@ -100,12 +100,12 @@ public class Lattice {
 //		System.out.println("done.");
 	}
 	
-	//paints the node that was last merged into red
-	private String color(LatticeNode node) {
-		if(this.lastMergedInto != null && this.lastMergedInto.equals(node.getIntent()))
-			return ", style = filled, color = red";
-		return "";
-	}
+//	//paints the node that was last merged into red
+//	private String color(LatticeNode node) {
+//		if(this.lastMergedInto != null && this.lastMergedInto.equals(node.getIntent()))
+//			return ", style = filled, color = red";
+//		return "";
+//	}
 
 	private String peripheries(LatticeNode node) {
 		if(node.numberOfOwnObjects() > 0)
@@ -407,7 +407,7 @@ public class Lattice {
 		for(String hash : bookkeeping.keySet()) {
 			BitSet archetype = bitsetFromHash(hash);
 			ArrayList<FormalObject> nodeObjects = bookkeeping.get(hash);
-			System.out.println(archetype + "(" + archetype.cardinality() + ")*" + nodeObjects.size());
+//			System.out.println(archetype + "(" + archetype.cardinality() + ")*" + nodeObjects.size());
 			size += (archetype.cardinality()*nodeObjects.size());
 		}
 		return size;

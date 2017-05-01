@@ -1,0 +1,2515 @@
+digraph d{
+1 [label="author, date-added, date-modified, title, year
+ext.: 100 (93% article) 
+own: 0 (empty) "]
+2 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+3 [label="ext.: 53 (100% article) 
+own: 0 (empty) "]
+4 [label="ext.: 9 (100% article) 
+own: 9 (100% article) ", peripheries = 2]
+5 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+6 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+7 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+8 [label="journal, volume
+ext.: 97 (95% article) 
+own: 0 (empty) "]
+9 [label="ext.: 9 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+10 [label="number
+ext.: 83 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+11 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+12 [label="ext.: 40 (100% article) 
+own: 0 (empty) "]
+13 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+14 [label="ext.: 33 (100% article) 
+own: 0 (empty) "]
+15 [label="ext.: 32 (100% article) 
+own: 0 (empty) "]
+16 [label="ext.: 2 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+17 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+18 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+19 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+20 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+21 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+22 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+23 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+24 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+25 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+26 [label="ext.: 66 (100% article) 
+own: 0 (empty) "]
+27 [label="ext.: 73 (100% article) 
+own: 0 (empty) "]
+28 [label="ext.: 6 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+29 [label="ext.: 37 (100% article) 
+own: 0 (empty) "]
+30 [label="ext.: 11 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+31 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+32 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+33 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+34 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+35 [label="pmc
+ext.: 2 (100% article) 
+own: 0 (empty) "]
+36 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+37 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+38 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+39 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+40 [label="ext.: 4 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+41 [label="abstract
+ext.: 60 (100% article) 
+own: 0 (empty) "]
+42 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+43 [label="pages
+ext.: 95 (95% article) 
+own: 0 (empty) "]
+44 [label="ext.: 46 (100% article) 
+own: 0 (empty) "]
+45 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+46 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+47 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+48 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+49 [label="supplement
+ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+50 [label="ext.: 2 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+51 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+52 [label="ext.: 14 (100% article) 
+own: 4 (100% article) ", peripheries = 2]
+53 [label="ext.: 44 (90% article) 
+own: 0 (empty) "]
+54 [label="issn
+ext.: 74 (94% article) 
+own: 0 (empty) "]
+55 [label="ext.: 4 (75% misc) 
+own: 4 (75% misc) ", peripheries = 2]
+56 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+57 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+58 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+59 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+60 [label="ext.: 42 (100% article) 
+own: 0 (empty) "]
+61 [label="ext.: 2 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+62 [label="ext.: 41 (100% article) 
+own: 0 (empty) "]
+63 [label="ext.: 9 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+64 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+65 [label="ext.: 71 (100% article) 
+own: 0 (empty) "]
+66 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+67 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+68 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+69 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+70 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+71 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+72 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+73 [label="ext.: 2 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+74 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+75 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+76 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+77 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+78 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+79 [label="ext.: 6 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+80 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+81 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+82 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+83 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+84 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+85 [label="ext.: 3 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+86 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+87 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+88 [label="ext.: 3 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+89 [label="ext.: 36 (100% article) 
+own: 0 (empty) "]
+90 [label="ext.: 63 (100% article) 
+own: 0 (empty) "]
+91 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+92 [label="ext.: 37 (100% article) 
+own: 0 (empty) "]
+93 [label="ext.: 48 (100% article) 
+own: 0 (empty) "]
+94 [label="ext.: 34 (100% article) 
+own: 0 (empty) "]
+95 [label="ext.: 41 (100% article) 
+own: 0 (empty) "]
+96 [label="ext.: 52 (100% article) 
+own: 0 (empty) "]
+97 [label="ext.: 22 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+98 [label="ext.: 38 (100% article) 
+own: 0 (empty) "]
+99 [label="isi, publication-type
+ext.: 46 (91% article) 
+own: 0 (empty) "]
+100 [label="ext.: 24 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+101 [label="ext.: 10 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+102 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+103 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+104 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+105 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+106 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+107 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+108 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+109 [label="mh
+ext.: 17 (100% article) 
+own: 0 (empty) "]
+110 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+111 [label="ext.: 5 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+112 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+113 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+114 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+115 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+116 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+117 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+118 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+119 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+120 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+121 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+122 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+123 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+124 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+125 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+126 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+127 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+128 [label="m3
+ext.: 2 (100% article) 
+own: 0 (empty) "]
+129 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+130 [label="ext.: 29 (100% article) 
+own: 0 (empty) "]
+131 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+132 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+133 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+134 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+135 [label="ty
+ext.: 7 (100% article) 
+own: 0 (empty) "]
+136 [label="isbn, l3, bdsk-file-2
+ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+137 [label="bdsk-file-1
+ext.: 75 (97% article) 
+own: 0 (empty) "]
+138 [label="group
+ext.: 43 (97% article) 
+own: 0 (empty) "]
+139 [label="booktitle
+ext.: 6 (50% inproceedings) 
+own: 0 (empty) "]
+140 [label="ext.: 1 (100% inproceedings) 
+own: 1 (100% inproceedings) ", peripheries = 2]
+141 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+142 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+143 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+144 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+145 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+146 [label="url
+ext.: 11 (90% article) 
+own: 0 (empty) "]
+147 [label="ext.: 10 (90% article) 
+own: 0 (empty) "]
+148 [label="bdsk-url-1
+ext.: 34 (97% article) 
+own: 0 (empty) "]
+149 [label="ext.: 33 (96% article) 
+own: 0 (empty) "]
+150 [label="ext.: 20 (95% article) 
+own: 0 (empty) "]
+151 [label="ext.: 3 (66% article) 
+own: 0 (empty) "]
+152 [label="ext.: 33 (96% article) 
+own: 0 (empty) "]
+153 [label="address
+ext.: 35 (97% article) 
+own: 0 (empty) "]
+154 [label="ext.: 2 (100% inproceedings) 
+own: 0 (empty) "]
+155 [label="editor
+ext.: 1 (100% inproceedings) 
+own: 1 (100% inproceedings) ", peripheries = 2]
+156 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+157 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+158 [label="month
+ext.: 33 (100% article) 
+own: 0 (empty) "]
+159 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+160 [label="publisher
+ext.: 4 (50% article) 
+own: 0 (empty) "]
+161 [label="annote
+ext.: 13 (92% article) 
+own: 0 (empty) "]
+162 [label="ext.: 2 (50% book) 
+own: 1 (100% book) ", peripheries = 2]
+163 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+164 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+165 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+166 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+167 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+168 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+169 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+170 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+171 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+172 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+173 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+174 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+175 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+176 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+177 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+178 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+179 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+180 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+181 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+182 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+183 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+184 [label="rn
+ext.: 25 (100% article) 
+own: 0 (empty) "]
+185 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+186 [label="dcom
+ext.: 28 (100% article) 
+own: 0 (empty) "]
+187 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+188 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+189 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+190 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+191 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+192 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+193 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+194 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+195 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+196 [label="lr
+ext.: 27 (100% article) 
+own: 0 (empty) "]
+197 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+198 [label="ext.: 47 (100% article) 
+own: 0 (empty) "]
+199 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+200 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+201 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+202 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+203 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+204 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+205 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+206 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+207 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+208 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+209 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+210 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+211 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+212 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+213 [label="ext.: 3 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+214 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+215 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+216 [label="ext.: 29 (100% article) 
+own: 0 (empty) "]
+217 [label="ext.: 31 (100% article) 
+own: 0 (empty) "]
+218 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+219 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+220 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+221 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+222 [label="ext.: 35 (100% article) 
+own: 0 (empty) "]
+223 [label="ext.: 33 (100% article) 
+own: 0 (empty) "]
+224 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+225 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+226 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+227 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+228 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+229 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+230 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+231 [label="ext.: 33 (100% article) 
+own: 0 (empty) "]
+232 [label="ext.: 31 (100% article) 
+own: 0 (empty) "]
+233 [label="ext.: 29 (100% article) 
+own: 0 (empty) "]
+234 [label="da, edat, jid, language, mhda, own, pmid, pst, pt, pubm, so, stat
+ext.: 37 (100% article) 
+own: 0 (empty) "]
+235 [label="ext.: 35 (100% article) 
+own: 0 (empty) "]
+236 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+237 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+238 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+239 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+240 [label="pii
+ext.: 22 (100% article) 
+own: 0 (empty) "]
+241 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+242 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+243 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+244 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+245 [label="ext.: 10 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+246 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+247 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+248 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+249 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+250 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+251 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+252 [label="ext.: 8 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+253 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+254 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+255 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+256 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+257 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+258 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+259 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+260 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+261 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+262 [label="ext.: 2 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+263 [label="ext.: 6 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+264 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+265 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+266 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+267 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+268 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+269 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+270 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+271 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+272 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+273 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+274 [label="co, iso-source-abbreviation, ps
+ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+275 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+276 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+277 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+278 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+279 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+280 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+281 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+282 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+283 [label="ext.: 34 (100% article) 
+own: 0 (empty) "]
+284 [label="ext.: 32 (100% article) 
+own: 0 (empty) "]
+285 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+286 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+287 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+288 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+289 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+290 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+291 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+292 [label="ext.: 32 (100% article) 
+own: 0 (empty) "]
+293 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+294 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+295 [label="au, jt, pl, sb
+ext.: 36 (100% article) 
+own: 0 (empty) "]
+296 [label="ext.: 34 (100% article) 
+own: 0 (empty) "]
+297 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+298 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+299 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+300 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+301 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+302 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+303 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+304 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+305 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+306 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+307 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+308 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+309 [label="ext.: 6 (100% article) 
+own: 6 (100% article) ", peripheries = 2]
+310 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+311 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+312 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+313 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+314 [label="si
+ext.: 3 (100% article) 
+own: 0 (empty) "]
+315 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+316 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+317 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+318 [label="ext.: 15 (100% article) 
+own: 0 (empty) "]
+319 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+320 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+321 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+322 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+323 [label="keywords
+ext.: 15 (100% article) 
+own: 0 (empty) "]
+324 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+325 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+326 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+327 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+328 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+329 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+330 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+331 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+332 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+333 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+334 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+335 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+336 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+337 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+338 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+339 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+340 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+341 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+342 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+343 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+344 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+345 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+346 [label="ext.: 39 (100% article) 
+own: 0 (empty) "]
+347 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+348 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+349 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+350 [label="ext.: 29 (100% article) 
+own: 0 (empty) "]
+351 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+352 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+353 [label="ext.: 2 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+354 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+355 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+356 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+357 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+358 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+359 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+360 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+361 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+362 [label="dep, phst
+ext.: 11 (100% article) 
+own: 0 (empty) "]
+363 [label="gr
+ext.: 9 (100% article) 
+own: 0 (empty) "]
+364 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+365 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+366 [label="ext.: 31 (100% article) 
+own: 0 (empty) "]
+367 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+368 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+369 [label="local-url
+ext.: 49 (100% article) 
+own: 0 (empty) "]
+370 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+371 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+372 [label="ext.: 18 (100% article) 
+own: 0 (empty) "]
+373 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+374 [label="ext.: 17 (100% article) 
+own: 0 (empty) "]
+375 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+376 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+377 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+378 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+379 [label="ext.: 14 (100% article) 
+own: 0 (empty) "]
+380 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+381 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+382 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+383 [label="ext.: 16 (100% article) 
+own: 0 (empty) "]
+384 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+385 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+386 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+387 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+388 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+389 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+390 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+391 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+392 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+393 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+394 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+395 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+396 [label="ext.: 6 (100% article) 
+own: 0 (empty) "]
+397 [label="ci
+ext.: 5 (100% article) 
+own: 0 (empty) "]
+398 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+399 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+400 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+401 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+402 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+403 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+404 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+405 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+406 [label="title1
+ext.: 3 (100% article) 
+own: 0 (empty) "]
+407 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+408 [label="ext.: 2 (100% article) 
+own: 2 (100% article) ", peripheries = 2]
+409 [label="eprint
+ext.: 2 (100% article) 
+own: 0 (empty) "]
+410 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+411 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+412 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+413 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+414 [label="doi
+ext.: 18 (100% article) 
+own: 0 (empty) "]
+415 [label="bdsk-url-2
+ext.: 3 (100% article) 
+own: 0 (empty) "]
+416 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+417 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+418 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+419 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+420 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+421 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+422 [label="ext.: 30 (100% article) 
+own: 0 (empty) "]
+423 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+424 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+425 [label="af
+ext.: 3 (100% article) 
+own: 0 (empty) "]
+426 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+427 [label="di
+ext.: 4 (100% article) 
+own: 0 (empty) "]
+428 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+429 [label="ext.: 25 (100% article) 
+own: 0 (empty) "]
+430 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+431 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+432 [label="ext.: 40 (100% article) 
+own: 0 (empty) "]
+433 [label="ext.: 31 (100% article) 
+own: 0 (empty) "]
+434 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+435 [label="ext.: 26 (100% article) 
+own: 0 (empty) "]
+436 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+437 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+438 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+439 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+440 [label="ext.: 27 (100% article) 
+own: 0 (empty) "]
+441 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+442 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+443 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+444 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+445 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+446 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+447 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+448 [label="ext.: 18 (100% article) 
+own: 13 (100% article) ", peripheries = 2]
+449 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+450 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+451 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+452 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+453 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+454 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+455 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+456 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+457 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+458 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+459 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+460 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+461 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+462 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+463 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+464 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+465 [label="ext.: 8 (100% article) 
+own: 3 (100% article) ", peripheries = 2]
+466 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+467 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+468 [label="ext.: 7 (100% article) 
+own: 0 (empty) "]
+469 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+470 [label="ext.: 10 (100% article) 
+own: 0 (empty) "]
+471 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+472 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+473 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+474 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+475 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+476 [label="ext.: 8 (100% article) 
+own: 0 (empty) "]
+477 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+478 [label="ext.: 11 (100% article) 
+own: 0 (empty) "]
+479 [label="ext.: 9 (100% article) 
+own: 0 (empty) "]
+480 [label="ext.: 13 (100% article) 
+own: 0 (empty) "]
+481 [label="ext.: 12 (100% article) 
+own: 0 (empty) "]
+482 [label="rf
+ext.: 2 (100% article) 
+own: 0 (empty) "]
+483 [label="ext.: 4 (100% article) 
+own: 0 (empty) "]
+484 [label="ext.: 5 (100% article) 
+own: 0 (empty) "]
+485 [label="ext.: 3 (100% article) 
+own: 0 (empty) "]
+486 [label="ext.: 2 (100% article) 
+own: 0 (empty) "]
+487 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+488 [label="ext.: 28 (100% article) 
+own: 0 (empty) "]
+489 [label="ext.: 31 (100% article) 
+own: 0 (empty) "]
+490 [label="ext.: 29 (100% article) 
+own: 0 (empty) "]
+491 [label="date
+ext.: 32 (100% article) 
+own: 0 (empty) "]
+492 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+493 [label="read
+ext.: 2 (100% article) 
+own: 0 (empty) "]
+494 [label="ext.: 21 (100% article) 
+own: 0 (empty) "]
+495 [label="ext.: 20 (100% article) 
+own: 0 (empty) "]
+496 [label="ext.: 19 (100% article) 
+own: 0 (empty) "]
+497 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+498 [label="ext.: 24 (100% article) 
+own: 0 (empty) "]
+499 [label="ext.: 23 (100% article) 
+own: 0 (empty) "]
+500 [label="ext.: 22 (100% article) 
+own: 0 (empty) "]
+501 [label="ext.: 1 (100% article) 
+own: 1 (100% article) ", peripheries = 2]
+502 [label="ext.: 5 (100% article) 
+own: 5 (100% article) ", peripheries = 2]
+503 [label="ext.: 0 (empty) 
+own: 0 (empty) "]
+1->137;
+1->139;
+1->148;
+1->153;
+1->160;
+1->161;
+137->138;
+137->149;
+137->152;
+137->154;
+139->154;
+148->146;
+148->149;
+153->152;
+160->162;
+161->162;
+8->14;
+8->27;
+8->43;
+138->140;
+146->147;
+149->147;
+149->150;
+152->150;
+154->140;
+14->7;
+14->15;
+14->366;
+27->15;
+27->60;
+27->65;
+43->10;
+43->41;
+43->54;
+43->65;
+43->158;
+43->366;
+147->151;
+7->9;
+10->3;
+10->26;
+10->90;
+10->129;
+10->156;
+15->9;
+15->39;
+15->367;
+41->3;
+41->44;
+41->45;
+41->62;
+41->360;
+54->44;
+54->90;
+54->96;
+60->39;
+60->95;
+65->26;
+65->62;
+65->95;
+65->96;
+65->367;
+65->369;
+65->430;
+158->45;
+158->156;
+158->430;
+366->129;
+366->360;
+366->367;
+3->11;
+3->12;
+3->17;
+3->29;
+9->40;
+26->29;
+26->92;
+26->93;
+26->130;
+26->198;
+26->323;
+26->442;
+26->458;
+39->40;
+44->12;
+44->267;
+45->17;
+62->29;
+62->64;
+62->267;
+62->361;
+62->381;
+90->12;
+90->93;
+95->64;
+95->92;
+95->94;
+95->423;
+95->438;
+96->93;
+96->94;
+96->267;
+96->432;
+99->53;
+99->98;
+99->435;
+99->491;
+129->11;
+129->127;
+129->130;
+156->17;
+156->442;
+360->11;
+360->361;
+367->130;
+367->361;
+367->368;
+369->198;
+369->368;
+369->381;
+369->431;
+369->432;
+369->438;
+430->423;
+430->431;
+430->442;
+11->5;
+11->13;
+12->265;
+29->13;
+29->57;
+29->164;
+29->265;
+29->273;
+53->47;
+53->55;
+53->89;
+53->427;
+53->433;
+53->434;
+64->57;
+92->57;
+92->91;
+92->317;
+92->412;
+92->418;
+92->441;
+93->91;
+93->265;
+93->346;
+93->459;
+94->91;
+94->437;
+98->89;
+98->269;
+98->490;
+127->5;
+127->131;
+127->409;
+130->13;
+130->131;
+130->134;
+130->135;
+130->211;
+130->412;
+130->414;
+130->415;
+198->211;
+198->273;
+198->345;
+198->346;
+198->418;
+198->443;
+267->265;
+323->164;
+323->317;
+323->345;
+361->13;
+361->383;
+368->211;
+368->383;
+381->273;
+381->383;
+423->441;
+431->443;
+432->346;
+432->437;
+435->269;
+435->429;
+435->434;
+435->498;
+438->418;
+438->437;
+442->441;
+442->443;
+458->134;
+458->459;
+491->433;
+491->489;
+491->490;
+5->2;
+5->18;
+13->18;
+13->22;
+13->87;
+13->142;
+13->201;
+13->311;
+47->51;
+47->52;
+47->266;
+57->22;
+57->453;
+89->52;
+89->268;
+89->444;
+91->446;
+91->457;
+131->18;
+131->132;
+131->133;
+131->413;
+131->420;
+135->87;
+135->133;
+164->201;
+164->271;
+164->453;
+211->311;
+211->416;
+211->417;
+211->419;
+211->420;
+265->272;
+269->100;
+269->268;
+269->497;
+273->271;
+273->272;
+273->311;
+317->453;
+345->271;
+345->344;
+346->272;
+346->344;
+346->446;
+346->464;
+383->311;
+409->2;
+412->22;
+412->410;
+412->413;
+412->419;
+414->142;
+414->410;
+414->417;
+415->157;
+415->416;
+418->419;
+418->446;
+418->493;
+427->51;
+427->425;
+429->100;
+429->428;
+429->499;
+433->266;
+433->422;
+433->444;
+434->268;
+434->428;
+434->461;
+437->446;
+459->457;
+459->464;
+489->422;
+489->488;
+490->444;
+490->488;
+498->461;
+498->494;
+498->497;
+498->499;
+18->21;
+18->23;
+22->19;
+22->23;
+22->389;
+51->48;
+52->264;
+87->21;
+87->88;
+87->407;
+100->97;
+100->500;
+133->21;
+133->128;
+142->19;
+157->159;
+201->88;
+201->310;
+201->389;
+266->42;
+266->264;
+268->97;
+268->460;
+271->270;
+271->310;
+272->270;
+311->310;
+311->407;
+344->270;
+410->19;
+413->23;
+416->159;
+422->42;
+422->426;
+422->440;
+425->48;
+428->97;
+428->462;
+444->264;
+444->440;
+453->389;
+461->436;
+461->460;
+461->462;
+488->440;
+494->436;
+494->492;
+497->460;
+497->492;
+497->500;
+499->462;
+499->500;
+21->6;
+21->406;
+42->4;
+42->50;
+48->49;
+88->312;
+97->463;
+128->6;
+264->4;
+310->312;
+407->312;
+426->50;
+426->424;
+436->445;
+440->4;
+460->445;
+460->463;
+462->463;
+492->445;
+500->463;
+50->46;
+406->408;
+424->46;
+463->465;
+495->447;
+495->496;
+447->448;
+496->448;
+496->501;
+448->502;
+234->222;
+234->231;
+234->235;
+234->240;
+234->333;
+222->217;
+222->223;
+222->225;
+222->331;
+222->385;
+231->217;
+231->232;
+231->237;
+231->332;
+235->223;
+235->232;
+235->233;
+235->241;
+240->225;
+240->237;
+240->241;
+333->233;
+333->331;
+333->332;
+217->215;
+217->216;
+217->330;
+217->335;
+223->216;
+223->221;
+223->226;
+223->375;
+223->376;
+225->215;
+225->226;
+232->216;
+232->230;
+232->238;
+233->221;
+233->230;
+233->239;
+237->215;
+237->238;
+241->226;
+241->238;
+241->239;
+331->221;
+331->330;
+332->230;
+332->330;
+385->335;
+385->376;
+215->220;
+216->220;
+216->227;
+216->229;
+216->243;
+221->224;
+221->227;
+226->220;
+226->224;
+226->374;
+226->379;
+230->227;
+230->236;
+238->220;
+238->236;
+239->224;
+239->236;
+330->227;
+330->334;
+335->243;
+335->334;
+375->229;
+375->374;
+376->243;
+376->379;
+220->218;
+220->219;
+220->260;
+224->218;
+227->218;
+227->242;
+229->219;
+236->218;
+243->242;
+243->260;
+295->186;
+295->283;
+295->292;
+295->301;
+295->350;
+334->242;
+374->219;
+374->377;
+379->260;
+379->377;
+186->109;
+186->181;
+186->184;
+186->196;
+186->339;
+218->261;
+219->244;
+242->261;
+260->244;
+260->261;
+283->278;
+283->286;
+283->348;
+283->384;
+292->181;
+292->278;
+292->298;
+292->349;
+301->286;
+301->298;
+350->339;
+350->348;
+350->349;
+377->244;
+109->104;
+109->107;
+109->121;
+181->104;
+181->179;
+181->191;
+181->338;
+184->107;
+184->179;
+184->194;
+184->325;
+196->121;
+196->173;
+196->191;
+196->194;
+196->341;
+196->480;
+228->214;
+278->276;
+278->347;
+278->352;
+286->276;
+296->185;
+296->284;
+296->293;
+296->294;
+296->302;
+298->276;
+339->325;
+339->338;
+339->341;
+348->347;
+349->338;
+349->347;
+384->352;
+104->102;
+104->114;
+107->102;
+107->119;
+121->68;
+121->114;
+121->119;
+173->68;
+173->167;
+173->171;
+173->337;
+173->472;
+179->102;
+179->189;
+179->324;
+185->108;
+185->180;
+185->187;
+185->195;
+185->249;
+191->114;
+191->167;
+191->189;
+191->340;
+191->477;
+194->119;
+194->171;
+194->189;
+194->210;
+194->327;
+214->245;
+284->277;
+284->282;
+284->287;
+284->363;
+284->364;
+284->372;
+293->180;
+293->277;
+293->291;
+293->299;
+294->249;
+294->282;
+294->291;
+294->300;
+302->287;
+302->299;
+302->300;
+325->324;
+325->327;
+338->324;
+338->340;
+341->327;
+341->337;
+341->340;
+347->351;
+352->351;
+480->210;
+480->472;
+480->477;
+68->31;
+68->66;
+102->117;
+108->103;
+108->110;
+108->120;
+114->31;
+114->117;
+119->66;
+119->117;
+119->124;
+167->31;
+167->165;
+167->336;
+167->467;
+171->66;
+171->165;
+171->205;
+171->321;
+171->322;
+180->103;
+180->182;
+180->190;
+180->248;
+187->110;
+187->182;
+187->183;
+187->197;
+189->117;
+189->165;
+189->208;
+189->326;
+195->120;
+195->172;
+195->190;
+195->197;
+195->251;
+195->481;
+210->124;
+210->205;
+210->208;
+249->183;
+249->248;
+249->251;
+277->281;
+277->288;
+277->290;
+277->305;
+282->285;
+282->288;
+287->281;
+287->285;
+287->371;
+287->378;
+291->248;
+291->288;
+291->297;
+299->281;
+299->297;
+300->285;
+300->297;
+324->326;
+327->321;
+327->326;
+337->321;
+337->336;
+340->326;
+340->336;
+363->365;
+363->370;
+364->290;
+364->365;
+364->371;
+372->305;
+372->370;
+372->378;
+472->205;
+472->467;
+477->208;
+477->467;
+31->58;
+66->58;
+66->75;
+103->105;
+103->113;
+110->105;
+110->106;
+110->122;
+117->58;
+117->112;
+120->67;
+120->113;
+120->122;
+124->75;
+124->112;
+165->58;
+165->202;
+165->318;
+165->319;
+172->67;
+172->166;
+172->174;
+172->247;
+172->473;
+182->105;
+182->178;
+182->192;
+183->106;
+183->178;
+183->193;
+190->113;
+190->166;
+190->192;
+190->250;
+190->478;
+197->122;
+197->174;
+197->192;
+197->193;
+197->209;
+205->75;
+205->202;
+208->112;
+208->202;
+248->178;
+248->250;
+251->193;
+251->247;
+251->250;
+251->479;
+281->279;
+281->304;
+281->307;
+285->279;
+288->279;
+288->303;
+290->304;
+297->279;
+305->303;
+305->307;
+321->318;
+321->320;
+322->319;
+322->320;
+326->318;
+336->318;
+370->380;
+371->304;
+371->373;
+378->307;
+378->373;
+378->380;
+467->202;
+481->209;
+481->473;
+481->478;
+481->479;
+58->28;
+67->30;
+67->70;
+75->28;
+105->101;
+105->116;
+106->101;
+106->118;
+112->28;
+113->30;
+113->116;
+122->70;
+122->116;
+122->118;
+122->125;
+166->30;
+166->168;
+166->246;
+166->470;
+166->475;
+174->70;
+174->168;
+174->170;
+174->175;
+174->204;
+174->392;
+178->101;
+178->188;
+192->116;
+192->168;
+192->188;
+192->207;
+193->118;
+193->170;
+193->188;
+193->257;
+202->28;
+209->125;
+209->204;
+209->207;
+209->257;
+247->170;
+247->246;
+247->471;
+250->188;
+250->246;
+250->476;
+279->308;
+303->308;
+304->306;
+307->306;
+307->308;
+318->316;
+319->316;
+320->316;
+343->329;
+343->342;
+373->306;
+373->386;
+380->386;
+473->204;
+473->470;
+473->471;
+478->207;
+478->470;
+478->476;
+479->257;
+479->471;
+479->476;
+30->59;
+70->59;
+70->69;
+70->71;
+70->77;
+101->126;
+116->59;
+116->115;
+116->126;
+118->69;
+118->123;
+118->126;
+125->77;
+125->115;
+125->123;
+168->59;
+168->163;
+168->169;
+168->203;
+168->206;
+168->314;
+168->390;
+170->69;
+170->163;
+170->176;
+170->255;
+170->454;
+175->169;
+175->176;
+175->393;
+188->126;
+188->163;
+188->256;
+204->77;
+204->203;
+204->255;
+204->394;
+207->115;
+207->203;
+207->256;
+246->163;
+246->468;
+257->123;
+257->255;
+257->256;
+289->357;
+289->449;
+329->328;
+329->402;
+342->328;
+362->280;
+362->382;
+392->71;
+392->390;
+392->393;
+392->394;
+392->397;
+392->454;
+470->203;
+470->468;
+470->469;
+471->255;
+471->468;
+475->206;
+475->469;
+476->256;
+476->468;
+59->36;
+59->56;
+59->80;
+59->82;
+69->63;
+69->76;
+69->80;
+71->56;
+71->63;
+71->72;
+77->36;
+77->76;
+115->36;
+115->111;
+123->76;
+123->111;
+126->80;
+126->111;
+163->80;
+163->177;
+163->254;
+163->313;
+163->452;
+169->177;
+169->391;
+169->403;
+176->177;
+203->36;
+203->200;
+203->254;
+206->82;
+206->200;
+206->396;
+206->403;
+253->212;
+253->252;
+253->484;
+255->76;
+255->254;
+256->111;
+256->254;
+314->313;
+328->353;
+357->358;
+357->450;
+382->387;
+390->56;
+390->391;
+390->396;
+390->452;
+393->72;
+393->391;
+394->395;
+397->395;
+402->353;
+449->450;
+454->63;
+454->452;
+468->254;
+469->200;
+36->32;
+36->37;
+56->61;
+56->79;
+63->73;
+63->74;
+63->79;
+63->83;
+72->61;
+72->73;
+76->32;
+76->74;
+80->32;
+80->79;
+111->32;
+200->388;
+212->259;
+212->263;
+212->400;
+212->455;
+252->263;
+252->482;
+252->485;
+254->32;
+358->451;
+391->61;
+396->388;
+396->399;
+450->451;
+452->79;
+474->355;
+474->466;
+484->259;
+484->483;
+484->485;
+32->33;
+37->33;
+74->78;
+83->78;
+259->213;
+259->401;
+263->258;
+263->456;
+275->309;
+355->143;
+355->354;
+355->356;
+399->398;
+400->258;
+400->401;
+455->456;
+466->354;
+483->213;
+143->81;
+143->144;
+213->404;
+258->199;
+258->262;
+258->315;
+401->262;
+401->404;
+34->35;
+81->85;
+486->487;
+35->38;
+85->84;
+85->86;
+141->16;
+141->145;
+16->25;
+25->503;
+1->8;
+137->27;
+148->14;
+138->60;
+146->7;
+149->15;
+43->99;
+147->9;
+7->127;
+10->98;
+54->53;
+65->435;
+9->131;
+26->269;
+39->412;
+44->47;
+90->89;
+95->429;
+96->434;
+369->498;
+12->52;
+40->413;
+92->100;
+93->268;
+94->428;
+198->497;
+432->461;
+438->499;
+442->157;
+491->494;
+91->97;
+346->460;
+418->500;
+427->426;
+433->436;
+437->462;
+443->159;
+490->492;
+51->50;
+410->411;
+413->411;
+425->424;
+444->445;
+446->463;
+494->495;
+499->495;
+48->46;
+407->408;
+436->447;
+462->447;
+492->496;
+500->496;
+406->24;
+411->421;
+445->448;
+463->448;
+447->439;
+465->502;
+227->228;
+229->228;
+295->296;
+186->185;
+218->214;
+219->214;
+283->173;
+283->284;
+292->293;
+301->302;
+301->480;
+350->294;
+109->108;
+181->180;
+184->187;
+196->195;
+244->245;
+261->245;
+278->167;
+278->277;
+286->287;
+286->472;
+298->299;
+298->477;
+339->249;
+348->282;
+348->337;
+349->291;
+384->372;
+104->103;
+107->110;
+121->120;
+173->172;
+179->182;
+191->190;
+194->197;
+276->281;
+276->467;
+284->172;
+302->481;
+325->183;
+338->248;
+341->251;
+347->288;
+347->336;
+352->305;
+480->481;
+68->67;
+102->105;
+114->113;
+119->122;
+167->166;
+167->343;
+171->174;
+189->192;
+210->209;
+277->166;
+282->247;
+287->473;
+299->478;
+300->479;
+324->178;
+327->193;
+337->247;
+340->250;
+351->303;
+472->473;
+477->478;
+31->30;
+66->70;
+117->116;
+124->125;
+165->168;
+165->329;
+205->204;
+208->207;
+281->470;
+285->471;
+288->246;
+288->289;
+290->289;
+290->475;
+297->476;
+321->170;
+322->392;
+326->188;
+336->246;
+336->342;
+365->386;
+371->362;
+467->470;
+58->59;
+75->77;
+112->115;
+166->253;
+202->203;
+279->357;
+279->468;
+304->280;
+304->357;
+304->469;
+318->163;
+318->328;
+319->390;
+319->402;
+320->454;
+343->253;
+373->382;
+28->36;
+168->212;
+246->252;
+246->474;
+289->474;
+306->358;
+308->358;
+316->353;
+316->452;
+329->212;
+342->252;
+386->387;
+470->484;
+475->474;
+163->263;
+163->355;
+169->400;
+176->73;
+203->259;
+206->355;
+280->275;
+314->37;
+328->263;
+357->275;
+357->466;
+390->455;
+394->74;
+394->388;
+397->83;
+397->399;
+402->455;
+468->466;
+468->485;
+469->466;
+469->483;
+80->143;
+82->143;
+177->258;
+177->356;
+200->213;
+200->354;
+254->354;
+313->33;
+353->456;
+358->309;
+391->398;
+395->78;
+403->356;
+403->398;
+452->456;
+79->81;
+466->486;
+482->199;
+483->486;
+485->262;
+485->486;
+34->141;
+144->86;
+262->359;
+404->359;
+486->359;
+145->503;
+405->503;
+160->151;
+151->155;
+158->489;
+156->488;
+415->411;
+489->495;
+420->408;
+422->447;
+457->465;
+464->465;
+488->496;
+23->24;
+88->24;
+389->24;
+440->448;
+411->20;
+424->439;
+352->343;
+351->342;
+363->175;
+305->253;
+303->252;
+307->484;
+306->483;
+308->485;
+382->309;
+36->34;
+82->34;
+200->34;
+254->262;
+313->315;
+358->486;
+396->81;
+403->404;
+83->85;
+399->85;
+482->487;
+143->141;
+354->141;
+354->359;
+356->84;
+356->359;
+398->84;
+81->16;
+144->145;
+404->405;
+35->25;
+38->503;
+84->503;
+86->503;
+359->503;
+150->155;
+151->132;
+45->42;
+17->4;
+423->495;
+431->495;
+441->496;
+443->496;
+416->421;
+417->421;
+419->421;
+420->421;
+493->501;
+19->20;
+23->20;
+234->295;
+222->283;
+231->292;
+240->301;
+333->350;
+217->278;
+225->286;
+237->298;
+331->348;
+332->349;
+385->384;
+215->276;
+330->347;
+335->352;
+334->351;
+365->403;
+280->34;
+449->144;
+32->141;
+37->38;
+61->84;
+73->84;
+275->141;
+398->405;
+487->503;
+161->458;
+154->155;
+409->421;
+132->20;
+157->20;
+128->136;
+445->274;
+235->296;
+223->284;
+232->293;
+233->294;
+241->302;
+216->277;
+221->282;
+226->287;
+230->291;
+238->299;
+239->300;
+375->364;
+376->372;
+220->281;
+224->285;
+227->288;
+229->290;
+236->297;
+243->305;
+374->371;
+379->378;
+218->279;
+219->304;
+242->303;
+260->307;
+377->373;
+228->289;
+244->306;
+261->308;
+214->357;
+245->358;
+370->400;
+380->401;
+386->404;
+74->16;
+388->16;
+388->405;
+455->405;
+199->503;
+315->503;
+139->55;
+441->20;
+132->136;
+264->274;
+270->274;
+395->405;
+450->145;
+33->503;
+78->503;
+309->503;
+456->503;
+17->20;
+134->136;
+451->503;
+387->503;
+162->136;
+43->234;
+10->231;
+41->235;
+54->333;
+65->222;
+3->232;
+26->217;
+44->233;
+62->223;
+90->332;
+96->331;
+369->385;
+12->230;
+29->216;
+93->330;
+198->335;
+267->221;
+361->375;
+381->376;
+13->229;
+265->227;
+273->243;
+346->334;
+272->242;
+383->377;
+142->228;
+311->244;
+417->245;
+345->343;
+344->342;
+95->322;
+92->319;
+94->320;
+91->316;
+271->253;
+270->252;
+153->296;
+152->284;
+150->364;
+64->392;
+57->390;
+134->449;
+317->402;
+418->402;
+459->449;
+22->396;
+446->353;
+310->483;
+453->455;
+464->451;
+274->503;
+19->81;
+136->503;
+20->503;
+439->503;
+502->503;
+24->503;
+421->503;
+501->503;
+457->86;
+389->405;
+46->503;
+408->503;
+419->405;
+493->405;
+4->503;
+6->503;
+49->503;
+312->503;
+159->503;
+2->503;
+55->503;
+155->503;
+140->503;
+}

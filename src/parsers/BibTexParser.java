@@ -1,21 +1,23 @@
 package parsers;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import datasets.SemiStructuredDataset;
 import datastructures.FormalObject;
 
 public class BibTexParser implements NoSQLParser {
 	
-	public ArrayList<FormalObject> parseFile(String file, int MAX_OBJECTS){
-		ArrayList<String> splitObjects = splitFile(file); //split the input file
+	public ArrayList<FormalObject> parseFile(SemiStructuredDataset dataset, int MAX_OBJECTS){
+		ArrayList<String> splitObjects = splitFile(dataset.getFile()); //split the input file
 		return createFormalObjects(splitObjects, MAX_OBJECTS); //extract attributes from split objects		
 	}
 
-	private ArrayList<String> splitFile(String file) {
+	private ArrayList<String> splitFile(File file) {
 		ArrayList<String> splitString = new ArrayList<String>();
 		try {
 			BufferedReader br = new BufferedReader (new FileReader(file));

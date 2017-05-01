@@ -3,6 +3,7 @@ package driver;
 import java.io.File;
 import java.util.ArrayList;
 
+import datasets.*;
 import parsers.NoSQLParser;
 import datastructures.FormalContext;
 import datastructures.FormalObject;
@@ -11,138 +12,107 @@ import factories.ParserFactory;
 
 public class Driver {
 	public static void main(String[] args){
-		String iesl100 = "C:\\Users\\Luca Liechti\\Desktop\\IESL100";
-		String iesl1000 = "C:\\Users\\Luca Liechti\\Desktop\\IESL1000";
-		String repoFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\NoSQL repos\\";
-		String outputFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\context files\\";	
-		String graphvizFolder = "C:\\Users\\Luca Liechti\\Dropbox\\Uni\\!BSc\\graphviz files\\";
-		ArrayList<String> docs100 = new ArrayList<String>();
-		ArrayList<String> docs1000 = new ArrayList<String>();
+		String inputFolder = System.getProperty("user.dir") + "\\interaction\\input";
+		String outputFolder = System.getProperty("user.dir") + "\\interaction\\output-context";
+		String graphvizFolder = System.getProperty("user.dir") + "\\interaction\\output-graph";
+		ArrayList<SemiStructuredDataset> datasets = new ArrayList<SemiStructuredDataset>();
 		ParserFactory factory = new ParserFactory();
 		
-		//CONFIGURE HERE
+		//add datasets to be processed
+		datasets.add(new BibtexDataset(inputFolder + "\\" + "caltech_hp.bib"));
+		datasets.add(new XMLdataset(inputFolder + "\\" + "animals.xml", "animal", "name"));
+		datasets.add(new JSONdataset(inputFolder + "\\" + "alle.js", "items", "file"));
+		
+		//CONFIGURE HERE: General parameters
 		double mergeStop = 0d;
-		Boolean deleteRareAttributes = false;
-		Boolean retroFitSingletons = false; //second merge criterion. false = 0, true = 1
+		int numberOfObjects = 500;
 		
-		//add BibTex repos
-//		docs100.add(repoFolder + "BibTex\\scg.bib");
-//		docs1000.add(repoFolder + "BibTex\\listb.bib");
-		
-		//add XML repos
-//		docs1000.add(repoFolder + "XML\\DBLP\\1000Complexity.xml");
-//		docs1000.add(repoFolder + "XML\\DBLP\\1000Database.xml");
-		docs1000.add(repoFolder + "XML\\DBLP\\1000Inference.xml");
-//		docs1000.add(repoFolder + "XML\\DBLP\\1000Lattice.xml");
-//		docs1000.add(repoFolder + "XML\\DBLP\\1000Library.xml");
-//		docs1000.add(repoFolder + "XML\\DBLP\\1000Schema.xml");
-		
-		//add JSON repos
-//		docs1000.add(repoFolder + "JSON\\SIRA\\alle.js");
-//		docs1000.add(repoFolder + "BibTex\\zbMATH500\\zb_groups.bib");
+		//CONFIGURE HERE: Parameters for the algorithm
+		Boolean firstOption = false;
+		Boolean secondOption = false;
+		Boolean secondSubOption = false;
+		Boolean thirdOption = false;
+			
+		for(SemiStructuredDataset dataset : datasets) {
+			parseDocument(dataset, outputFolder, graphvizFolder, factory.makeParser(dataset.getFilePath()), firstOption, secondOption, secondSubOption, thirdOption, mergeStop, numberOfObjects);
+		}
 
-		//PARSING SINGLE FILES
-		for(String doc : docs100)
-			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 100);
-		for(String doc : docs1000)
-			parseDocument(doc, outputFolder, graphvizFolder, factory.makeParser(doc), retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
-		
-		//PARSING ALL FILES IN FOLDER
-//		parseFolder(repoFolder + "BibTex\\zbMATH100", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
-//		parseFolder(repoFolder + "BibTex\\zbMATH500", outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 500);
-//		parseFolder(iesl100, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 100);
-//		parseFolder(iesl1000, outputFolder, graphvizFolder, factory, retroFitSingletons, deleteRareAttributes, mergeStop, 1000);
-		
 		System.out.println("All done.");
 	}
 	
-	private static void parseDocument(String doc, String outputFolder, String graphvizFolder, NoSQLParser parser, Boolean retroFitSingletons, Boolean deleteRareAttributes, double mergeStop, int obj){
-		System.out.println("Parsing file " + doc);
-		ArrayList<FormalObject> importedContext = parser.parseFile(doc, obj);
+	private static void parseDocument(SemiStructuredDataset dataset, String outputFolder, String graphvizFolder, NoSQLParser parser, 
+			Boolean firstOption, Boolean secondOption, Boolean secondSubOption, Boolean thirdOption, double mergeStop, int numberOfObjects){
+		String fileName = dataset.getFilePath();
+		System.out.println("Parsing file " + fileName);
+		//create and save formal context
+		ArrayList<FormalObject> importedContext = parser.parseFile(dataset, numberOfObjects);
 		FormalContext fc = new FormalContext();
-		for(FormalObject object : importedContext)
+		for(FormalObject object : importedContext) {
 			fc.createAndAddObject(object);
-		fc.exportContextToFile(outputFolder + parser.getTargetContextFilename(doc));
+		}
+		fc.exportContextToFile(outputFolder + "\\" + parser.getTargetContextFilename(fileName));
 		
 		LatticeBuilder lb = new LatticeBuilder(fc);
 		Lattice lattice = lb.buildLattice();
 		lattice.computeAttributeCardinality();
-		lattice.exportLatticeToFile(graphvizFolder + "0a_original_" + parser.getTargetLatticeFilename(doc));
+		lattice.exportLatticeToFile(graphvizFolder + "\\" + "0a_original_" + parser.getTargetLatticeFilename(fileName));
 		
-		Boolean noOwnAttr = true; //third merge criterion. false = 0, true = 1
-		
-		String graphvizString = "::" + fileName(doc) + "\ndot \"" + graphvizFolder + "0a_original_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0a_original_" + fileName(doc) + ".png\"\n";
+		String graphvizString = "::" + fileName(fileName) + "\ndot \"" + graphvizFolder + "\\" + "0a_original_" + fileName(fileName) + ".dot\" -Tpng -o \"" + graphvizFolder + "\\images\\0a_original_" + fileName(fileName) + ".png\"\n";
 		System.out.println("\nNr\tScore\tObjects\tTypes\tAttr\tNodes\tWithOwn\tedges\tindex\tmajor\tinClean\tnull\tleg\ttime");
 		System.out.println("------------------------------------------------------------------------------------------------------------");
 		System.out.println("orig\t---" + "\t" + lattice.latticeStats());
 		ContextCleanser cc = new ContextCleanser(fc, lattice);
 		
-		///RARE ATTRIBUTES///
-		if(deleteRareAttributes) {
-			cc.removeRareAttributes(0);
-			lattice.clear();
-			lattice = lb.buildLattice();
-			lattice.initialiseBookkeeping();
-			System.out.println("del\t---" + "\t" + lattice.latticeStats());	//if we have deleted rare attributes
-			lattice.exportLatticeToFile(graphvizFolder + "0b_withoutRareAttributes_" + parser.getTargetLatticeFilename(doc));
-			graphvizString += "dot \"" + graphvizFolder + "0b_withoutRareAttributes_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0b_withoutRareAttributes_" + fileName(doc) + ".png\"\n";
-		}
-		
-//		///SINGLETONS PT. 1 VERSION 1///
-//		if(retroFitSingletons){
-//			cc.removeSingletonObjects();
+//		///RARE ATTRIBUTES///
+//		//CURRENTLY NOT USED
+//		if(deleteRareAttributes) {
+//			cc.removeRareAttributes(0);
 //			lattice.clear();
 //			lattice = lb.buildLattice();
-//			System.out.println("noSing1\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
-//			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutSingletons_" + parser.getTargetLatticeFilename(doc));
-//			graphvizString += "dot \"" + graphvizFolder + "0c_withoutSingletons_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0c_withoutSingletons_" + fileName(doc) + ".png\"\n";
+//			lattice.initialiseBookkeeping();
+//			System.out.println("del\t---" + "\t" + lattice.latticeStats());	//if we have deleted rare attributes
+//			lattice.exportLatticeToFile(graphvizFolder + "0b_withoutRareAttributes_" + parser.getTargetLatticeFilename(doc));
+//			graphvizString += "dot \"" + graphvizFolder + "0b_withoutRareAttributes_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0b_withoutRareAttributes_" + fileName(doc) + ".png\"\n";
 //		}
 		
-		///SINGLETONS PT. 1 VERSION 2///
-		if(retroFitSingletons){
-			cc.removeActualSingletonObjects();
+		///REMOVE UNIQUE///
+		if(secondOption){
+			cc.removeUniqueObjects();
 			lattice.clear();
 			lattice = lb.buildLattice();
 			System.out.println("noSing2\t---" + "\t" + lattice.latticeStats());	//if we have deleted singleton objects
-			lattice.exportLatticeToFile(graphvizFolder + "0c_withoutSingletons2_" + parser.getTargetLatticeFilename(doc));
-			graphvizString += "dot \"" + graphvizFolder + "0c_withoutSingletons2_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\0c_withoutSingletons2_" + fileName(doc) + ".png\"\n";
+			lattice.exportLatticeToFile(graphvizFolder + "\\" + "0c_withoutSingletons2_" + parser.getTargetLatticeFilename(fileName));
+			graphvizString += "dot \"" + graphvizFolder + "\\" + "0c_withoutSingletons2_" + fileName(fileName) + ".dot\" -Tpng -o \"" + graphvizFolder + "\\images\\0c_withoutSingletons2_" + fileName(fileName) + ".png\"\n";
 		}		
 	
-		///TINKER///
-		double score = cc.tinker(noOwnAttr);
+		///LATTICEMERGE///
+		double score = cc.latticeMerge(firstOption, thirdOption);
 		int i = 1;
 		while(score > mergeStop) {
 			lattice.clear();
 			lattice = lb.buildLattice();
 			System.out.println(i + "\t" + String.format("%.1f", score) + "\t" + lattice.latticeStats()); /////////////////////this line makes everything super verbose!
-			lattice.exportLatticeToFile(graphvizFolder + (i++) + "_" + parser.getTargetLatticeFilename(doc));
-			graphvizString += "dot \"" + graphvizFolder + (i-1) + "_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\" + (i-1) + "_" + fileName(doc) + ".png\"\n";
-			score = cc.tinker(noOwnAttr);
+			lattice.exportLatticeToFile(graphvizFolder + "\\" + (i++) + "_" + parser.getTargetLatticeFilename(fileName));
+			graphvizString += "dot \"" + graphvizFolder + "\\" + (i-1) + "_" + fileName(fileName) + ".dot\" -Tpng -o \"" + graphvizFolder + "\\images\\" + (i-1) + "_" + fileName(fileName) + ".png\"\n";
+			score = cc.latticeMerge(firstOption, thirdOption);
 		}
 		System.out.println("final (" + (--i) + ")\t" + lattice.latticeStats());
 		
-		///SINGLETONS PT. 2///
-		if(retroFitSingletons) {
+		///FIT UNIQUES BACK IN///
+		if(secondOption && secondSubOption) {
 			lattice.retrofitSingletons();
 			System.out.println("retfit\t\t" + lattice.latticeStats());
-			lattice.exportLatticeToFile(graphvizFolder + i + "_retroFit_" + parser.getTargetLatticeFilename(doc));
-			graphvizString += "dot \"" + graphvizFolder + i + "_retroFit_" + fileName(doc) + ".dot\" -Tpng -o \"" + graphvizFolder + "output\\" + i + "_retroFit_" + fileName(doc) + ".png\"\n";
+			lattice.exportLatticeToFile(graphvizFolder + "\\" + i + "_retroFit_" + parser.getTargetLatticeFilename(fileName));
+			graphvizString += "dot \"" + graphvizFolder + "\\" + i + "_retroFit_" + fileName(fileName) + ".dot\" -Tpng -o \"" + graphvizFolder + "\\images\\" + i + "_retroFit_" + fileName(fileName) + ".png\"\n";
 		}
 		
 		graphvizString += "\n";
 		System.out.println("------------------------------------------------------------------------------------------------------------\n\n");
 		System.out.println(graphvizString);
 	}
-	
-	private static void parseFolder(String inFolder, String outFolder, String gvFolder, ParserFactory fac, Boolean retroFitSingletons, Boolean deleteRareAttributes, double mergeStop, int obj) {
-		File fold = new File(inFolder);
-		assert(fold.isDirectory());
-		String[] inFiles = fold.list();
-		for(int i = 0; i < inFiles.length; i++)
-			parseDocument(inFolder + "\\" + inFiles[i], outFolder, gvFolder, fac.makeParser(inFiles[i]), retroFitSingletons, deleteRareAttributes, mergeStop, obj);
-	}
 
 	private static String fileName(String path) {
-		return path.substring(path.lastIndexOf("\\")+1, path.length()-4);
+		int endingLength = path.length() - path.lastIndexOf(".");
+		return path.substring(path.lastIndexOf("\\")+1, path.length()-endingLength);
 	}
 }

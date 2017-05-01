@@ -1,0 +1,27 @@
+<zoo>
+	<animal name = "Cat">
+		<four-legged></four-legged>
+		<hair-covered></hair-covered>
+	</animal>
+	<animal name = "Dog">
+		<four-legged></four-legged>
+		<hair-covered></hair-covered>
+	</animal>
+	<animal name = "Gibbon">
+		<hair-covered></hair-covered>
+		<thumbed></thumbed>
+		<intelligent></intelligent>
+	</animal>
+	<animal name = "Human">
+		<thumbed></thumbed>
+		<intelligent></intelligent>
+	</animal>
+	<animal name = "Dolphin">
+		<intelligent></intelligent>
+		<marine></marine>
+	</animal>
+	<animal name = "Whale">
+		<intelligent></intelligent>
+		<marine></marine>
+	</animal>
+</zoo>

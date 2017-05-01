@@ -12,15 +12,18 @@ import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
 import org.jdom2.input.SAXBuilder;
 
+import datasets.SemiStructuredDataset;
 import datastructures.FormalObject;
 
 public class XMLParser implements NoSQLParser {
 	
-	private String wantedObjects = "info";
-	private String nameAttribute = "type";
+	private String wantedObjects = null;
+	private String nameAttribute = null;
 	
-	public ArrayList<FormalObject> parseFile(String file, int MAX_OBJECTS){
-		ArrayList<Element> wantedElements = extractElements(file, MAX_OBJECTS); //split the input file
+	public ArrayList<FormalObject> parseFile(SemiStructuredDataset dataset, int MAX_OBJECTS){
+		wantedObjects = dataset.getElementLevel();
+		nameAttribute = dataset.getTypeAttribute();
+		ArrayList<Element> wantedElements = extractElements(dataset.getFilePath(), MAX_OBJECTS); //split the input file
 		return createFormalObjects(wantedElements); //extract attributes from split objects		
 	}
 
@@ -62,8 +65,8 @@ public class XMLParser implements NoSQLParser {
 				if(!attributes.contains(attribute)) attributes.add(attribute);
 			}
 			object.setAttributes(attributes);
-//			object.setName(el.getAttributeValue(nameAttribute)); //specify here which attribute is the name, OR...
-			object.setName(el.getChildTextNormalize(nameAttribute)); //... which child element is the name (comment one line out)
+			object.setName(el.getAttributeValue(nameAttribute)); //specify here which attribute is the name, OR...
+//			object.setName(el.getChildTextNormalize(nameAttribute)); //... which child element is the name (comment one line out)
 			parsedObjects.add(object);
 		}
 //		System.out.println("done.");

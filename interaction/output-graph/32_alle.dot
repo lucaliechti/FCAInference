@@ -1,0 +1,39 @@
+digraph d{
+1 [label="file, home-page, org, inst, label, given-name, family-name, email
+ext.: 293 (19% epfl) 
+own: 0 (empty) "]
+2 [label="ext.: 148 (18% usi) 
+own: 148 (18% usi) ", peripheries = 2]
+3 [label="title
+ext.: 291 (19% epfl) 
+own: 0 (empty) "]
+4 [label="ext.: 38 (34% epfl) 
+own: 38 (34% epfl) ", peripheries = 2]
+5 [label="group-page, group, fields
+ext.: 253 (17% epfl) 
+own: 105 (27% zfh) ", peripheries = 2]
+6 [label="since
+ext.: 150 (18% usi) 
+own: 0 (empty) "]
+7 [label="role
+ext.: 40 (35% epfl) 
+own: 0 (empty) "]
+8 [label="ext.: 2 (50% zfh) 
+own: 2 (50% zfh) ", peripheries = 2]
+9 [label="representative
+ext.: 0 (empty) 
+own: 0 (empty) "]
+1->3;
+1->6;
+1->7;
+3->4;
+6->8;
+7->4;
+7->8;
+5->2;
+2->9;
+3->5;
+6->2;
+4->9;
+8->9;
+}

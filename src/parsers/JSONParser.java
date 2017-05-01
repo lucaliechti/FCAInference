@@ -1,5 +1,6 @@
 package parsers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,23 +10,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import datasets.SemiStructuredDataset;
 import datastructures.FormalObject;
 
 public class JSONParser implements NoSQLParser {
 	
-	private String wantedObjects = "items";
-	private String nameAttribute = "file";
+	private String wantedObjects = null;
+	private String nameAttribute = null;
 
 	@Override
-	public ArrayList<FormalObject> parseFile(String file, int MAX_OBJECTS) {
-		JSONArray jarray = extractJSONarray(file);
+	public ArrayList<FormalObject> parseFile(SemiStructuredDataset dataset, int MAX_OBJECTS) {
+		wantedObjects = dataset.getElementLevel();
+		nameAttribute = dataset.getTypeAttribute();
+		JSONArray jarray = extractJSONarray(dataset);
 		return(createFormalObjects(jarray, MAX_OBJECTS));
 	}
 
-	private JSONArray extractJSONarray(String file) {
+	private JSONArray extractJSONarray(SemiStructuredDataset dataset) {
 		JSONArray array = new JSONArray();
 		try {
-			String jtext = new String(Files.readAllBytes(Paths.get(file)));
+			String jtext = new String(Files.readAllBytes(Paths.get(dataset.getFilePath())));
 			JSONObject jobj = new JSONObject(jtext);
 			array = jobj.getJSONArray(wantedObjects);
 		}

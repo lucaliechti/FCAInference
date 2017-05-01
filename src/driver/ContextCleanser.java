@@ -40,6 +40,7 @@ public class ContextCleanser {
 	
 	//checks which attributes appear the least amount of times in the data
 	//and completely removes these attributes from the context
+	//CURRENTLY NOT USED
 	public void removeRareAttributes(int treshold) {
 		HashMap<String, Integer> attributeSupport = context.getAttributeSupport();
 		HashSet<Integer> supportSet = new HashSet<Integer>();
@@ -58,7 +59,8 @@ public class ContextCleanser {
 		System.out.println("");
 	}
 	
-	public double tinker(Boolean noOwnAttr) {
+	//noBigAttrDifference = firstOption, noOwnAttr = thirdOption
+	public double latticeMerge(Boolean noBigAttrDifference, Boolean noOwnAttr) {
 		HashMap<Integer, ArrayList<LatticeNode>> latticeLevelNodes = lattice.nodesByLevel();
 		int[] levelArray = lattice.levelArray();
 		double highScore = 0.0;
@@ -78,7 +80,7 @@ public class ContextCleanser {
 //					}
 //				}
 				for(LatticeNode candidate : mergeCandidates) {
-					double currentMergeScore = mergeScore(node, candidate, noOwnAttr);
+					double currentMergeScore = mergeScore(node, candidate, noOwnAttr, noBigAttrDifference);
 					if(currentMergeScore >= highScore) {
 						highScore = currentMergeScore;
 						firstNode = node;
@@ -88,24 +90,28 @@ public class ContextCleanser {
 			}
 		}
 //		System.out.println("highscore = " + highScore);
-		if(highScore > 0.0 /*&& attributeDifference(firstNode, secondNode) <= 2*/) {///////////////super important stuff. first of three merge criteria! comment in/out '&&' and everything after. out = 0, in = 1///////////////////
+		if(highScore > 0.0) {
 			mergeInto(firstNode, secondNode);
 			return highScore;
 		}
 		return -1;
 	}
 
-	private double mergeScore(LatticeNode node, LatticeNode candidate, Boolean noOwnAttr) {
+	private double mergeScore(LatticeNode node, LatticeNode candidate, Boolean noOwnAttr, Boolean noBigAttrDifference) {
 		if(!node.hasOwnObjects() || !candidate.hasOwnObjects() || candidate.numberOfOwnObjects() < node.numberOfOwnObjects())
 			return 0d;
+		//first option
+		if(noBigAttrDifference && attributeDifference(node, candidate) > 2){
+			return 0d;
+		}
+		//third option
 		if(noOwnAttr && ((candidate.hasOwnAttributes() && candidate.upperNeighbours().contains(node) /*&& !node.isTopNode()*/) 
-					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate) /*&& !candidate.isTopNode()*/))){//third criterion
+					  || (node.hasOwnAttributes() && node.upperNeighbours().contains(candidate) /*&& !candidate.isTopNode()*/))){//excluding the top node is a parameter we experimented with
 //			System.out.println("not merging into node with attribute(s) " + candidate.getNiceAttributes());
 			return 0d;
 		}
 		double ownObjectRatio = candidate.numberOfOwnObjects()/(double)node.numberOfOwnObjects();
-		double percentOfObjects = node.numberOfOwnObjects()/(double)context.getObjects().size()*100.0;
-		return ownObjectRatio/(double)node.numberOfOwnObjects(); //was divided by percent of objects before. Test
+		return ownObjectRatio/(double)node.numberOfOwnObjects();
 	}
 	
 	private void mergeInto(LatticeNode firstNode, LatticeNode secondNode) {
@@ -115,17 +121,6 @@ public class ContextCleanser {
 		for(FormalObject obj : firstNode.ownObjects())
 			obj.setIntent(mergedIntent);
 		lattice.setLastMergedInto((BitSet)secondNode.getIntent().clone());
-	}
-
-	public void removeSingletonObjects() {
-		for(LatticeNode node : lattice.getNodes()){
-			if(node.numberOfOwnObjects() == 1){
-				Iterator<FormalObject> it = node.ownObjects().iterator();
-				FormalObject obj = it.next(); //super awkward
-				context.getObjects().remove(obj);
-				lattice.addToRemovedSingletons(obj);
-			}
-		}
 	}
 	
 	//creates a String from a BitSet where true = 1 and false = 0.
@@ -158,7 +153,7 @@ public class ContextCleanser {
 		return set1.cardinality();
 	}
 
-	public void removeActualSingletonObjects() {
+	public void removeUniqueObjects() {
 		for(LatticeNode node : lattice.getNodes()){
 			if(node.numberOfOwnObjects() == 1 && !node.isConnected()){ //we try this out
 				Iterator<FormalObject> it = node.ownObjects().iterator();

@@ -1,0 +1,88 @@
+digraph d{
+1 [label="file, org, inst, label, given-name, family-name, email
+ext.: 292 (19% epfl) 
+own: 0 (empty) "]
+2 [label="ext.: 103 (21% fhnw) 
+own: 103 (21% fhnw) ", peripheries = 2]
+3 [label="group-page
+ext.: 182 (24% epfl) 
+own: 79 (36% epfl) ", peripheries = 2]
+4 [label="ext.: 104 (21% fhnw) 
+own: 0 (empty) "]
+5 [label="ext.: 183 (24% epfl) 
+own: 0 (empty) "]
+6 [label="ext.: 1 (100% epfl) 
+own: 1 (100% epfl) ", peripheries = 2]
+7 [label="ext.: 268 (21% epfl) 
+own: 0 (empty) "]
+8 [label="ext.: 37 (37% epfl) 
+own: 36 (36% epfl) ", peripheries = 2]
+9 [label="ext.: 153 (18% usi) 
+own: 49 (55% usi) ", peripheries = 2]
+10 [label="ext.: 232 (19% epfl) 
+own: 0 (empty) "]
+11 [label="ext.: 158 (17% usi) 
+own: 0 (empty) "]
+12 [label="fields
+ext.: 237 (18% epfl) 
+own: 0 (empty) "]
+13 [label="title
+ext.: 291 (19% epfl) 
+own: 0 (empty) "]
+14 [label="representative
+ext.: 5 (100% supsi) 
+own: 5 (100% supsi) ", peripheries = 2]
+15 [label="ext.: 154 (18% usi) 
+own: 0 (empty) "]
+16 [label="home-page
+ext.: 269 (21% epfl) 
+own: 0 (empty) "]
+17 [label="ext.: 2 (50% zfh) 
+own: 1 (100% zfh) ", peripheries = 2]
+18 [label="role
+ext.: 38 (36% epfl) 
+own: 0 (empty) "]
+19 [label="since
+ext.: 159 (17% usi) 
+own: 0 (empty) "]
+20 [label="group
+ext.: 201 (22% epfl) 
+own: 18 (100% zfh) ", peripheries = 2]
+21 [label="ext.: 0 (empty) 
+own: 0 (empty) "]
+1->13;
+1->16;
+1->19;
+13->7;
+13->12;
+13->20;
+16->7;
+16->15;
+16->18;
+19->15;
+7->8;
+7->10;
+12->10;
+12->11;
+15->17;
+18->8;
+18->17;
+10->5;
+10->9;
+11->9;
+11->14;
+5->3;
+5->4;
+9->4;
+3->2;
+4->2;
+4->6;
+2->21;
+6->21;
+19->11;
+15->9;
+20->5;
+8->6;
+17->6;
+14->21;
+}

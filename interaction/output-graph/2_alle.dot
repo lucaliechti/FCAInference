@@ -1,0 +1,256 @@
+digraph d{
+1 [label="file, org, inst, label, given-name, family-name
+ext.: 292 (19% epfl) 
+own: 0 (empty) "]
+2 [label="ext.: 102 (21% fhnw) 
+own: 1 (100% bfh) ", peripheries = 2]
+3 [label="ext.: 168 (26% epfl) 
+own: 0 (empty) "]
+4 [label="ext.: 3 (33% uzh) 
+own: 2 (50% bfh) ", peripheries = 2]
+5 [label="ext.: 167 (26% epfl) 
+own: 62 (46% epfl) ", peripheries = 2]
+6 [label="ext.: 101 (21% fhnw) 
+own: 84 (25% fhnw) ", peripheries = 2]
+7 [label="ext.: 17 (47% fho) 
+own: 1 (100% unine) ", peripheries = 2]
+8 [label="ext.: 14 (57% fho) 
+own: 13 (61% fho) ", peripheries = 2]
+9 [label="ext.: 104 (21% fhnw) 
+own: 0 (empty) "]
+10 [label="ext.: 177 (25% epfl) 
+own: 5 (100% zfh) ", peripheries = 2]
+11 [label="ext.: 8 (37% uzh) 
+own: 0 (empty) "]
+12 [label="ext.: 171 (26% epfl) 
+own: 2 (50% unibe) ", peripheries = 2]
+13 [label="ext.: 103 (21% fhnw) 
+own: 1 (100% unil) ", peripheries = 2]
+14 [label="ext.: 5 (60% uzh) 
+own: 1 (100% epfl) ", peripheries = 2]
+15 [label="ext.: 255 (22% epfl) 
+own: 1 (100% unifr) ", peripheries = 2]
+16 [label="ext.: 36 (36% epfl) 
+own: 19 (63% epfl) ", peripheries = 2]
+17 [label="title
+ext.: 286 (20% epfl) 
+own: 0 (empty) "]
+18 [label="ext.: 44 (31% epfl) 
+own: 1 (100% epfl) ", peripheries = 2]
+19 [label="ext.: 145 (19% usi) 
+own: 0 (empty) "]
+20 [label="ext.: 24 (33% fho) 
+own: 1 (100% hes-so) ", peripheries = 2]
+21 [label="ext.: 227 (19% epfl) 
+own: 9 (44% unisg) ", peripheries = 2]
+22 [label="ext.: 142 (19% usi) 
+own: 33 (78% usi) ", peripheries = 2]
+23 [label="ext.: 20 (40% fho) 
+own: 5 (40% supsi) ", peripheries = 2]
+24 [label="ext.: 7 (42% uzh) 
+own: 1 (100% unige) ", peripheries = 2]
+25 [label="ext.: 4 (75% uzh) 
+own: 3 (66% uzh) ", peripheries = 2]
+26 [label="ext.: 151 (18% usi) 
+own: 0 (empty) "]
+27 [label="ext.: 285 (20% epfl) 
+own: 0 (empty) "]
+28 [label="ext.: 29 (27% fho) 
+own: 0 (empty) "]
+29 [label="fields
+ext.: 232 (19% epfl) 
+own: 0 (empty) "]
+30 [label="ext.: 147 (19% usi) 
+own: 0 (empty) "]
+31 [label="ext.: 25 (32% fho) 
+own: 5 (100% supsi) ", peripheries = 2]
+32 [label="ext.: 15 (26% unil) 
+own: 6 (66% unil) ", peripheries = 2]
+33 [label="ext.: 43 (30% epfl) 
+own: 6 (50% unige) ", peripheries = 2]
+34 [label="ext.: 169 (26% epfl) 
+own: 0 (empty) "]
+35 [label="ext.: 168 (26% epfl) 
+own: 1 (100% unine) ", peripheries = 2]
+36 [label="ext.: 4 (25% unisg) 
+own: 0 (empty) "]
+37 [label="ext.: 6 (50% uzh) 
+own: 0 (empty) "]
+38 [label="ext.: 2 (50% unisg) 
+own: 1 (100% unisg) ", peripheries = 2]
+39 [label="ext.: 9 (66% uzh) 
+own: 1 (100% uzh) ", peripheries = 2]
+40 [label="ext.: 8 (62% uzh) 
+own: 2 (100% uzh) ", peripheries = 2]
+41 [label="ext.: 1 (100% uzh) 
+own: 1 (100% uzh) ", peripheries = 2]
+42 [label="ext.: 146 (19% usi) 
+own: 0 (empty) "]
+43 [label="home-page
+ext.: 256 (22% epfl) 
+own: 0 (empty) "]
+44 [label="ext.: 37 (35% epfl) 
+own: 0 (empty) "]
+45 [label="ext.: 9 (55% uzh) 
+own: 1 (100% zfh) ", peripheries = 2]
+46 [label="role
+ext.: 45 (31% epfl) 
+own: 0 (empty) "]
+47 [label="since
+ext.: 152 (18% usi) 
+own: 0 (empty) "]
+48 [label="email
+ext.: 291 (19% epfl) 
+own: 0 (empty) "]
+49 [label="ext.: 44 (29% epfl) 
+own: 0 (empty) "]
+50 [label="ext.: 10 (60% uzh) 
+own: 0 (empty) "]
+51 [label="ext.: 195 (23% epfl) 
+own: 8 (100% zfh) ", peripheries = 2]
+52 [label="group
+ext.: 200 (22% epfl) 
+own: 4 (100% zfh) ", peripheries = 2]
+53 [label="ext.: 177 (24% epfl) 
+own: 9 (100% zfh) ", peripheries = 2]
+54 [label="ext.: 178 (24% epfl) 
+own: 0 (empty) "]
+55 [label="ext.: 178 (24% epfl) 
+own: 1 (100% zfh) ", peripheries = 2]
+56 [label="group-page
+ext.: 179 (24% epfl) 
+own: 0 (empty) "]
+57 [label="ext.: 18 (44% fho) 
+own: 1 (100% zfh) ", peripheries = 2]
+58 [label="representative
+ext.: 30 (26% fho) 
+own: 0 (empty) "]
+1->17;
+1->46;
+1->48;
+17->18;
+17->27;
+46->18;
+46->49;
+48->27;
+48->43;
+48->47;
+48->49;
+48->52;
+48->56;
+18->33;
+27->15;
+27->26;
+27->29;
+27->33;
+27->51;
+27->54;
+27->58;
+43->15;
+43->42;
+43->44;
+47->26;
+47->42;
+47->50;
+49->33;
+49->44;
+49->50;
+52->51;
+52->55;
+56->54;
+56->55;
+15->10;
+15->16;
+15->19;
+15->21;
+15->34;
+26->19;
+26->30;
+26->39;
+29->21;
+29->28;
+29->30;
+33->16;
+33->39;
+42->19;
+42->45;
+44->16;
+44->45;
+50->39;
+50->45;
+51->10;
+51->53;
+51->57;
+54->34;
+54->53;
+55->53;
+58->28;
+58->57;
+10->3;
+10->9;
+10->12;
+16->32;
+16->40;
+19->9;
+19->22;
+19->40;
+21->12;
+21->20;
+21->22;
+21->32;
+21->35;
+28->20;
+28->31;
+30->22;
+30->31;
+34->3;
+34->35;
+39->40;
+45->40;
+53->3;
+3->2;
+3->5;
+9->2;
+9->13;
+12->5;
+12->11;
+12->13;
+20->23;
+20->36;
+22->13;
+22->23;
+22->37;
+31->23;
+32->11;
+32->36;
+32->37;
+35->5;
+40->37;
+2->6;
+5->6;
+5->7;
+5->24;
+11->14;
+11->24;
+13->6;
+13->14;
+23->38;
+36->38;
+37->14;
+37->38;
+6->8;
+6->25;
+7->4;
+7->8;
+14->25;
+24->4;
+24->25;
+4->41;
+8->41;
+25->41;
+20->7;
+23->8;
+36->4;
+38->41;
+57->7;
+}
