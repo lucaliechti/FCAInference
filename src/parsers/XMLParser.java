@@ -24,7 +24,7 @@ public class XMLParser implements NoSQLParser {
 		wantedObjects = dataset.getElementLevel();
 		nameAttribute = dataset.getTypeAttribute();
 		ArrayList<Element> wantedElements = extractElements(dataset.getFilePath(), MAX_OBJECTS); //split the input file
-		return createFormalObjects(wantedElements); //extract attributes from split objects		
+		return createFormalObjects(wantedElements, dataset.getTypeType()); //extract attributes from split objects		
 	}
 
 	private ArrayList<Element> extractElements(String file, int MAX_OBJECTS) {
@@ -51,7 +51,8 @@ public class XMLParser implements NoSQLParser {
 		return wantedElements;
 	}
 	
-	private ArrayList<FormalObject> createFormalObjects(ArrayList<Element> elements) {
+	//typeType tells us where the type information is stored. "attribute" means in an attribute of name typeAttribute, "element" means it's the value of a child element of that name.
+	private ArrayList<FormalObject> createFormalObjects(ArrayList<Element> elements, String typeType) {
 		ArrayList<FormalObject> parsedObjects = new ArrayList<FormalObject>();
 //		System.out.print("Parsing objects to context... ");
 		
@@ -65,8 +66,15 @@ public class XMLParser implements NoSQLParser {
 				if(!attributes.contains(attribute)) attributes.add(attribute);
 			}
 			object.setAttributes(attributes);
-			object.setName(el.getAttributeValue(nameAttribute)); //specify here which attribute is the name, OR...
-//			object.setName(el.getChildTextNormalize(nameAttribute)); //... which child element is the name (comment one line out)
+			if(typeType.equals("attribute")) {
+				object.setName(el.getAttributeValue(nameAttribute));
+			}
+			else if(typeType.equals("element")) {
+				object.setName(el.getChildTextNormalize(nameAttribute));
+			}
+			else {
+				object.setName("NO TYPE FOUND");
+			}
 			parsedObjects.add(object);
 		}
 //		System.out.println("done.");

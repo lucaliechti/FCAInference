@@ -9,6 +9,7 @@ public class SemiStructuredDataset {
 	private File file = null;
 	private String elementLevel = null;
 	private String typeAttribute = null;
+	private String typeType = null;
 	
 	//constructor for XML and JSON files with elementLevel and typeAttribute
 	public SemiStructuredDataset(String _location, String _elementLevel, String _typeAttribute) {
@@ -18,6 +19,17 @@ public class SemiStructuredDataset {
 		catch(IOException ioe) {ioe.printStackTrace();}
 		elementLevel = _elementLevel;
 		typeAttribute = _typeAttribute;
+	}
+	
+	//constructor for XML files with elementLevel, typeAttribute, and typeType
+	public SemiStructuredDataset(String _location, String _elementLevel, String _typeAttribute, String _typeType) {
+		try{
+			setFile(_location);
+		}
+		catch(IOException ioe) {ioe.printStackTrace();}
+		elementLevel = _elementLevel;
+		typeAttribute = _typeAttribute;
+		typeType = _typeType;
 	}
 	
 	//constructor for BibTeX files where no elementLevel and typeAttribute are needed
@@ -46,6 +58,10 @@ public class SemiStructuredDataset {
 	
 	public String getTypeAttribute() {
 		return typeAttribute;
+	}
+	
+	public String getTypeType() {
+		return typeType;
 	}
 
 }

@@ -20,7 +20,8 @@ public class Driver {
 		
 		//add datasets to be processed
 //		datasets.add(new BibtexDataset(inputFolder + "caltech_hp.bib"));
-		datasets.add(new XMLdataset(inputFolder + "animals.xml", "animal", "name"));
+		datasets.add(new XMLdataset(inputFolder + "animals.xml", "animal", "name", "attribute"));
+		datasets.add(new XMLdataset(inputFolder + "1000Complexity.xml", "info", "type", "element"));
 //		datasets.add(new JSONdataset(inputFolder + "alle.js", "items", "file"));
 		
 		//CONFIGURE HERE: General parameters
