@@ -83,7 +83,7 @@ Boolean thirdOption = true;
 2. `numberOfObjects` sets an upper bound to the number of objects considered for the lattice. This is important because large lattices are extremely time costly to compute. Note that this parameter has no influence on the number of objects considered for the formal context file---this file always takes the whole dataset as input.
 3. The four boolean variables correspond to the parameters we tested the algorithm with, them being `true` meaning that the option is "turned on", i.e. considered by the algorithm. These booleans are freely combineable, except for `secondSubOption`, whose value has no influence on the algorithm if `secondOption` is `false`.
 
-##A word on architecture
+## A word on architecture
 
 Without going into too much detail, we are giving the interested reader a short account of how FCAInference is structured.
 
